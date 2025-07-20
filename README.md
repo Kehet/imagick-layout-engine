@@ -72,6 +72,37 @@ $row->addItem(new Rectangle(fill('#fca5a5')), 100); // 100 px wide
 $row->addItem(new Rectangle(fill('#dc2626')));      // Takes remaining space
 ```
 
+#### Padding
+
+Containers support padding, which adds space between the container's edge and its content. The padding feature works similar to CSS padding, with support for one to four values:
+
+- Single value: applies the same padding to all sides
+- Two values: first value applies to top and bottom, second value applies to left and right
+- Three values: first value applies to top, second value applies to left and right, third value applies to bottom
+- Four values: values apply to top, right, bottom, and left, respectively
+
+```php
+// Single value padding (10px on all sides)
+$row = new RowContainer();
+$row->addItem(new Rectangle(fill('#fee2e2')), padding: 10);
+$row->addItem(new Rectangle(fill('#fca5a5')), padding: 10);
+
+// Two value padding (10px top/bottom, 20px left/right)
+$column = new ColumnContainer();
+$column->addItem(new Rectangle(fill('#fee2e2')), padding: [10, 20]);
+$column->addItem(new Rectangle(fill('#fca5a5')), padding: [10, 20]);
+
+// Three value padding (10px top, 20px left/right, 30px bottom)
+$row = new RowContainer();
+$row->addItem(new Rectangle(fill('#fee2e2')), padding: [10, 20, 30]);
+$row->addItem(new Rectangle(fill('#fca5a5')), padding: [10, 20, 30]);
+
+// Four value padding (10px top, 20px right, 30px bottom, 40px left)
+$column = new ColumnContainer();
+$column->addItem(new Rectangle(fill('#fee2e2')), padding: [10, 20, 30, 40]);
+$column->addItem(new Rectangle(fill('#fca5a5')), padding: [10, 20, 30, 40]);
+```
+
 ### Text Handling
 
 The library provides two classes for text handling:
@@ -110,10 +141,10 @@ The library provides an Image class for adding images to layouts with various fi
 $container->addItem(new Image('path/to/image.jpg'));
 
 // Fill mode - image will be cropped to fill the container
-$container->addItem(new Image('path/to/image.jpg', fill: true));
+$container->addItem(new Image('path/to/image.jpg', fill: ImageMode::FILL));
 
 // With gravity option for positioning
-$container->addItem(new Image('path/to/image.jpg', fill: false, gravity: Image::GRAVITY_TOP));
+$container->addItem(new Image('path/to/image.jpg', fill: ImageMode::FIT, gravity: Image::GRAVITY_TOP));
 ```
 
 Available gravity options:
@@ -157,7 +188,7 @@ $frame->addItem($row);
 ```php
 // Create a column container with an image and text
 $container = new ColumnContainer();
-$container->addItem(new Image('path/to/image.jpg', fill: false, gravity: Image::GRAVITY_CENTER));
+$container->addItem(new Image('path/to/image.jpg', fill: ImageMode::FIT, gravity: Image::GRAVITY_CENTER));
 $container->addItem(new TextWrap(fill('black'), 'Image Caption'));
 ```
 
