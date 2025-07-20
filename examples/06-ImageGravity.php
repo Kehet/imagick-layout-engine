@@ -20,6 +20,7 @@
 
 use Kehet\ImagickLayoutEngine\Containers\ColumnContainer;
 use Kehet\ImagickLayoutEngine\Containers\RowContainer;
+use Kehet\ImagickLayoutEngine\Enums\ImageMode;
 use Kehet\ImagickLayoutEngine\Items\Image;
 use Kehet\ImagickLayoutEngine\Items\Text;
 
@@ -37,6 +38,7 @@ $width = 1500;
 $height = 1000;
 
 $smallImage = __DIR__.'/example-image-small.jpeg';
+$largeImage = __DIR__.'/example-image-large.jpeg';
 
 // Create new image
 $imagick = new Imagick;
@@ -46,15 +48,21 @@ $imagick->newImage($width, $height, new ImagickPixel('white'));
 $mainContainer = new ColumnContainer;
 
 $rowFit = new RowContainer;
-$rowFit->addItem(createGravityDemoContainer($smallImage, Image::GRAVITY_LEFT, 'LEFT (fit)'));
-$rowFit->addItem(createGravityDemoContainer($smallImage, Image::GRAVITY_CENTER, 'CENTER (fit)'));
-$rowFit->addItem(createGravityDemoContainer($smallImage, Image::GRAVITY_RIGHT, 'RIGHT (fit)'));
+$rowFit->addItem(createGravityDemoContainer($largeImage, Image::GRAVITY_TOP, 'TOP (none)', ImageMode::NONE));
+$rowFit->addItem(createGravityDemoContainer($largeImage, Image::GRAVITY_CENTER, 'CENTER (none)', ImageMode::NONE));
+$rowFit->addItem(createGravityDemoContainer($largeImage, Image::GRAVITY_BOTTOM, 'BOTTOM (none)', ImageMode::NONE));
+$mainContainer->addItem($rowFit);
+
+$rowFit = new RowContainer;
+$rowFit->addItem(createGravityDemoContainer($smallImage, Image::GRAVITY_LEFT, 'LEFT (fit)', ImageMode::FIT));
+$rowFit->addItem(createGravityDemoContainer($smallImage, Image::GRAVITY_CENTER, 'CENTER (fit)', ImageMode::FIT));
+$rowFit->addItem(createGravityDemoContainer($smallImage, Image::GRAVITY_RIGHT, 'RIGHT (fit)', ImageMode::FIT));
 $mainContainer->addItem($rowFit);
 
 $rowFill = new RowContainer;
-$rowFill->addItem(createGravityDemoContainer($smallImage, Image::GRAVITY_TOP, 'TOP (fill)', true));
-$rowFill->addItem(createGravityDemoContainer($smallImage, Image::GRAVITY_CENTER, 'CENTER (fill)', true));
-$rowFill->addItem(createGravityDemoContainer($smallImage, Image::GRAVITY_BOTTOM, 'BOTTOM (fill)', true));
+$rowFill->addItem(createGravityDemoContainer($largeImage, Image::GRAVITY_TOP, 'TOP (fill)', ImageMode::FILL));
+$rowFill->addItem(createGravityDemoContainer($largeImage, Image::GRAVITY_CENTER, 'CENTER (fill)', ImageMode::FILL));
+$rowFill->addItem(createGravityDemoContainer($largeImage, Image::GRAVITY_BOTTOM, 'BOTTOM (fill)', ImageMode::FILL));
 $mainContainer->addItem($rowFill);
 
 // Draw container onto image
@@ -64,10 +72,10 @@ $mainContainer->draw($imagick, 0, 0, $width, $height);
 $imagick->setImageFormat('png');
 $imagick->writeImage(__DIR__.'/06.png');
 
-function createGravityDemoContainer(string $imagePath, string $gravity, string $label, bool $fill = false): ColumnContainer
+function createGravityDemoContainer(string $imagePath, string $gravity, string $label, ImageMode $mode): ColumnContainer
 {
     $container = new ColumnContainer;
-    $container->addItem(new Image($imagePath, $fill, $gravity));
+    $container->addItem(new Image($imagePath, $mode, $gravity));
     $container->addItem(new Text(fill('black'), $label));
 
     return $container;

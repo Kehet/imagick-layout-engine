@@ -25,11 +25,6 @@ use Kehet\ImagickLayoutEngine\Items\TextWrap;
 
 class TextWrapTest extends TestCase
 {
-    const string TINY_TEXT = 'Lorem ipsum dolor sit amet.';
-
-    const string SHORT_TEXT = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec elementum vulputate eros at rutrum.';
-
-    const string LONG_TEXT = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris vitae ultrices erat. Integer id eleifend diam, sed commodo lacus.  Fusce iaculis aliquam pulvinar. Donec dictum mollis volutpat. Nulla facilisi. Nulla egestas hendrerit lobortis. Proin tincidunt interdum eros a pharetra. Nam tincidunt, justo eget pulvinar consequat, velit tortor iaculis urna, in vulputate libero ipsum at ante. ';
 
     public function test_text(): void
     {
