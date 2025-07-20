@@ -21,6 +21,7 @@
 namespace Kehet\ImagickLayoutEngine\Items;
 
 use Imagick;
+use Kehet\ImagickLayoutEngine\Enums\ImageMode;
 
 /**
  * Represents an image that can be drawn onto container grid.
@@ -47,7 +48,7 @@ class Image implements DrawableInterface
 
     public function __construct(
         protected string $file,
-        protected bool $fill = false,
+        protected ImageMode $mode = ImageMode::NONE,
         protected string $gravity = self::GRAVITY_CENTER,
     ) {}
 
@@ -61,64 +62,97 @@ class Image implements DrawableInterface
         $originalRatio = $originalWidth / $originalHeight;
         $targetRatio = $width / $height;
 
-        if ($this->fill) {
-            if ($originalRatio > $targetRatio) {
-                // Image is wider than target area
-                $newWidth = $originalWidth * ($height / $originalHeight);
-                $newHeight = $height;
+        switch ($this->mode) {
+            case ImageMode::FILL:
+                if ($originalRatio > $targetRatio) {
+                    // Image is wider than target area
+                    $newWidth = $originalWidth * ($height / $originalHeight);
+                    $newHeight = $height;
+                    $image->resizeImage($newWidth, $newHeight, Imagick::FILTER_LANCZOS, 1);
+
+                    // Calculate crop X position based on gravity
+                    if (str_contains($this->gravity, 'right')) {
+                        $cropX = $newWidth - $width;
+                    } elseif (str_contains($this->gravity, 'left')) {
+                        $cropX = 0;
+                    } else {
+                        // Center horizontally for top, center, bottom
+                        $cropX = ($newWidth - $width) / 2;
+                    }
+
+                    $image->cropImage($width, $height, $cropX, 0);
+                } else {
+                    // Image is taller than target area
+                    $newWidth = $width;
+                    $newHeight = $originalHeight * ($width / $originalWidth);
+                    $image->resizeImage($newWidth, $newHeight, Imagick::FILTER_LANCZOS, 1);
+
+                    // Calculate crop Y position based on gravity
+                    if (str_contains($this->gravity, 'bottom')) {
+                        $cropY = $newHeight - $height;
+                    } elseif (str_contains($this->gravity, 'top')) {
+                        $cropY = 0;
+                    } else {
+                        // Center vertically for left, center, right
+                        $cropY = ($newHeight - $height) / 2;
+                    }
+
+                    $image->cropImage($width, $height, 0, $cropY);
+                }
+
+                break;
+            case ImageMode::FIT:
+                if ($originalRatio > $targetRatio) {
+                    // Image is wider than target area
+                    $newWidth = $width;
+                    $newHeight = $width / $originalRatio;
+                } else {
+                    // Image is taller than target area
+                    $newWidth = $height * $originalRatio;
+                    $newHeight = $height;
+                }
+
                 $image->resizeImage($newWidth, $newHeight, Imagick::FILTER_LANCZOS, 1);
 
-                // Calculate crop X position based on gravity
-                $cropX = 0;
-                if (str_contains($this->gravity, 'right')) {
-                    $cropX = $newWidth - $width;
-                } elseif (str_contains($this->gravity, 'left')) {
+                break;
+            case ImageMode::NONE:
+                // If image is larger than container, crop it to fit
+                if ($originalWidth > $width || $originalHeight > $height) {
+                    // Determine crop dimensions
+                    $cropWidth = min($originalWidth, $width);
+                    $cropHeight = min($originalHeight, $height);
+
+                    // Calculate crop position based on gravity
                     $cropX = 0;
-                } else {
-                    // Center horizontally for top, center, bottom
-                    $cropX = ($newWidth - $width) / 2;
-                }
-
-                $image->cropImage($width, $height, $cropX, 0);
-            } else {
-                // Image is taller than target area
-                $newWidth = $width;
-                $newHeight = $originalHeight * ($width / $originalWidth);
-                $image->resizeImage($newWidth, $newHeight, Imagick::FILTER_LANCZOS, 1);
-
-                // Calculate crop Y position based on gravity
-                $cropY = 0;
-                if (str_contains($this->gravity, 'bottom')) {
-                    $cropY = $newHeight - $height;
-                } elseif (str_contains($this->gravity, 'top')) {
                     $cropY = 0;
-                } else {
-                    // Center vertically for left, center, right
-                    $cropY = ($newHeight - $height) / 2;
+
+                    if ($originalWidth > $width) {
+                        if (str_contains($this->gravity, 'right')) {
+                            $cropX = $originalWidth - $width;
+                        } elseif (! str_contains($this->gravity, 'left')) {
+                            // Center horizontally for top, center, bottom
+                            $cropX = ($originalWidth - $width) / 2;
+                        }
+                    }
+
+                    if ($originalHeight > $height) {
+                        if (str_contains($this->gravity, 'bottom')) {
+                            $cropY = $originalHeight - $height;
+                        } elseif (! str_contains($this->gravity, 'top')) {
+                            // Center vertically for left, center, right
+                            $cropY = ($originalHeight - $height) / 2;
+                        }
+                    }
+
+                    $image->cropImage($cropWidth, $cropHeight, $cropX, $cropY);
                 }
-
-                $image->cropImage($width, $height, 0, $cropY);
-            }
-        } else {
-            // fit
-
-            if ($originalRatio > $targetRatio) {
-                // Image is wider than target area
-                $newWidth = $width;
-                $newHeight = $width / $originalRatio;
-            } else {
-                // Image is taller than target area
-                $newWidth = $height * $originalRatio;
-                $newHeight = $height;
-            }
-
-            $image->resizeImage($newWidth, $newHeight, Imagick::FILTER_LANCZOS, 1);
+                break;
         }
 
         $posX = $x;
         $posY = $y;
 
-        if (! $this->fill) {
+        if ($this->mode === ImageMode::NONE || $this->mode === ImageMode::FIT) {
             $imageWidth = $image->getImageWidth();
             $imageHeight = $image->getImageHeight();
 

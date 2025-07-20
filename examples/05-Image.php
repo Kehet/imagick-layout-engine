@@ -19,6 +19,7 @@
  */
 
 use Kehet\ImagickLayoutEngine\Containers\ColumnContainer;
+use Kehet\ImagickLayoutEngine\Enums\ImageMode;
 use Kehet\ImagickLayoutEngine\Items\Image;
 
 require __DIR__.'/../vendor/autoload.php';
@@ -46,14 +47,14 @@ $imagick->newImage($width, $height, new ImagickPixel('white'));
 
 $frame = new ColumnContainer;
 
-// Default behavior (fit) - maintains aspect ratio
+// Default behavior doesn't scale image
 $frame->addItem(new Image($largeImage));
 
 // Large image will be cropped to fit
-$frame->addItem(new Image($largeImage, true));
+$frame->addItem(new Image($largeImage, ImageMode::FIT));
 
 // Small image will be stretched
-$frame->addItem(new Image($smallImage, true));
+$frame->addItem(new Image($smallImage, ImageMode::FIT));
 
 // Draw container onto image
 
