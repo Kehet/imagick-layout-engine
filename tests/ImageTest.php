@@ -20,6 +20,7 @@
 
 use Kehet\ImagickLayoutEngine\Containers\ColumnContainer;
 use Kehet\ImagickLayoutEngine\Containers\RowContainer;
+use Kehet\ImagickLayoutEngine\Enums\Gravity;
 use Kehet\ImagickLayoutEngine\Enums\ImageMode;
 use Kehet\ImagickLayoutEngine\Items\Image;
 use Kehet\ImagickLayoutEngine\Tests\TestCase;
@@ -32,9 +33,9 @@ class ImageTest extends TestCase
 
         $frame = new RowContainer;
 
-        $frame->addItem(new Image(self::SMALL_IMAGE, ImageMode::FIT, Image::GRAVITY_TOP));
-        $frame->addItem(new Image(self::SMALL_IMAGE, ImageMode::FIT, Image::GRAVITY_CENTER));
-        $frame->addItem(new Image(self::SMALL_IMAGE, ImageMode::FIT, Image::GRAVITY_BOTTOM));
+        $frame->addItem(new Image(self::SMALL_IMAGE, ImageMode::FIT, Gravity::TOP));
+        $frame->addItem(new Image(self::SMALL_IMAGE, ImageMode::FIT, Gravity::CENTER));
+        $frame->addItem(new Image(self::SMALL_IMAGE, ImageMode::FIT, Gravity::BOTTOM));
 
         $this->saveImage($imagick, $frame, __FUNCTION__.'.png');
     }
@@ -45,9 +46,9 @@ class ImageTest extends TestCase
 
         $frame = new ColumnContainer;
 
-        $frame->addItem(new Image(self::SMALL_IMAGE, ImageMode::FIT, Image::GRAVITY_LEFT));
-        $frame->addItem(new Image(self::SMALL_IMAGE, ImageMode::FIT, Image::GRAVITY_CENTER));
-        $frame->addItem(new Image(self::SMALL_IMAGE, ImageMode::FIT, Image::GRAVITY_RIGHT));
+        $frame->addItem(new Image(self::SMALL_IMAGE, ImageMode::FIT, Gravity::LEFT));
+        $frame->addItem(new Image(self::SMALL_IMAGE, ImageMode::FIT, Gravity::CENTER));
+        $frame->addItem(new Image(self::SMALL_IMAGE, ImageMode::FIT, Gravity::RIGHT));
 
         $this->saveImage($imagick, $frame, __FUNCTION__.'.png');
     }
@@ -58,9 +59,9 @@ class ImageTest extends TestCase
 
         $frame = new RowContainer;
 
-        $frame->addItem(new Image(self::SMALL_IMAGE, ImageMode::FILL, Image::GRAVITY_LEFT));
-        $frame->addItem(new Image(self::SMALL_IMAGE, ImageMode::FILL, Image::GRAVITY_CENTER));
-        $frame->addItem(new Image(self::SMALL_IMAGE, ImageMode::FILL, Image::GRAVITY_RIGHT));
+        $frame->addItem(new Image(self::SMALL_IMAGE, ImageMode::FILL, Gravity::LEFT));
+        $frame->addItem(new Image(self::SMALL_IMAGE, ImageMode::FILL, Gravity::CENTER));
+        $frame->addItem(new Image(self::SMALL_IMAGE, ImageMode::FILL, Gravity::RIGHT));
 
         $this->saveImage($imagick, $frame, __FUNCTION__.'.png');
     }
@@ -71,9 +72,9 @@ class ImageTest extends TestCase
 
         $frame = new ColumnContainer;
 
-        $frame->addItem(new Image(self::SMALL_IMAGE, ImageMode::FILL, Image::GRAVITY_TOP));
-        $frame->addItem(new Image(self::SMALL_IMAGE, ImageMode::FILL, Image::GRAVITY_CENTER));
-        $frame->addItem(new Image(self::SMALL_IMAGE, ImageMode::FILL, Image::GRAVITY_BOTTOM));
+        $frame->addItem(new Image(self::SMALL_IMAGE, ImageMode::FILL, Gravity::TOP));
+        $frame->addItem(new Image(self::SMALL_IMAGE, ImageMode::FILL, Gravity::CENTER));
+        $frame->addItem(new Image(self::SMALL_IMAGE, ImageMode::FILL, Gravity::BOTTOM));
 
         $this->saveImage($imagick, $frame, __FUNCTION__.'.png');
     }
@@ -85,21 +86,21 @@ class ImageTest extends TestCase
         $frame = new ColumnContainer;
 
         $row1 = new RowContainer;
-        $row1->addItem(new Image(self::TINY_IMAGE, ImageMode::NONE, Image::GRAVITY_TOP_LEFT));
-        $row1->addItem(new Image(self::TINY_IMAGE, ImageMode::NONE, Image::GRAVITY_TOP));
-        $row1->addItem(new Image(self::TINY_IMAGE, ImageMode::NONE, Image::GRAVITY_TOP_RIGHT));
+        $row1->addItem(new Image(self::TINY_IMAGE, ImageMode::NONE, Gravity::TOP_LEFT));
+        $row1->addItem(new Image(self::TINY_IMAGE, ImageMode::NONE, Gravity::TOP));
+        $row1->addItem(new Image(self::TINY_IMAGE, ImageMode::NONE, Gravity::TOP_RIGHT));
         $frame->addItem($row1);
 
         $row2 = new RowContainer;
-        $row2->addItem(new Image(self::TINY_IMAGE, ImageMode::NONE, Image::GRAVITY_LEFT));
-        $row2->addItem(new Image(self::TINY_IMAGE, ImageMode::NONE, Image::GRAVITY_CENTER));
-        $row2->addItem(new Image(self::TINY_IMAGE, ImageMode::NONE, Image::GRAVITY_RIGHT));
+        $row2->addItem(new Image(self::TINY_IMAGE, ImageMode::NONE, Gravity::LEFT));
+        $row2->addItem(new Image(self::TINY_IMAGE, ImageMode::NONE, Gravity::CENTER));
+        $row2->addItem(new Image(self::TINY_IMAGE, ImageMode::NONE, Gravity::RIGHT));
         $frame->addItem($row2);
 
         $row3 = new RowContainer;
-        $row3->addItem(new Image(self::TINY_IMAGE, ImageMode::NONE, Image::GRAVITY_BOTTOM_LEFT));
-        $row3->addItem(new Image(self::TINY_IMAGE, ImageMode::NONE, Image::GRAVITY_BOTTOM));
-        $row3->addItem(new Image(self::TINY_IMAGE, ImageMode::NONE, Image::GRAVITY_BOTTOM_RIGHT));
+        $row3->addItem(new Image(self::TINY_IMAGE, ImageMode::NONE, Gravity::BOTTOM_LEFT));
+        $row3->addItem(new Image(self::TINY_IMAGE, ImageMode::NONE, Gravity::BOTTOM));
+        $row3->addItem(new Image(self::TINY_IMAGE, ImageMode::NONE, Gravity::BOTTOM_RIGHT));
         $frame->addItem($row3);
 
         $this->saveImage($imagick, $frame, __FUNCTION__.'.png');
@@ -112,21 +113,21 @@ class ImageTest extends TestCase
         $frame = new ColumnContainer;
 
         $row1 = new RowContainer;
-        $row1->addItem(new Image(self::SMALL_IMAGE, ImageMode::NONE, Image::GRAVITY_TOP_LEFT));
-        $row1->addItem(new Image(self::SMALL_IMAGE, ImageMode::NONE, Image::GRAVITY_TOP));
-        $row1->addItem(new Image(self::SMALL_IMAGE, ImageMode::NONE, Image::GRAVITY_TOP_RIGHT));
+        $row1->addItem(new Image(self::SMALL_IMAGE, ImageMode::NONE, Gravity::TOP_LEFT));
+        $row1->addItem(new Image(self::SMALL_IMAGE, ImageMode::NONE, Gravity::TOP));
+        $row1->addItem(new Image(self::SMALL_IMAGE, ImageMode::NONE, Gravity::TOP_RIGHT));
         $frame->addItem($row1);
 
         $row2 = new RowContainer;
-        $row2->addItem(new Image(self::SMALL_IMAGE, ImageMode::NONE, Image::GRAVITY_LEFT));
-        $row2->addItem(new Image(self::SMALL_IMAGE, ImageMode::NONE, Image::GRAVITY_CENTER));
-        $row2->addItem(new Image(self::SMALL_IMAGE, ImageMode::NONE, Image::GRAVITY_RIGHT));
+        $row2->addItem(new Image(self::SMALL_IMAGE, ImageMode::NONE, Gravity::LEFT));
+        $row2->addItem(new Image(self::SMALL_IMAGE, ImageMode::NONE, Gravity::CENTER));
+        $row2->addItem(new Image(self::SMALL_IMAGE, ImageMode::NONE, Gravity::RIGHT));
         $frame->addItem($row2);
 
         $row3 = new RowContainer;
-        $row3->addItem(new Image(self::SMALL_IMAGE, ImageMode::NONE, Image::GRAVITY_BOTTOM_LEFT));
-        $row3->addItem(new Image(self::SMALL_IMAGE, ImageMode::NONE, Image::GRAVITY_BOTTOM));
-        $row3->addItem(new Image(self::SMALL_IMAGE, ImageMode::NONE, Image::GRAVITY_BOTTOM_RIGHT));
+        $row3->addItem(new Image(self::SMALL_IMAGE, ImageMode::NONE, Gravity::BOTTOM_LEFT));
+        $row3->addItem(new Image(self::SMALL_IMAGE, ImageMode::NONE, Gravity::BOTTOM));
+        $row3->addItem(new Image(self::SMALL_IMAGE, ImageMode::NONE, Gravity::BOTTOM_RIGHT));
         $frame->addItem($row3);
 
         $this->saveImage($imagick, $frame, __FUNCTION__.'.png');
@@ -139,21 +140,21 @@ class ImageTest extends TestCase
         $frame = new ColumnContainer;
 
         $row1 = new RowContainer;
-        $row1->addItem(new Image(self::LARGE_IMAGE, ImageMode::NONE, Image::GRAVITY_TOP_LEFT));
-        $row1->addItem(new Image(self::LARGE_IMAGE, ImageMode::NONE, Image::GRAVITY_TOP));
-        $row1->addItem(new Image(self::LARGE_IMAGE, ImageMode::NONE, Image::GRAVITY_TOP_RIGHT));
+        $row1->addItem(new Image(self::LARGE_IMAGE, ImageMode::NONE, Gravity::TOP_LEFT));
+        $row1->addItem(new Image(self::LARGE_IMAGE, ImageMode::NONE, Gravity::TOP));
+        $row1->addItem(new Image(self::LARGE_IMAGE, ImageMode::NONE, Gravity::TOP_RIGHT));
         $frame->addItem($row1);
 
         $row2 = new RowContainer;
-        $row2->addItem(new Image(self::LARGE_IMAGE, ImageMode::NONE, Image::GRAVITY_LEFT));
-        $row2->addItem(new Image(self::LARGE_IMAGE, ImageMode::NONE, Image::GRAVITY_CENTER));
-        $row2->addItem(new Image(self::LARGE_IMAGE, ImageMode::NONE, Image::GRAVITY_RIGHT));
+        $row2->addItem(new Image(self::LARGE_IMAGE, ImageMode::NONE, Gravity::LEFT));
+        $row2->addItem(new Image(self::LARGE_IMAGE, ImageMode::NONE, Gravity::CENTER));
+        $row2->addItem(new Image(self::LARGE_IMAGE, ImageMode::NONE, Gravity::RIGHT));
         $frame->addItem($row2);
 
         $row3 = new RowContainer;
-        $row3->addItem(new Image(self::LARGE_IMAGE, ImageMode::NONE, Image::GRAVITY_BOTTOM_LEFT));
-        $row3->addItem(new Image(self::LARGE_IMAGE, ImageMode::NONE, Image::GRAVITY_BOTTOM));
-        $row3->addItem(new Image(self::LARGE_IMAGE, ImageMode::NONE, Image::GRAVITY_BOTTOM_RIGHT));
+        $row3->addItem(new Image(self::LARGE_IMAGE, ImageMode::NONE, Gravity::BOTTOM_LEFT));
+        $row3->addItem(new Image(self::LARGE_IMAGE, ImageMode::NONE, Gravity::BOTTOM));
+        $row3->addItem(new Image(self::LARGE_IMAGE, ImageMode::NONE, Gravity::BOTTOM_RIGHT));
         $frame->addItem($row3);
 
         $this->saveImage($imagick, $frame, __FUNCTION__.'.png');

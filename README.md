@@ -144,19 +144,19 @@ $container->addItem(new Image('path/to/image.jpg'));
 $container->addItem(new Image('path/to/image.jpg', fill: ImageMode::FILL));
 
 // With gravity option for positioning
-$container->addItem(new Image('path/to/image.jpg', fill: ImageMode::FIT, gravity: Image::GRAVITY_TOP));
+$container->addItem(new Image('path/to/image.jpg', fill: ImageMode::FIT, gravity: Gravity::TOP));
 ```
 
 Available gravity options:
-- `Image::GRAVITY_TOP_LEFT`
-- `Image::GRAVITY_TOP`
-- `Image::GRAVITY_TOP_RIGHT`
-- `Image::GRAVITY_LEFT`
-- `Image::GRAVITY_CENTER` (default)
-- `Image::GRAVITY_RIGHT`
-- `Image::GRAVITY_BOTTOM_LEFT`
-- `Image::GRAVITY_BOTTOM`
-- `Image::GRAVITY_BOTTOM_RIGHT`
+- `Gravity::TOP_LEFT`
+- `Gravity::TOP`
+- `Gravity::TOP_RIGHT`
+- `Gravity::LEFT`
+- `Gravity::CENTER` (default)
+- `Gravity::RIGHT`
+- `Gravity::BOTTOM_LEFT`
+- `Gravity::BOTTOM`
+- `Gravity::BOTTOM_RIGHT`
 
 ## Advanced Examples
 
@@ -188,7 +188,7 @@ $frame->addItem($row);
 ```php
 // Create a column container with an image and text
 $container = new ColumnContainer();
-$container->addItem(new Image('path/to/image.jpg', fill: ImageMode::FIT, gravity: Image::GRAVITY_CENTER));
+$container->addItem(new Image('path/to/image.jpg', fill: ImageMode::FIT, gravity: Gravity::CENTER));
 $container->addItem(new TextWrap(fill('black'), 'Image Caption'));
 ```
 

@@ -21,6 +21,7 @@
 namespace Kehet\ImagickLayoutEngine\Items;
 
 use Imagick;
+use Kehet\ImagickLayoutEngine\Enums\Gravity;
 use Kehet\ImagickLayoutEngine\Enums\ImageMode;
 
 /**
@@ -28,28 +29,12 @@ use Kehet\ImagickLayoutEngine\Enums\ImageMode;
  */
 class Image implements DrawableInterface
 {
-    public const string GRAVITY_TOP_LEFT = 'top-left';
 
-    public const string GRAVITY_TOP = 'top';
-
-    public const string GRAVITY_TOP_RIGHT = 'top-right';
-
-    public const string GRAVITY_LEFT = 'left';
-
-    public const string GRAVITY_CENTER = 'center';
-
-    public const string GRAVITY_RIGHT = 'right';
-
-    public const string GRAVITY_BOTTOM_LEFT = 'bottom-left';
-
-    public const string GRAVITY_BOTTOM = 'bottom';
-
-    public const string GRAVITY_BOTTOM_RIGHT = 'bottom-right';
 
     public function __construct(
         protected string $file,
         protected ImageMode $mode = ImageMode::NONE,
-        protected string $gravity = self::GRAVITY_CENTER,
+        protected Gravity $gravity = Gravity::CENTER,
     ) {}
 
     public function draw(Imagick $imagick, int $x, int $y, int $width, int $height): void
@@ -71,9 +56,9 @@ class Image implements DrawableInterface
                     $image->resizeImage($newWidth, $newHeight, Imagick::FILTER_LANCZOS, 1);
 
                     // Calculate crop X position based on gravity
-                    if (str_contains($this->gravity, 'right')) {
+                    if (str_contains($this->gravity->value, 'right')) {
                         $cropX = $newWidth - $width;
-                    } elseif (str_contains($this->gravity, 'left')) {
+                    } elseif (str_contains($this->gravity->value, 'left')) {
                         $cropX = 0;
                     } else {
                         // Center horizontally for top, center, bottom
@@ -88,9 +73,9 @@ class Image implements DrawableInterface
                     $image->resizeImage($newWidth, $newHeight, Imagick::FILTER_LANCZOS, 1);
 
                     // Calculate crop Y position based on gravity
-                    if (str_contains($this->gravity, 'bottom')) {
+                    if (str_contains($this->gravity->value, 'bottom')) {
                         $cropY = $newHeight - $height;
-                    } elseif (str_contains($this->gravity, 'top')) {
+                    } elseif (str_contains($this->gravity->value, 'top')) {
                         $cropY = 0;
                     } else {
                         // Center vertically for left, center, right
@@ -127,18 +112,18 @@ class Image implements DrawableInterface
                     $cropY = 0;
 
                     if ($originalWidth > $width) {
-                        if (str_contains($this->gravity, 'right')) {
+                        if (str_contains($this->gravity->value, 'right')) {
                             $cropX = $originalWidth - $width;
-                        } elseif (! str_contains($this->gravity, 'left')) {
+                        } elseif (! str_contains($this->gravity->value, 'left')) {
                             // Center horizontally for top, center, bottom
                             $cropX = ($originalWidth - $width) / 2;
                         }
                     }
 
                     if ($originalHeight > $height) {
-                        if (str_contains($this->gravity, 'bottom')) {
+                        if (str_contains($this->gravity->value, 'bottom')) {
                             $cropY = $originalHeight - $height;
-                        } elseif (! str_contains($this->gravity, 'top')) {
+                        } elseif (! str_contains($this->gravity->value, 'top')) {
                             // Center vertically for left, center, right
                             $cropY = ($originalHeight - $height) / 2;
                         }
@@ -158,47 +143,47 @@ class Image implements DrawableInterface
 
             // Calculate position based on gravity
             switch ($this->gravity) {
-                case self::GRAVITY_TOP_LEFT:
+                case Gravity::TOP_LEFT:
                     $posX = $x;
                     $posY = $y;
                     break;
 
-                case self::GRAVITY_TOP:
+                case Gravity::TOP:
                     $posX = $x + ($width - $imageWidth) / 2;
                     $posY = $y;
                     break;
 
-                case self::GRAVITY_TOP_RIGHT:
+                case Gravity::TOP_RIGHT:
                     $posX = $x + ($width - $imageWidth);
                     $posY = $y;
                     break;
 
-                case self::GRAVITY_LEFT:
+                case Gravity::LEFT:
                     $posX = $x;
                     $posY = $y + ($height - $imageHeight) / 2;
                     break;
 
-                case self::GRAVITY_CENTER:
+                case Gravity::CENTER:
                     $posX = $x + ($width - $imageWidth) / 2;
                     $posY = $y + ($height - $imageHeight) / 2;
                     break;
 
-                case self::GRAVITY_RIGHT:
+                case Gravity::RIGHT:
                     $posX = $x + ($width - $imageWidth);
                     $posY = $y + ($height - $imageHeight) / 2;
                     break;
 
-                case self::GRAVITY_BOTTOM_LEFT:
+                case Gravity::BOTTOM_LEFT:
                     $posX = $x;
                     $posY = $y + ($height - $imageHeight);
                     break;
 
-                case self::GRAVITY_BOTTOM:
+                case Gravity::BOTTOM:
                     $posX = $x + ($width - $imageWidth) / 2;
                     $posY = $y + ($height - $imageHeight);
                     break;
 
-                case self::GRAVITY_BOTTOM_RIGHT:
+                case Gravity::BOTTOM_RIGHT:
                     $posX = $x + ($width - $imageWidth);
                     $posY = $y + ($height - $imageHeight);
                     break;
