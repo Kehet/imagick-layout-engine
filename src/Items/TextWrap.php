@@ -1,4 +1,5 @@
 <?php
+
 /*
  * The Imagick Layout Engine
  * Copyright (C) 2025 Kehet
@@ -28,14 +29,12 @@ use ImagickDraw;
  */
 class TextWrap implements DrawableInterface
 {
-
     public function __construct(
         protected ImagickDraw $draw,
         protected string $text,
         protected int $initialFontSize = 60,
         protected int $minFontSize = 10,
-    ) {
-    }
+    ) {}
 
     protected function calculateWrapping(Imagick $imagick, int $width): array
     {
@@ -44,7 +43,7 @@ class TextWrap implements DrawableInterface
         $currentLine = '';
 
         foreach ($words as $word) {
-            $testLine = $currentLine . ($currentLine ? ' ' : '') . $word;
+            $testLine = $currentLine.($currentLine ? ' ' : '').$word;
             $metrics = $imagick->queryFontMetrics($this->draw, $testLine);
 
             if ($metrics['textWidth'] <= $width) {
@@ -68,8 +67,8 @@ class TextWrap implements DrawableInterface
         $totalHeight = count($lines) * $lineHeight;
 
         return [
-            'lines'       => $lines,
-            'lineHeight'  => $lineHeight,
+            'lines' => $lines,
+            'lineHeight' => $lineHeight,
             'totalHeight' => $totalHeight,
         ];
     }
@@ -105,5 +104,4 @@ class TextWrap implements DrawableInterface
 
         $imagick->drawImage($this->draw);
     }
-
 }

@@ -1,4 +1,5 @@
 <?php
+
 /*
  * The Imagick Layout Engine
  * Copyright (C) 2025 Kehet
@@ -27,11 +28,9 @@ use ImagickDraw;
  */
 class Rectangle implements DrawableInterface
 {
-
     public function __construct(
         protected ImagickDraw $draw,
-    ) {
-    }
+    ) {}
 
     public function draw(Imagick $imagick, int $x, int $y, int $width, int $height): void
     {

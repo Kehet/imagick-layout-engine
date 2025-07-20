@@ -1,4 +1,5 @@
 <?php
+
 /*
  * The Imagick Layout Engine
  * Copyright (C) 2025
@@ -19,52 +20,50 @@
 
 namespace Kehet\ImagickLayoutEngine\Tests;
 
-use ImagickDraw;
-use ImagickPixel;
 use Kehet\ImagickLayoutEngine\Containers\ColumnContainer;
 use Kehet\ImagickLayoutEngine\Items\Text;
 
 class TextTest extends TestCase
 {
-
     const string TINY_TEXT = 'Lorem ipsum dolor sit amet.';
+
     const string SHORT_TEXT = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec elementum vulputate eros at rutrum.';
+
     const string LONG_TEXT = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris vitae ultrices erat. Integer id eleifend diam, sed commodo lacus.  Fusce iaculis aliquam pulvinar. Donec dictum mollis volutpat. Nulla facilisi. Nulla egestas hendrerit lobortis. Proin tincidunt interdum eros a pharetra. Nam tincidunt, justo eget pulvinar consequat, velit tortor iaculis urna, in vulputate libero ipsum at ante. ';
 
     public function test_text(): void
     {
         $imagick = $this->createImage();
 
-        $frame = new ColumnContainer();
+        $frame = new ColumnContainer;
         $frame->addItem(new Text($this->draw('#000'), self::TINY_TEXT));
         $frame->addItem(new Text($this->draw('#000'), self::SHORT_TEXT));
         $frame->addItem(new Text($this->draw('#000'), self::LONG_TEXT));
 
-        $this->saveImage($imagick, $frame, __FUNCTION__ . '.png');
+        $this->saveImage($imagick, $frame, __FUNCTION__.'.png');
     }
 
     public function test_text_with_initial_font_size(): void
     {
         $imagick = $this->createImage();
 
-        $frame = new ColumnContainer();
+        $frame = new ColumnContainer;
         $frame->addItem(new Text($this->draw('#000'), self::TINY_TEXT, initialFontSize: 100));
         $frame->addItem(new Text($this->draw('#000'), self::SHORT_TEXT, initialFontSize: 100));
         $frame->addItem(new Text($this->draw('#000'), self::LONG_TEXT, initialFontSize: 100));
 
-        $this->saveImage($imagick, $frame, __FUNCTION__ . '.png');
+        $this->saveImage($imagick, $frame, __FUNCTION__.'.png');
     }
 
     public function test_text_with_minimum_font_size(): void
     {
         $imagick = $this->createImage();
 
-        $frame = new ColumnContainer();
+        $frame = new ColumnContainer;
         $frame->addItem(new Text($this->draw('#000'), self::TINY_TEXT, minFontSize: 100));
         $frame->addItem(new Text($this->draw('#000'), self::SHORT_TEXT, minFontSize: 100));
         $frame->addItem(new Text($this->draw('#000'), self::LONG_TEXT, minFontSize: 100));
 
-        $this->saveImage($imagick, $frame, __FUNCTION__ . '.png');
+        $this->saveImage($imagick, $frame, __FUNCTION__.'.png');
     }
-
 }

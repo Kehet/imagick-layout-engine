@@ -1,4 +1,5 @@
 <?php
+
 /*
  * The Imagick Layout Engine
  * Copyright (C) 2025
@@ -27,21 +28,22 @@ use Spatie\Snapshots\MatchesSnapshots;
 
 abstract class TestCase extends \PHPUnit\Framework\TestCase
 {
-
     use MatchesSnapshots;
 
     public function draw(string $fill): ImagickDraw
     {
-        $return = new ImagickDraw();
+        $return = new ImagickDraw;
         $return->setFont('DejaVu-Sans'); // This seems to be available on GH runners
         $return->setFillColor(new ImagickPixel($fill));
+
         return $return;
     }
 
     public function createImage(): Imagick
     {
-        $imagick = new Imagick();
+        $imagick = new Imagick;
         $imagick->newImage(1500, 1000, new ImagickPixel('white'));
+
         return $imagick;
     }
 
@@ -50,9 +52,8 @@ abstract class TestCase extends \PHPUnit\Framework\TestCase
         $container->draw($imagick, 0, 0, 1500, 1000);
 
         $imagick->setImageFormat('png');
-        $imagick->writeImage(__DIR__ . '/temp/' . $filename);
+        $imagick->writeImage(__DIR__.'/temp/'.$filename);
 
-        $this->assertMatchesImageSnapshot(__DIR__ . '/temp/' . $filename, 0.1);
+        $this->assertMatchesImageSnapshot(__DIR__.'/temp/'.$filename, 0.1);
     }
-
 }

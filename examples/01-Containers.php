@@ -1,4 +1,5 @@
 <?php
+
 /*
  * The Imagick Layout Engine
  * Copyright (C) 2025
@@ -17,15 +18,16 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-use Kehet\ImagickLayoutEngine\Items\Rectangle;
 use Kehet\ImagickLayoutEngine\Containers\RowContainer;
+use Kehet\ImagickLayoutEngine\Items\Rectangle;
 
-require __DIR__ . '/../vendor/autoload.php';
+require __DIR__.'/../vendor/autoload.php';
 
 function fill(string $fill): ImagickDraw
 {
-    $return = new \ImagickDraw();
+    $return = new \ImagickDraw;
     $return->setFillColor(new \ImagickPixel($fill));
+
     return $return;
 }
 
@@ -34,12 +36,12 @@ $height = 1000;
 
 // Create new image
 
-$imagick = new Imagick();
+$imagick = new Imagick;
 $imagick->newImage($width, $height, new ImagickPixel('white'));
 
 // Define root container, can be RowContainer or ColumnContainer
 
-$frame = new RowContainer();
+$frame = new RowContainer;
 $frame->addItem(new Rectangle(fill('#fee2e2')));
 $frame->addItem(new Rectangle(fill('#fca5a5')));
 $frame->addItem(new Rectangle(fill('#dc2626')));
@@ -52,4 +54,4 @@ $frame->draw($imagick, 0, 0, $width, $height);
 // Output image as png to file
 
 $imagick->setImageFormat('png');
-$imagick->writeImage(__DIR__ . '/01.png');
+$imagick->writeImage(__DIR__.'/01.png');

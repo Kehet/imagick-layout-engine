@@ -1,4 +1,5 @@
 <?php
+
 /*
  * The Imagick Layout Engine
  * Copyright (C) 2025
@@ -21,12 +22,13 @@ use Kehet\ImagickLayoutEngine\Containers\ColumnContainer;
 use Kehet\ImagickLayoutEngine\Containers\RowContainer;
 use Kehet\ImagickLayoutEngine\Items\Rectangle;
 
-require __DIR__ . '/../vendor/autoload.php';
+require __DIR__.'/../vendor/autoload.php';
 
 function fill(string $fill): ImagickDraw
 {
-    $return = new \ImagickDraw();
+    $return = new \ImagickDraw;
     $return->setFillColor(new \ImagickPixel($fill));
+
     return $return;
 }
 
@@ -35,30 +37,30 @@ $height = 1000;
 
 // Create new image
 
-$imagick = new Imagick();
+$imagick = new Imagick;
 $imagick->newImage($width, $height, new ImagickPixel('white'));
 
 // Create root container
 
-$frame = new ColumnContainer();
+$frame = new ColumnContainer;
 
 // Add subcontainers into root container
 
-$row = new RowContainer();
+$row = new RowContainer;
 $row->addItem(new Rectangle(fill('#fee2e2')), 50);
 $row->addItem(new Rectangle(fill('#fca5a5')), 100);
 $row->addItem(new Rectangle(fill('#dc2626')), 150);
 $row->addItem(new Rectangle(fill('#450a0a')));
 $frame->addItem($row);
 
-$row = new RowContainer();
+$row = new RowContainer;
 $row->addItem(new Rectangle(fill('#ecfccb')));
 $row->addItem(new Rectangle(fill('#bef264')), 50);
 $row->addItem(new Rectangle(fill('#65a30d')), 100);
 $row->addItem(new Rectangle(fill('#1a2e05')), 150);
 $frame->addItem($row);
 
-$row = new RowContainer();
+$row = new RowContainer;
 $row->addItem(new Rectangle(fill('#cffafe')));
 $row->addItem(new Rectangle(fill('#67e8f9')));
 $row->addItem(new Rectangle(fill('#0891b2')));
@@ -72,4 +74,4 @@ $frame->draw($imagick, 0, 0, $width, $height);
 // Output image as png to file
 
 $imagick->setImageFormat('png');
-$imagick->writeImage(__DIR__ . '/02.png');
+$imagick->writeImage(__DIR__.'/02.png');

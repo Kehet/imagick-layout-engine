@@ -1,4 +1,5 @@
 <?php
+
 /*
  * The Imagick Layout Engine
  * Copyright (C) 2025
@@ -20,29 +21,30 @@
 use Kehet\ImagickLayoutEngine\Containers\ColumnContainer;
 use Kehet\ImagickLayoutEngine\Items\Image;
 
-require __DIR__ . '/../vendor/autoload.php';
+require __DIR__.'/../vendor/autoload.php';
 
 function fill(string $fill): ImagickDraw
 {
-    $return = new \ImagickDraw();
+    $return = new \ImagickDraw;
     $return->setFillColor(new \ImagickPixel($fill));
+
     return $return;
 }
 
 $width = 1500;
 $height = 1000;
 
-$largeImage = __DIR__ . '/example-image-large.jpeg';
-$smallImage = __DIR__ . '/example-image-small.jpeg';
+$largeImage = __DIR__.'/example-image-large.jpeg';
+$smallImage = __DIR__.'/example-image-small.jpeg';
 
 // Create new image
 
-$imagick = new Imagick();
+$imagick = new Imagick;
 $imagick->newImage($width, $height, new ImagickPixel('white'));
 
 // TextWrap shrinks and wraps text as needed
 
-$frame = new ColumnContainer();
+$frame = new ColumnContainer;
 
 // Default behavior (fit) - maintains aspect ratio
 $frame->addItem(new Image($largeImage));
@@ -60,4 +62,4 @@ $frame->draw($imagick, 0, 0, $width, $height);
 // Output image as png to file
 
 $imagick->setImageFormat('png');
-$imagick->writeImage(__DIR__ . '/05.png');
+$imagick->writeImage(__DIR__.'/05.png');

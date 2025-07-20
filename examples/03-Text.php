@@ -1,4 +1,5 @@
 <?php
+
 /*
  * The Imagick Layout Engine
  * Copyright (C) 2025
@@ -20,12 +21,13 @@
 use Kehet\ImagickLayoutEngine\Containers\ColumnContainer;
 use Kehet\ImagickLayoutEngine\Items\Text;
 
-require __DIR__ . '/../vendor/autoload.php';
+require __DIR__.'/../vendor/autoload.php';
 
 function fill(string $fill): ImagickDraw
 {
-    $return = new \ImagickDraw();
+    $return = new \ImagickDraw;
     $return->setFillColor(new \ImagickPixel($fill));
+
     return $return;
 }
 
@@ -34,12 +36,12 @@ $height = 1000;
 
 // Create new image
 
-$imagick = new Imagick();
+$imagick = new Imagick;
 $imagick->newImage($width, $height, new ImagickPixel('white'));
 
 // Text tries to shrink font size until text fits
 
-$frame = new ColumnContainer();
+$frame = new ColumnContainer;
 $frame->addItem(
     new Text(
         fill('#000'),
@@ -68,4 +70,4 @@ $frame->draw($imagick, 0, 0, $width, $height);
 // Output image as png to file
 
 $imagick->setImageFormat('png');
-$imagick->writeImage(__DIR__ . '/03.png');
+$imagick->writeImage(__DIR__.'/03.png');

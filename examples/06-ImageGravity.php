@@ -1,4 +1,5 @@
 <?php
+
 /*
  * The Imagick Layout Engine
  * Copyright (C) 2025
@@ -22,34 +23,35 @@ use Kehet\ImagickLayoutEngine\Containers\RowContainer;
 use Kehet\ImagickLayoutEngine\Items\Image;
 use Kehet\ImagickLayoutEngine\Items\Text;
 
-require __DIR__ . '/../vendor/autoload.php';
+require __DIR__.'/../vendor/autoload.php';
 
 function fill(string $fill): ImagickDraw
 {
-    $return = new \ImagickDraw();
+    $return = new \ImagickDraw;
     $return->setFillColor(new \ImagickPixel($fill));
+
     return $return;
 }
 
 $width = 1500;
 $height = 1000;
 
-$smallImage = __DIR__ . '/example-image-small.jpeg';
+$smallImage = __DIR__.'/example-image-small.jpeg';
 
 // Create new image
-$imagick = new Imagick();
+$imagick = new Imagick;
 $imagick->newImage($width, $height, new ImagickPixel('white'));
 
 // Create a 3x3 grid to demonstrate all gravity options
-$mainContainer = new ColumnContainer();
+$mainContainer = new ColumnContainer;
 
-$rowFit = new RowContainer();
+$rowFit = new RowContainer;
 $rowFit->addItem(createGravityDemoContainer($smallImage, Image::GRAVITY_LEFT, 'LEFT (fit)'));
 $rowFit->addItem(createGravityDemoContainer($smallImage, Image::GRAVITY_CENTER, 'CENTER (fit)'));
 $rowFit->addItem(createGravityDemoContainer($smallImage, Image::GRAVITY_RIGHT, 'RIGHT (fit)'));
 $mainContainer->addItem($rowFit);
 
-$rowFill = new RowContainer();
+$rowFill = new RowContainer;
 $rowFill->addItem(createGravityDemoContainer($smallImage, Image::GRAVITY_TOP, 'TOP (fill)', true));
 $rowFill->addItem(createGravityDemoContainer($smallImage, Image::GRAVITY_CENTER, 'CENTER (fill)', true));
 $rowFill->addItem(createGravityDemoContainer($smallImage, Image::GRAVITY_BOTTOM, 'BOTTOM (fill)', true));
@@ -60,11 +62,11 @@ $mainContainer->draw($imagick, 0, 0, $width, $height);
 
 // Output image as png to file
 $imagick->setImageFormat('png');
-$imagick->writeImage(__DIR__ . '/06.png');
+$imagick->writeImage(__DIR__.'/06.png');
 
 function createGravityDemoContainer(string $imagePath, string $gravity, string $label, bool $fill = false): ColumnContainer
 {
-    $container = new ColumnContainer();
+    $container = new ColumnContainer;
     $container->addItem(new Image($imagePath, $fill, $gravity));
     $container->addItem(new Text(fill('black'), $label));
 

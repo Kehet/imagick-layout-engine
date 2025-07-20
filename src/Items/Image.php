@@ -1,4 +1,5 @@
 <?php
+
 /*
  * The Imagick Layout Engine
  * Copyright (C) 2025 Kehet
@@ -26,23 +27,29 @@ use Imagick;
  */
 class Image implements DrawableInterface
 {
-
     public const string GRAVITY_TOP_LEFT = 'top-left';
+
     public const string GRAVITY_TOP = 'top';
+
     public const string GRAVITY_TOP_RIGHT = 'top-right';
+
     public const string GRAVITY_LEFT = 'left';
+
     public const string GRAVITY_CENTER = 'center';
+
     public const string GRAVITY_RIGHT = 'right';
+
     public const string GRAVITY_BOTTOM_LEFT = 'bottom-left';
+
     public const string GRAVITY_BOTTOM = 'bottom';
+
     public const string GRAVITY_BOTTOM_RIGHT = 'bottom-right';
 
     public function __construct(
         protected string $file,
         protected bool $fill = false,
         protected string $gravity = self::GRAVITY_CENTER,
-    ) {
-    }
+    ) {}
 
     public function draw(Imagick $imagick, int $x, int $y, int $width, int $height): void
     {
@@ -111,7 +118,7 @@ class Image implements DrawableInterface
         $posX = $x;
         $posY = $y;
 
-        if (!$this->fill) {
+        if (! $this->fill) {
             $imageWidth = $image->getImageWidth();
             $imageHeight = $image->getImageHeight();
 

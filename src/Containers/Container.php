@@ -1,4 +1,5 @@
 <?php
+
 /*
  * The Imagick Layout Engine
  * Copyright (C) 2025 Kehet
@@ -33,6 +34,4 @@ abstract class Container implements DrawableInterface
             'size' => $forceSize,
         ];
     }
-
 }
-

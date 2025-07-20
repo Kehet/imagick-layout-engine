@@ -1,4 +1,5 @@
 <?php
+
 /*
  * The Imagick Layout Engine
  * Copyright (C) 2025
@@ -27,14 +28,12 @@ use ImagickDraw;
  */
 class Text implements DrawableInterface
 {
-
     public function __construct(
         protected ImagickDraw $draw,
         protected string $text,
         protected int $initialFontSize = 60,
         protected int $minFontSize = 10,
-    ) {
-    }
+    ) {}
 
     public function draw(Imagick $imagick, int $x, int $y, int $width, int $height): void
     {
@@ -55,5 +54,4 @@ class Text implements DrawableInterface
 
         $imagick->drawImage($this->draw);
     }
-
 }

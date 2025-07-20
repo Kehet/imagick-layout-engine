@@ -1,4 +1,5 @@
 <?php
+
 /*
  * The Imagick Layout Engine
  * Copyright (C) 2025 Kehet
@@ -23,7 +24,5 @@ use Imagick;
 
 interface DrawableInterface
 {
-
     public function draw(Imagick $imagick, int $x, int $y, int $width, int $height): void;
-
 }
