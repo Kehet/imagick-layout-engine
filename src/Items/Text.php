@@ -22,9 +22,10 @@ namespace Kehet\ImagickLayoutEngine\Items;
 
 use Imagick;
 use ImagickDraw;
+use Kehet\ImagickLayoutEngine\Enums\Gravity;
 
 /**
- * Represents an simple text that can be drawn onto container grid. Scales font size down as needed.
+ * Represents a simple text that can be drawn onto container grid. Scales font size down as needed.
  */
 class Text implements DrawableInterface
 {
@@ -33,25 +34,52 @@ class Text implements DrawableInterface
         protected string $text,
         protected int $initialFontSize = 60,
         protected int $minFontSize = 10,
-    ) {}
+        protected Gravity $gravity = Gravity::TOP_LEFT,
+    ) {
+    }
 
     public function draw(Imagick $imagick, int $x, int $y, int $width, int $height): void
     {
         $this->draw->setGravity(Imagick::GRAVITY_NORTHWEST);
 
+        $textMetrics = $this->calculateOptimalFontSize($imagick, $width, $height);
+
+        $x = $this->calculateHorizontalPosition($x, $width, $textMetrics['textWidth']);
+        $y = $this->calculateVerticalPosition($y, $height, $textMetrics['textHeight']);
+
+        $this->draw->annotation($x, $y, $this->text);
+        $imagick->drawImage($this->draw);
+    }
+
+    private function calculateOptimalFontSize(Imagick $imagick, int $width, int $height): array
+    {
         $fontSize = $this->initialFontSize;
 
         do {
             $this->draw->setFontSize($fontSize);
-
             $metrics = $imagick->queryFontMetrics($this->draw, $this->text);
-
             $fontSize--;
         } while (($metrics['textHeight'] > $height || $metrics['textWidth'] > $width) &&
         $fontSize > $this->minFontSize);
 
-        $this->draw->annotation($x, $y, $this->text);
+        return $metrics;
+    }
 
-        $imagick->drawImage($this->draw);
+    private function calculateHorizontalPosition(int $x, int $width, int $textWidth): int
+    {
+        return match ($this->gravity) {
+            Gravity::TOP_LEFT, Gravity::LEFT, Gravity::BOTTOM_LEFT => $x,
+            Gravity::TOP, Gravity::CENTER, Gravity::BOTTOM => $x + ($width - $textWidth) / 2,
+            Gravity::TOP_RIGHT, Gravity::RIGHT, Gravity::BOTTOM_RIGHT => $x + ($width - $textWidth),
+        };
+    }
+
+    private function calculateVerticalPosition(int $y, int $height, int $totalHeight): int
+    {
+        return match ($this->gravity) {
+            Gravity::TOP_LEFT, Gravity::TOP, Gravity::TOP_RIGHT => $y,
+            Gravity::LEFT, Gravity::CENTER, Gravity::RIGHT => $y + ($height - $totalHeight) / 2,
+            Gravity::BOTTOM_LEFT, Gravity::BOTTOM, Gravity::BOTTOM_RIGHT => $y + ($height - $totalHeight),
+        };
     }
 }

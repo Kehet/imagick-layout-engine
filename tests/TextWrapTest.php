@@ -21,6 +21,8 @@
 namespace Kehet\ImagickLayoutEngine\Tests;
 
 use Kehet\ImagickLayoutEngine\Containers\ColumnContainer;
+use Kehet\ImagickLayoutEngine\Containers\RowContainer;
+use Kehet\ImagickLayoutEngine\Enums\Gravity;
 use Kehet\ImagickLayoutEngine\Items\TextWrap;
 
 class TextWrapTest extends TestCase
@@ -59,5 +61,49 @@ class TextWrapTest extends TestCase
         $frame->addItem(new TextWrap($this->draw('#000'), self::LONG_TEXT, minFontSize: 100));
 
         $this->saveImage($imagick, $frame, __FUNCTION__.'.png');
+    }
+
+    public function test_text_wrap_with_gravity(): void
+    {
+        $imagick = $this->createImage();
+
+        // Create a 3x3 grid to demonstrate all gravity options
+        $mainContainer = new ColumnContainer;
+
+        // Top row: TOP_LEFT, TOP, TOP_RIGHT
+        $row = new RowContainer;
+        $row->addItem($this->createGravityDemoContainer(Gravity::TOP_LEFT, 'TOP_LEFT'));
+        $row->addItem($this->createGravityDemoContainer(Gravity::TOP, 'TOP'));
+        $row->addItem($this->createGravityDemoContainer(Gravity::TOP_RIGHT, 'TOP_RIGHT'));
+        $mainContainer->addItem($row);
+
+        // Middle row: LEFT, CENTER, RIGHT
+        $row = new RowContainer;
+        $row->addItem($this->createGravityDemoContainer(Gravity::LEFT, 'LEFT'));
+        $row->addItem($this->createGravityDemoContainer(Gravity::CENTER, 'CENTER'));
+        $row->addItem($this->createGravityDemoContainer(Gravity::RIGHT, 'RIGHT'));
+        $mainContainer->addItem($row);
+
+        // Bottom row: BOTTOM_LEFT, BOTTOM, BOTTOM_RIGHT
+        $row = new RowContainer;
+        $row->addItem($this->createGravityDemoContainer(Gravity::BOTTOM_LEFT, 'BOTTOM_LEFT'));
+        $row->addItem($this->createGravityDemoContainer(Gravity::BOTTOM, 'BOTTOM'));
+        $row->addItem($this->createGravityDemoContainer(Gravity::BOTTOM_RIGHT, 'BOTTOM_RIGHT'));
+        $mainContainer->addItem($row);
+
+        $this->saveImage($imagick, $mainContainer, __FUNCTION__.'.png');
+    }
+
+    private function createGravityDemoContainer(Gravity $gravity, string $label): ColumnContainer
+    {
+        $container = new ColumnContainer;
+
+        // Add a text with the specified gravity
+        $container->addItem(new TextWrap($this->draw('#ff0000'), 'Text with gravity that wraps to multiple lines', initialFontSize: 25, gravity: $gravity));
+
+        // Add a label at the bottom
+        $container->addItem(new TextWrap($this->draw('#000000'), $label));
+
+        return $container;
     }
 }

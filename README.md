@@ -117,7 +117,8 @@ $container->addItem(
         fill('#000'),
         'Lorem Ipsum Dolor',
         initialFontSize: 120,
-        minFontSize: 50
+        minFontSize: 50,
+        gravity: Gravity::CENTER
     )
 );
 
@@ -131,6 +132,17 @@ $container->addItem(
     )
 );
 ```
+
+Available gravity options:
+- `Gravity::TOP_LEFT` (default)
+- `Gravity::TOP`
+- `Gravity::TOP_RIGHT`
+- `Gravity::LEFT`
+- `Gravity::CENTER`
+- `Gravity::RIGHT`
+- `Gravity::BOTTOM_LEFT`
+- `Gravity::BOTTOM`
+- `Gravity::BOTTOM_RIGHT`
 
 ### Image Handling
 
