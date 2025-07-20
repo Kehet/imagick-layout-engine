@@ -36,7 +36,7 @@ class PaddingTest extends TestCase
         $frame->addItem(new Rectangle($this->draw('#dc2626')), padding: 80);
         $frame->addItem(new Rectangle($this->draw('#450a0a')), padding: 100);
 
-        $this->saveImage($imagick, $frame, __FUNCTION__ . '.png');
+        $this->saveImage($imagick, $frame, __FUNCTION__.'.png');
     }
 
     public function test_column_container_with_padding(): void
@@ -49,7 +49,7 @@ class PaddingTest extends TestCase
         $frame->addItem(new Rectangle($this->draw('#dc2626')), padding: 80);
         $frame->addItem(new Rectangle($this->draw('#450a0a')), padding: 100);
 
-        $this->saveImage($imagick, $frame, __FUNCTION__ . '.png');
+        $this->saveImage($imagick, $frame, __FUNCTION__.'.png');
     }
 
     public function test_row_container_with_two_value_padding(): void
@@ -63,7 +63,7 @@ class PaddingTest extends TestCase
         $frame->addItem(new Rectangle($this->draw('#dc2626')), padding: [60, 80]);
         $frame->addItem(new Rectangle($this->draw('#450a0a')), padding: [80, 60]);
 
-        $this->saveImage($imagick, $frame, __FUNCTION__ . '.png');
+        $this->saveImage($imagick, $frame, __FUNCTION__.'.png');
     }
 
     public function test_column_container_with_two_value_padding(): void
@@ -77,7 +77,7 @@ class PaddingTest extends TestCase
         $frame->addItem(new Rectangle($this->draw('#dc2626')), padding: [60, 80]);
         $frame->addItem(new Rectangle($this->draw('#450a0a')), padding: [80, 60]);
 
-        $this->saveImage($imagick, $frame, __FUNCTION__ . '.png');
+        $this->saveImage($imagick, $frame, __FUNCTION__.'.png');
     }
 
     public function test_row_container_with_three_value_padding(): void
@@ -91,7 +91,7 @@ class PaddingTest extends TestCase
         $frame->addItem(new Rectangle($this->draw('#dc2626')), padding: [60, 20, 40]);
         $frame->addItem(new Rectangle($this->draw('#450a0a')), padding: [80, 40, 60]);
 
-        $this->saveImage($imagick, $frame, __FUNCTION__ . '.png');
+        $this->saveImage($imagick, $frame, __FUNCTION__.'.png');
     }
 
     public function test_column_container_with_three_value_padding(): void
@@ -105,7 +105,7 @@ class PaddingTest extends TestCase
         $frame->addItem(new Rectangle($this->draw('#dc2626')), padding: [60, 20, 40]);
         $frame->addItem(new Rectangle($this->draw('#450a0a')), padding: [80, 40, 60]);
 
-        $this->saveImage($imagick, $frame, __FUNCTION__ . '.png');
+        $this->saveImage($imagick, $frame, __FUNCTION__.'.png');
     }
 
     public function test_row_container_with_four_value_padding(): void
@@ -119,7 +119,7 @@ class PaddingTest extends TestCase
         $frame->addItem(new Rectangle($this->draw('#dc2626')), padding: [60, 80, 20, 40]);
         $frame->addItem(new Rectangle($this->draw('#450a0a')), padding: [80, 20, 40, 60]);
 
-        $this->saveImage($imagick, $frame, __FUNCTION__ . '.png');
+        $this->saveImage($imagick, $frame, __FUNCTION__.'.png');
     }
 
     public function test_column_container_with_four_value_padding(): void
@@ -133,7 +133,7 @@ class PaddingTest extends TestCase
         $frame->addItem(new Rectangle($this->draw('#dc2626')), padding: [60, 80, 20, 40]);
         $frame->addItem(new Rectangle($this->draw('#450a0a')), padding: [80, 20, 40, 60]);
 
-        $this->saveImage($imagick, $frame, __FUNCTION__ . '.png');
+        $this->saveImage($imagick, $frame, __FUNCTION__.'.png');
     }
 
     public function test_nested_containers_with_padding(): void
@@ -163,6 +163,6 @@ class PaddingTest extends TestCase
         $row->addItem(new Rectangle($this->draw('#164e63')), padding: 40);
         $frame->addItem($row, padding: 40);
 
-        $this->saveImage($imagick, $frame, __FUNCTION__ . '.png');
+        $this->saveImage($imagick, $frame, __FUNCTION__.'.png');
     }
 }

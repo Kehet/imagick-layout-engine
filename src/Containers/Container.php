@@ -42,7 +42,7 @@ abstract class Container implements DrawableInterface
              * When four values are specified, the paddings apply to the top, right, bottom, and left in that order (clockwise).
              */
 
-            if (!is_array($padding)) {
+            if (! is_array($padding)) {
                 $padding = [$padding];
             }
 
@@ -55,8 +55,8 @@ abstract class Container implements DrawableInterface
         }
 
         $this->items[] = [
-            'item'    => $item,
-            'size'    => $forceSize,
+            'item' => $item,
+            'size' => $forceSize,
             'padding' => $padding,
         ];
     }
