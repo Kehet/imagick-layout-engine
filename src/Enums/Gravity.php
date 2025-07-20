@@ -22,7 +22,6 @@ namespace Kehet\ImagickLayoutEngine\Enums;
 
 enum Gravity: string
 {
-
     case TOP_LEFT = 'top-left';
     case TOP = 'top';
     case TOP_RIGHT = 'top-right';

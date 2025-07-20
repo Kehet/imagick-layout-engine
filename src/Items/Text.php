@@ -35,8 +35,7 @@ class Text implements DrawableInterface
         protected int $initialFontSize = 60,
         protected int $minFontSize = 10,
         protected Gravity $gravity = Gravity::TOP_LEFT,
-    ) {
-    }
+    ) {}
 
     public function draw(Imagick $imagick, int $x, int $y, int $width, int $height): void
     {

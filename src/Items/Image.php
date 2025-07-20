@@ -29,8 +29,6 @@ use Kehet\ImagickLayoutEngine\Enums\ImageMode;
  */
 class Image implements DrawableInterface
 {
-
-
     public function __construct(
         protected string $file,
         protected ImageMode $mode = ImageMode::NONE,
