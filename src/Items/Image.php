@@ -50,8 +50,7 @@ class Image implements DrawableInterface
         protected string $file,
         protected ImageMode $mode = ImageMode::NONE,
         protected string $gravity = self::GRAVITY_CENTER,
-    ) {
-    }
+    ) {}
 
     public function draw(Imagick $imagick, int $x, int $y, int $width, int $height): void
     {
@@ -130,7 +129,7 @@ class Image implements DrawableInterface
                     if ($originalWidth > $width) {
                         if (str_contains($this->gravity, 'right')) {
                             $cropX = $originalWidth - $width;
-                        } elseif (!str_contains($this->gravity, 'left')) {
+                        } elseif (! str_contains($this->gravity, 'left')) {
                             // Center horizontally for top, center, bottom
                             $cropX = ($originalWidth - $width) / 2;
                         }
@@ -139,7 +138,7 @@ class Image implements DrawableInterface
                     if ($originalHeight > $height) {
                         if (str_contains($this->gravity, 'bottom')) {
                             $cropY = $originalHeight - $height;
-                        } elseif (!str_contains($this->gravity, 'top')) {
+                        } elseif (! str_contains($this->gravity, 'top')) {
                             // Center vertically for left, center, right
                             $cropY = ($originalHeight - $height) / 2;
                         }

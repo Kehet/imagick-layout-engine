@@ -26,7 +26,6 @@ use Kehet\ImagickLayoutEngine\Tests\TestCase;
 
 class ImageTest extends TestCase
 {
-
     public function test_image_row_fit(): void
     {
         $imagick = $this->createImage();
@@ -88,7 +87,7 @@ class ImageTest extends TestCase
         $row1 = new RowContainer;
         $row1->addItem(new Image(self::TINY_IMAGE, ImageMode::NONE, Image::GRAVITY_TOP_LEFT));
         $row1->addItem(new Image(self::TINY_IMAGE, ImageMode::NONE, Image::GRAVITY_TOP));
-        $row1->addItem(new Image(self::TINY_IMAGE, ImageMode::NONE, Image::GRAVITY_TOP_RIGHT));;
+        $row1->addItem(new Image(self::TINY_IMAGE, ImageMode::NONE, Image::GRAVITY_TOP_RIGHT));
         $frame->addItem($row1);
 
         $row2 = new RowContainer;
@@ -115,7 +114,7 @@ class ImageTest extends TestCase
         $row1 = new RowContainer;
         $row1->addItem(new Image(self::SMALL_IMAGE, ImageMode::NONE, Image::GRAVITY_TOP_LEFT));
         $row1->addItem(new Image(self::SMALL_IMAGE, ImageMode::NONE, Image::GRAVITY_TOP));
-        $row1->addItem(new Image(self::SMALL_IMAGE, ImageMode::NONE, Image::GRAVITY_TOP_RIGHT));;
+        $row1->addItem(new Image(self::SMALL_IMAGE, ImageMode::NONE, Image::GRAVITY_TOP_RIGHT));
         $frame->addItem($row1);
 
         $row2 = new RowContainer;
@@ -142,7 +141,7 @@ class ImageTest extends TestCase
         $row1 = new RowContainer;
         $row1->addItem(new Image(self::LARGE_IMAGE, ImageMode::NONE, Image::GRAVITY_TOP_LEFT));
         $row1->addItem(new Image(self::LARGE_IMAGE, ImageMode::NONE, Image::GRAVITY_TOP));
-        $row1->addItem(new Image(self::LARGE_IMAGE, ImageMode::NONE, Image::GRAVITY_TOP_RIGHT));;
+        $row1->addItem(new Image(self::LARGE_IMAGE, ImageMode::NONE, Image::GRAVITY_TOP_RIGHT));
         $frame->addItem($row1);
 
         $row2 = new RowContainer;
@@ -159,5 +158,4 @@ class ImageTest extends TestCase
 
         $this->saveImage($imagick, $frame, __FUNCTION__.'.png');
     }
-
 }

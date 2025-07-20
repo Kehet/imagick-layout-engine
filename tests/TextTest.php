@@ -25,7 +25,6 @@ use Kehet\ImagickLayoutEngine\Items\Text;
 
 class TextTest extends TestCase
 {
-
     public function test_text(): void
     {
         $imagick = $this->createImage();

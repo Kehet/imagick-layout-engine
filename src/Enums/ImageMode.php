@@ -1,4 +1,5 @@
 <?php
+
 /*
  * The Imagick Layout Engine
  * Copyright (C) 2025
@@ -21,7 +22,6 @@ namespace Kehet\ImagickLayoutEngine\Enums;
 
 enum ImageMode: string
 {
-
     case NONE = 'none';
     case FIT = 'fit';
     case FILL = 'fill';

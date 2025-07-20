@@ -25,7 +25,6 @@ use Kehet\ImagickLayoutEngine\Items\TextWrap;
 
 class TextWrapTest extends TestCase
 {
-
     public function test_text(): void
     {
         $imagick = $this->createImage();
