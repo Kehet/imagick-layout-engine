@@ -9,6 +9,7 @@ A PHP library for creating complex image layouts with automatic positioning and 
 ## Requirements
 
 - PHP 8.3 or higher
+- Linux (Windows not tested)
 - Imagick PHP extension
 
 ## Installation

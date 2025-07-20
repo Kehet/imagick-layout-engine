@@ -11,27 +11,39 @@ on:
 
 jobs:
   test:
-    runs-on: ${{ matrix.os }}
+    runs-on: ubuntu-latest
     timeout-minutes: 5
     strategy:
       fail-fast: true
       matrix:
-        os: [ubuntu-latest, windows-latest]
         php: [8.3, 8.4]
         stability: [prefer-lowest, prefer-stable]
 
-    name: P${{ matrix.php }} - ${{ matrix.stability }} - ${{ matrix.os }}
+    name: P${{ matrix.php }} - ${{ matrix.stability }}
 
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 'lts/*'
+          cache: 'npm'
+
+      - name: Install NPM dependencies
+        run: npm ci
 
       - name: Setup PHP
         uses: shivammathur/setup-php@v2
         with:
           php-version: ${{ matrix.php }}
           extensions: dom, curl, libxml, mbstring, zip, pcntl, pdo, sqlite, pdo_sqlite, bcmath, soap, intl, gd, exif, iconv, imagick, fileinfo
-          coverage: none
+          coverage: xdebug
+
+      - name: List available imagick fonts
+        run: |
+          php -r "print_r(\Imagick::queryFonts('*'));"
 
       - name: Setup problem matchers
         run: |

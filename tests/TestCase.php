@@ -19,7 +19,40 @@
 
 namespace Kehet\ImagickLayoutEngine\Tests;
 
+use Imagick;
+use ImagickDraw;
+use ImagickPixel;
+use Kehet\ImagickLayoutEngine\Containers\Container;
+use Spatie\Snapshots\MatchesSnapshots;
+
 abstract class TestCase extends \PHPUnit\Framework\TestCase
 {
-    //
+
+    use MatchesSnapshots;
+
+    public function draw(string $fill): ImagickDraw
+    {
+        $return = new ImagickDraw();
+        $return->setFont('DejaVu-Sans'); // This seems to be available on GH runners
+        $return->setFillColor(new ImagickPixel($fill));
+        return $return;
+    }
+
+    public function createImage(): Imagick
+    {
+        $imagick = new Imagick();
+        $imagick->newImage(1500, 1000, new ImagickPixel('white'));
+        return $imagick;
+    }
+
+    public function saveImage(Imagick $imagick, Container $container, string $filename): void
+    {
+        $container->draw($imagick, 0, 0, 1500, 1000);
+
+        $imagick->setImageFormat('png');
+        $imagick->writeImage(__DIR__ . '/temp/' . $filename);
+
+        $this->assertMatchesImageSnapshot(__DIR__ . '/temp/' . $filename, 0.1);
+    }
+
 }
