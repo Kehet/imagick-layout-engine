@@ -2,6 +2,14 @@
 
 All notable changes to `imagick-layout-engine` will be documented in this file.
 
+## Release 2.1.0 - 2025-07-20
+
+### What's Changed
+
+* Add gravity for Text and TextWrap by @Kehet
+
+**Full Changelog**: https://github.com/Kehet/imagick-layout-engine/compare/2.0.0...2.1.0
+
 ## Release 2.0.0 - 2025-07-20
 
 ### What's Changed
