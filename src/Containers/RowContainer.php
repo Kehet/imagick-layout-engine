@@ -65,12 +65,28 @@ class RowContainer extends Container
         foreach ($this->items as $key => $item) {
             $currentWidth = $item['size'] ?? $notForcedWidth;
 
+            $paddingTop = $item['padding'][0] ?? 0;
+            $paddingRight = $item['padding'][1] ?? 0;
+            $paddingBottom = $item['padding'][2] ?? 0;
+            $paddingLeft = $item['padding'][3] ?? 0;
+
             if ($key === $lastKeyWithoutForcing) {
                 $currentWidth += $cheat;
             }
 
-            $item['item']->draw($imagick, $x + $itemX, $y + $itemY, $currentWidth, $itemHeight);
+            // Calculate content area with padding
+            $contentX = $itemX + $paddingLeft;
+            $contentY = $itemY + $paddingTop;
+            $contentWidth = $currentWidth - $paddingLeft - $paddingRight;
+            $contentHeight = $itemHeight - $paddingTop - $paddingBottom;
 
+            // Ensure content dimensions are at least 1 pixel
+            $contentWidth = max(1, $contentWidth);
+            $contentHeight = max(1, $contentHeight);
+
+            $item['item']->draw($imagick, $x + $contentX, $y + $contentY, $contentWidth, $contentHeight);
+
+            // Move to next item position, including right margin
             $itemX += $currentWidth;
         }
     }

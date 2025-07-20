@@ -65,12 +65,28 @@ class ColumnContainer extends Container
         foreach ($this->items as $key => $item) {
             $currentHeight = $item['size'] ?? $notForcedHeight;
 
+            $paddingTop = $item['padding'][0] ?? 0;
+            $paddingRight = $item['padding'][1] ?? 0;
+            $paddingBottom = $item['padding'][2] ?? 0;
+            $paddingLeft = $item['padding'][3] ?? 0;
+
             if ($key === $lastKeyWithoutForcing) {
                 $currentHeight += $cheat;
             }
 
-            $item['item']->draw($imagick, $x + $itemX, $y + $itemY, $itemWidth, $currentHeight);
+            // Calculate content area with padding
+            $contentX = $itemX + $paddingLeft;
+            $contentY = $itemY + $paddingTop;
+            $contentWidth = $itemWidth - $paddingLeft - $paddingRight;
+            $contentHeight = $currentHeight - $paddingTop - $paddingBottom;
 
+            // Ensure content dimensions are at least 1 pixel
+            $contentWidth = max(1, $contentWidth);
+            $contentHeight = max(1, $contentHeight);
+
+            $item['item']->draw($imagick, $x + $contentX, $y + $contentY, $contentWidth, $contentHeight);
+
+            // Move to next item position, including bottom margin
             $itemY += $currentHeight;
         }
     }

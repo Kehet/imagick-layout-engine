@@ -173,7 +173,7 @@ Please see [CHANGELOG](CHANGELOG.md) for more information on what has changed re
 
 ## Roadmap
 
-- [ ] Margin / padding
+- [x] Margin / padding
 - [ ] Text background
 - [ ] Extract helper functions
 
