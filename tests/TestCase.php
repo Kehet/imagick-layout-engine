@@ -19,12 +19,7 @@
 
 namespace Kehet\ImagickLayoutEngine\Tests;
 
-class ExampleTest extends TestCase
+abstract class TestCase extends \PHPUnit\Framework\TestCase
 {
-
-    public function testExample(): void
-    {
-        $this->assertTrue(true);
-    }
-
+    //
 }

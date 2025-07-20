@@ -1,7 +1,7 @@
 <?php
 /*
  * The Imagick Layout Engine
- * Copyright (C) 2025
+ * Copyright (C) 2025 Kehet
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -17,14 +17,26 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-namespace Kehet\ImagickLayoutEngine\Tests;
+namespace Kehet\ImagickLayoutEngine\Items;
 
-class ExampleTest extends TestCase
+use Imagick;
+use ImagickDraw;
+
+/**
+ * Represents a drawable rectangle that can be drawn onto container grid.
+ */
+class Rectangle implements DrawableInterface
 {
 
-    public function testExample(): void
-    {
-        $this->assertTrue(true);
+    public function __construct(
+        protected ImagickDraw $draw,
+    ) {
     }
 
+    public function draw(Imagick $imagick, int $x, int $y, int $width, int $height): void
+    {
+        $this->draw->rectangle($x, $y, $x + $width, $y + $height);
+
+        $imagick->drawImage($this->draw);
+    }
 }

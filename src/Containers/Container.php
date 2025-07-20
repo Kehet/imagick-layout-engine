@@ -1,7 +1,7 @@
 <?php
 /*
  * The Imagick Layout Engine
- * Copyright (C) 2025
+ * Copyright (C) 2025 Kehet
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -17,14 +17,22 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-namespace Kehet\ImagickLayoutEngine\Tests;
+namespace Kehet\ImagickLayoutEngine\Containers;
 
-class ExampleTest extends TestCase
+use Kehet\ImagickLayoutEngine\Items\DrawableInterface;
+
+abstract class Container implements DrawableInterface
 {
+    /** @var array> */
+    protected array $items;
 
-    public function testExample(): void
+    public function addItem(DrawableInterface $item, ?int $forceSize = null): void
     {
-        $this->assertTrue(true);
+        $this->items[] = [
+            'item' => $item,
+            'size' => $forceSize,
+        ];
     }
 
 }
+
