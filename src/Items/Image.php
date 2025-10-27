@@ -33,8 +33,8 @@ use Kehet\ImagickLayoutEngine\Traits\PaddingTrait;
 class Image implements DrawableInterface
 {
     use BorderTrait;
-    use PaddingTrait;
     use MarginTrait;
+    use PaddingTrait;
 
     public function __construct(
         protected string $file,

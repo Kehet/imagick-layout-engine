@@ -32,8 +32,8 @@ use Kehet\ImagickLayoutEngine\Traits\PaddingTrait;
 class Rectangle implements DrawableInterface
 {
     use BorderTrait;
-    use PaddingTrait;
     use MarginTrait;
+    use PaddingTrait;
 
     public function __construct(
         protected ImagickDraw $draw,

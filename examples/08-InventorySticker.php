@@ -110,7 +110,7 @@ $row5->addItem($cell2);
 $frame->addItem($row5);
 
 // row 6
-$barcode = new Image(__DIR__ . '/example-code-128.png', ImageMode::FIT);
+$barcode = new Image(__DIR__.'/example-code-128.png', ImageMode::FIT);
 $barcode->setBorder(stroke());
 $frame->addItem($barcode, 300, 25);
 

@@ -34,7 +34,7 @@ class BorderTest extends TestCase
     {
         $imagick = $this->createImage();
 
-        $container = new RowContainer();
+        $container = new RowContainer;
         $rectangle = new Rectangle($this->draw('#4ade80'));
 
         // Set borders with different colors
@@ -45,14 +45,14 @@ class BorderTest extends TestCase
 
         $container->addItem($rectangle);
 
-        $this->saveImage($imagick, $container, __FUNCTION__ . '.png');
+        $this->saveImage($imagick, $container, __FUNCTION__.'.png');
     }
 
     public function test_text_with_border(): void
     {
         $imagick = $this->createImage();
 
-        $container = new RowContainer();
+        $container = new RowContainer;
         $text = new Text($this->draw('#4ade80'), self::SHORT_TEXT);
 
         // Set all borders with the same color
@@ -61,14 +61,14 @@ class BorderTest extends TestCase
 
         $container->addItem($text);
 
-        $this->saveImage($imagick, $container, __FUNCTION__ . '.png');
+        $this->saveImage($imagick, $container, __FUNCTION__.'.png');
     }
 
     public function test_text_wrap_with_border(): void
     {
         $imagick = $this->createImage();
 
-        $container = new RowContainer();
+        $container = new RowContainer;
         $textWrap = new TextWrap($this->draw('#4ade80'), self::LONG_TEXT);
 
         // Set individual borders
@@ -79,14 +79,14 @@ class BorderTest extends TestCase
 
         $container->addItem($textWrap);
 
-        $this->saveImage($imagick, $container, __FUNCTION__ . '.png');
+        $this->saveImage($imagick, $container, __FUNCTION__.'.png');
     }
 
     public function test_image_with_border(): void
     {
         $imagick = $this->createImage();
 
-        $container = new RowContainer();
+        $container = new RowContainer;
         $image = new Image(self::SMALL_IMAGE, ImageMode::FIT);
 
         // Set all borders with the same color
@@ -95,14 +95,14 @@ class BorderTest extends TestCase
 
         $container->addItem($image);
 
-        $this->saveImage($imagick, $container, __FUNCTION__ . '.png');
+        $this->saveImage($imagick, $container, __FUNCTION__.'.png');
     }
 
     public function test_row_container_with_border(): void
     {
         $imagick = $this->createImage();
 
-        $container = new RowContainer();
+        $container = new RowContainer;
 
         // Add some items to the container
         $container->addItem(new Rectangle($this->draw('#4ade80')), 300);
@@ -115,14 +115,14 @@ class BorderTest extends TestCase
         $container->setBorderBottom($this->stroke('#0000ff'));
         $container->setBorderLeft($this->stroke('#ffff00'));
 
-        $this->saveImage($imagick, $container, __FUNCTION__ . '.png');
+        $this->saveImage($imagick, $container, __FUNCTION__.'.png');
     }
 
     public function test_column_container_with_border(): void
     {
         $imagick = $this->createImage();
 
-        $container = new ColumnContainer();
+        $container = new ColumnContainer;
 
         // Add some items to the container
         $container->addItem(new Rectangle($this->draw('#4ade80')), 300);
@@ -133,17 +133,17 @@ class BorderTest extends TestCase
         $borderDraw = $this->stroke('#ff0000');
         $container->setBorder($borderDraw, $borderDraw, $borderDraw, $borderDraw);
 
-        $this->saveImage($imagick, $container, __FUNCTION__ . '.png');
+        $this->saveImage($imagick, $container, __FUNCTION__.'.png');
     }
 
     public function test_nested_containers_with_border(): void
     {
         $imagick = $this->createImage();
 
-        $outerContainer = new RowContainer();
+        $outerContainer = new RowContainer;
 
         // Create first column
-        $column1 = new ColumnContainer();
+        $column1 = new ColumnContainer;
         $column1->addItem(new Rectangle($this->draw('#4ade80')));
         $column1->addItem(new Rectangle($this->draw('#f87171')));
         $column1->setBorderTop($this->stroke('#ff0000'));
@@ -152,7 +152,7 @@ class BorderTest extends TestCase
         $column1->setBorderLeft($this->stroke('#ffff00'));
 
         // Create second column
-        $column2 = new ColumnContainer();
+        $column2 = new ColumnContainer;
         $column2->addItem(new Rectangle($this->draw('#60a5fa')));
         $column2->addItem(new Rectangle($this->draw('#c084fc')));
         $borderDraw = $this->stroke('#ff00ff');
@@ -166,7 +166,7 @@ class BorderTest extends TestCase
         $outerBorder = $this->stroke('#000000');
         $outerContainer->setBorder($outerBorder, $outerBorder, $outerBorder, $outerBorder);
 
-        $this->saveImage($imagick, $outerContainer, __FUNCTION__ . '.png');
+        $this->saveImage($imagick, $outerContainer, __FUNCTION__.'.png');
     }
 
     public function test_container_with_border_and_padding(): void
@@ -174,7 +174,7 @@ class BorderTest extends TestCase
         $imagick = $this->createImage();
 
         // Create a row container with a border
-        $container = new RowContainer();
+        $container = new RowContainer;
         $borderDraw = $this->stroke('#ff0000');
         $container->setBorder($borderDraw, $borderDraw, $borderDraw, $borderDraw);
 
@@ -188,7 +188,7 @@ class BorderTest extends TestCase
         // Third item: padding on top and bottom only
         $container->addItem((new Rectangle($this->draw('#60a5fa')))->setPadding(30, 0, 30, 0), 300);
 
-        $this->saveImage($imagick, $container, __FUNCTION__ . '.png');
+        $this->saveImage($imagick, $container, __FUNCTION__.'.png');
     }
 
     public function test_container_with_border_and_margin(): void
@@ -196,7 +196,7 @@ class BorderTest extends TestCase
         $imagick = $this->createImage();
 
         // Create a row container with a border
-        $container = new RowContainer();
+        $container = new RowContainer;
         $borderDraw = $this->stroke('#ff0000');
         $container->setBorder($borderDraw, $borderDraw, $borderDraw, $borderDraw);
 
@@ -210,7 +210,7 @@ class BorderTest extends TestCase
         // Third item: margin on top and bottom only
         $container->addItem((new Rectangle($this->draw('#60a5fa')))->setMargin(30, 0, 30, 0), 300);
 
-        $this->saveImage($imagick, $container, __FUNCTION__ . '.png');
+        $this->saveImage($imagick, $container, __FUNCTION__.'.png');
     }
 
     public function test_container_with_simple_border_margin(): void
@@ -218,13 +218,13 @@ class BorderTest extends TestCase
         $imagick = $this->createImage();
 
         // Create a row container with a border
-        $container = new RowContainer();
+        $container = new RowContainer;
         $borderDraw = $this->stroke('#ff0000', 50);
         $container->setBorder($borderDraw, $borderDraw, $borderDraw, $borderDraw);
         $container->setMargin(50);
         $container->addItem((new Rectangle($this->draw('#4ade80'))));
 
-        $this->saveImage($imagick, $container, __FUNCTION__ . '.png');
+        $this->saveImage($imagick, $container, __FUNCTION__.'.png');
     }
 
     public function test_container_with_simple_border_padding(): void
@@ -232,13 +232,13 @@ class BorderTest extends TestCase
         $imagick = $this->createImage();
 
         // Create a row container with a border
-        $container = new RowContainer();
+        $container = new RowContainer;
         $borderDraw = $this->stroke('#ff0000', 50);
         $container->setBorder($borderDraw, $borderDraw, $borderDraw, $borderDraw);
         $container->setPadding(50);
         $container->addItem((new Rectangle($this->draw('#4ade80'))));
 
-        $this->saveImage($imagick, $container, __FUNCTION__ . '.png');
+        $this->saveImage($imagick, $container, __FUNCTION__.'.png');
     }
 
     public function test_container_with_simple_border_margin_and_padding(): void
@@ -246,14 +246,14 @@ class BorderTest extends TestCase
         $imagick = $this->createImage();
 
         // Create a row container with a border
-        $container = new RowContainer();
+        $container = new RowContainer;
         $borderDraw = $this->stroke('#ff0000', 50);
         $container->setBorder($borderDraw, $borderDraw, $borderDraw, $borderDraw);
         $container->setMargin(50);
         $container->setPadding(50);
         $container->addItem((new Rectangle($this->draw('#4ade80'))));
 
-        $this->saveImage($imagick, $container, __FUNCTION__ . '.png');
+        $this->saveImage($imagick, $container, __FUNCTION__.'.png');
     }
 
     public function test_container_with_border_margin_and_padding(): void
@@ -261,7 +261,7 @@ class BorderTest extends TestCase
         $imagick = $this->createImage();
 
         // Create a row container with a border
-        $container = new RowContainer();
+        $container = new RowContainer;
         $borderDraw = $this->stroke('#ff0000');
         $container->setBorder($borderDraw, $borderDraw, $borderDraw, $borderDraw);
 
@@ -278,14 +278,14 @@ class BorderTest extends TestCase
         // Item 3: two-value margin (tb, lr) and padding (tb, lr)
         $container->addItem((new Rectangle($this->draw('#60a5fa')))->setMargin(30, 10)->setPadding(10, 30), 300);
 
-        $this->saveImage($imagick, $container, __FUNCTION__ . '.png');
+        $this->saveImage($imagick, $container, __FUNCTION__.'.png');
     }
 
     public function test_rectangle_border_with_margin(): void
     {
         $imagick = $this->createImage();
 
-        $container = new RowContainer();
+        $container = new RowContainer;
         $rectangle = new Rectangle($this->draw('#4ade80'));
         // border on the item + margin
         $rectangle->setBorder(
@@ -297,14 +297,14 @@ class BorderTest extends TestCase
         $rectangle->setMargin(40);
         $container->addItem($rectangle);
 
-        $this->saveImage($imagick, $container, __FUNCTION__ . '.png');
+        $this->saveImage($imagick, $container, __FUNCTION__.'.png');
     }
 
     public function test_rectangle_border_with_padding(): void
     {
         $imagick = $this->createImage();
 
-        $container = new RowContainer();
+        $container = new RowContainer;
         $rectangle = new Rectangle($this->draw('#4ade80'));
         // border on the item + padding
         $rectangle->setBorder(
@@ -316,14 +316,14 @@ class BorderTest extends TestCase
         $rectangle->setPadding(40);
         $container->addItem($rectangle);
 
-        $this->saveImage($imagick, $container, __FUNCTION__ . '.png');
+        $this->saveImage($imagick, $container, __FUNCTION__.'.png');
     }
 
     public function test_rectangle_border_with_margin_and_padding(): void
     {
         $imagick = $this->createImage();
 
-        $container = new RowContainer();
+        $container = new RowContainer;
         $rectangle = new Rectangle($this->draw('#4ade80'));
         // border on the item + margin and padding
         $rectangle->setBorder(
@@ -336,6 +336,6 @@ class BorderTest extends TestCase
         $rectangle->setPadding(30, 10);
         $container->addItem($rectangle);
 
-        $this->saveImage($imagick, $container, __FUNCTION__ . '.png');
+        $this->saveImage($imagick, $container, __FUNCTION__.'.png');
     }
 }

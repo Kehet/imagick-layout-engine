@@ -22,10 +22,12 @@ namespace Kehet\ImagickLayoutEngine\Traits;
 
 trait MarginTrait
 {
-
     public ?int $marginTop = null;
+
     public ?int $marginRight = null;
+
     public ?int $marginBottom = null;
+
     public ?int $marginLeft = null;
 
     protected function getBoundingBoxInsideMargin(int $x, int $y, int $width, int $height): array
@@ -36,25 +38,29 @@ trait MarginTrait
         $newHeight = $height - $this->marginTop - $this->marginBottom;
 
         // Prevent negative sizes
-        if ($newWidth < 0) { $newWidth = 0; }
-        if ($newHeight < 0) { $newHeight = 0; }
+        if ($newWidth < 0) {
+            $newWidth = 0;
+        }
+        if ($newHeight < 0) {
+            $newHeight = 0;
+        }
 
         return [$newX, $newY, $newWidth, $newHeight];
     }
 
     public function setMargin(?int $arg1 = null, ?int $arg2 = null, ?int $arg3 = null, ?int $arg4 = null): self
     {
-        if($arg4 !== null) {
+        if ($arg4 !== null) {
             $this->marginTop = $arg1;
             $this->marginRight = $arg2;
             $this->marginBottom = $arg3;
             $this->marginLeft = $arg4;
-        } else if($arg3 !== null) {
+        } elseif ($arg3 !== null) {
             $this->marginTop = $arg1;
             $this->marginRight = $arg2;
             $this->marginBottom = $arg3;
             $this->marginLeft = $arg1;
-        } else if($arg2 !== null) {
+        } elseif ($arg2 !== null) {
             $this->marginTop = $arg1;
             $this->marginRight = $arg2;
             $this->marginBottom = $arg1;
@@ -72,25 +78,28 @@ trait MarginTrait
     public function setMarginTop(?int $draw = null): self
     {
         $this->marginTop = $draw;
+
         return $this;
     }
 
     public function setMarginRight(?int $draw = null): self
     {
         $this->marginRight = $draw;
+
         return $this;
     }
 
     public function setMarginBottom(?int $draw = null): self
     {
         $this->marginBottom = $draw;
+
         return $this;
     }
 
     public function setMarginLeft(?int $draw = null): self
     {
         $this->marginLeft = $draw;
+
         return $this;
     }
-
 }

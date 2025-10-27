@@ -27,10 +27,9 @@ use Kehet\ImagickLayoutEngine\Traits\PaddingTrait;
 
 abstract class Container implements DrawableInterface
 {
-
     use BorderTrait;
-    use PaddingTrait;
     use MarginTrait;
+    use PaddingTrait;
 
     /** @var array> */
     protected array $items;
@@ -41,8 +40,8 @@ abstract class Container implements DrawableInterface
     ): void {
 
         $this->items[] = [
-            'item'    => $item,
-            'size'    => $forceSize,
+            'item' => $item,
+            'size' => $forceSize,
         ];
     }
 }

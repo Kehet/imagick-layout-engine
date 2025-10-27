@@ -24,7 +24,6 @@ use Kehet\ImagickLayoutEngine\Enums\ImageMode;
 use Kehet\ImagickLayoutEngine\Items\Image;
 use Kehet\ImagickLayoutEngine\Items\Rectangle;
 use Kehet\ImagickLayoutEngine\Items\Text;
-use Kehet\ImagickLayoutEngine\Items\TextWrap;
 
 require __DIR__.'/../vendor/autoload.php';
 
@@ -46,11 +45,11 @@ $imagick = new Imagick;
 $imagick->newImage($width, $height, new ImagickPixel('white'));
 
 // Create main container
-$mainContainer = new ColumnContainer();
+$mainContainer = new ColumnContainer;
 
 // Example 1: Rectangle with border
-$example1 = new RowContainer();
-$example1->addItem(new Text(createDraw('#000000'), "Rectangle with colored borders:"), 400);
+$example1 = new RowContainer;
+$example1->addItem(new Text(createDraw('#000000'), 'Rectangle with colored borders:'), 400);
 
 $rectangle = new Rectangle(createDraw('#4ade80'));
 $rectangle->setBorderTop(createDraw('#ff0000', 10));
@@ -60,28 +59,28 @@ $rectangle->setBorderLeft(createDraw('#ffff00', 10));
 $example1->addItem($rectangle, 1100);
 
 // Example 2: Text with border
-$example2 = new RowContainer();
-$example2->addItem(new Text(createDraw('#000000'), "Text with red border:"), 400);
+$example2 = new RowContainer;
+$example2->addItem(new Text(createDraw('#000000'), 'Text with red border:'), 400);
 
-$text = new Text(createDraw('#4ade80'), "This text has a red border around it.");
+$text = new Text(createDraw('#4ade80'), 'This text has a red border around it.');
 $borderDraw = createDraw('#ff0000', 5);
 $text->setBorder($borderDraw, $borderDraw, $borderDraw, $borderDraw);
 $example2->addItem($text, 1100);
 
 // Example 3: Image with border
-$example3 = new RowContainer();
-$example3->addItem(new Text(createDraw('#000000'), "Image with border:"), 400);
+$example3 = new RowContainer;
+$example3->addItem(new Text(createDraw('#000000'), 'Image with border:'), 400);
 
-$image = new Image(__DIR__ . '/example-image-small.jpeg', ImageMode::FIT);
+$image = new Image(__DIR__.'/example-image-small.jpeg', ImageMode::FIT);
 $borderDraw = createDraw('#0000ff', 5);
 $image->setBorder($borderDraw, $borderDraw, $borderDraw, $borderDraw);
 $example3->addItem($image, 1100);
 
 // Example 4: Container with border
-$example4 = new RowContainer();
-$example4->addItem(new Text(createDraw('#000000'), "Container with border:"), 400);
+$example4 = new RowContainer;
+$example4->addItem(new Text(createDraw('#000000'), 'Container with border:'), 400);
 
-$container = new RowContainer();
+$container = new RowContainer;
 $container->addItem(new Rectangle(createDraw('#4ade80')), 300);
 $container->addItem(new Rectangle(createDraw('#f87171')), 300);
 $container->addItem(new Rectangle(createDraw('#60a5fa')), 300);
@@ -90,12 +89,12 @@ $container->setBorder($borderDraw, $borderDraw, $borderDraw, $borderDraw);
 $example4->addItem($container, 1100);
 
 // Example 5: Nested containers with borders
-$example5 = new RowContainer();
-$example5->addItem(new Text(createDraw('#000000'), "Nested containers with borders:"), 400);
+$example5 = new RowContainer;
+$example5->addItem(new Text(createDraw('#000000'), 'Nested containers with borders:'), 400);
 
-$outerContainer = new RowContainer();
+$outerContainer = new RowContainer;
 // Create first column
-$column1 = new ColumnContainer();
+$column1 = new ColumnContainer;
 $column1->addItem(new Rectangle(createDraw('#4ade80')), 100);
 $column1->addItem(new Rectangle(createDraw('#f87171')), 100);
 $column1->setBorderTop(createDraw('#ff0000', 5));
@@ -104,7 +103,7 @@ $column1->setBorderBottom(createDraw('#0000ff', 5));
 $column1->setBorderLeft(createDraw('#ffff00', 5));
 
 // Create second column
-$column2 = new ColumnContainer();
+$column2 = new ColumnContainer;
 $column2->addItem(new Rectangle(createDraw('#60a5fa')), 100);
 $column2->addItem(new Rectangle(createDraw('#c084fc')), 100);
 $borderDraw = createDraw('#ff00ff', 5);

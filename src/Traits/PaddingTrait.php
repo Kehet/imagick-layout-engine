@@ -22,10 +22,12 @@ namespace Kehet\ImagickLayoutEngine\Traits;
 
 trait PaddingTrait
 {
-
     public ?int $paddingTop = null;
+
     public ?int $paddingRight = null;
+
     public ?int $paddingBottom = null;
+
     public ?int $paddingLeft = null;
 
     protected function getBoundingBoxInsidePadding(int $x, int $y, int $width, int $height): array
@@ -36,25 +38,29 @@ trait PaddingTrait
         $newHeight = $height - $this->paddingTop - $this->paddingBottom;
 
         // Prevent negative sizes
-        if ($newWidth < 0) { $newWidth = 0; }
-        if ($newHeight < 0) { $newHeight = 0; }
+        if ($newWidth < 0) {
+            $newWidth = 0;
+        }
+        if ($newHeight < 0) {
+            $newHeight = 0;
+        }
 
         return [$newX, $newY, $newWidth, $newHeight];
     }
 
     public function setPadding(?int $arg1 = null, ?int $arg2 = null, ?int $arg3 = null, ?int $arg4 = null): self
     {
-        if($arg4 !== null) {
+        if ($arg4 !== null) {
             $this->paddingTop = $arg1;
             $this->paddingRight = $arg2;
             $this->paddingBottom = $arg3;
             $this->paddingLeft = $arg4;
-        } else if($arg3 !== null) {
+        } elseif ($arg3 !== null) {
             $this->paddingTop = $arg1;
             $this->paddingRight = $arg2;
             $this->paddingBottom = $arg3;
             $this->paddingLeft = $arg1;
-        } else if($arg2 !== null) {
+        } elseif ($arg2 !== null) {
             $this->paddingTop = $arg1;
             $this->paddingRight = $arg2;
             $this->paddingBottom = $arg1;
@@ -72,25 +78,28 @@ trait PaddingTrait
     public function setPaddingTop(?int $draw = null): self
     {
         $this->paddingTop = $draw;
+
         return $this;
     }
 
     public function setPaddingRight(?int $draw = null): self
     {
         $this->paddingRight = $draw;
+
         return $this;
     }
 
     public function setPaddingBottom(?int $draw = null): self
     {
         $this->paddingBottom = $draw;
+
         return $this;
     }
 
     public function setPaddingLeft(?int $draw = null): self
     {
         $this->paddingLeft = $draw;
+
         return $this;
     }
-
 }

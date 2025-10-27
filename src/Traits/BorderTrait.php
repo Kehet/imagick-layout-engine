@@ -25,10 +25,12 @@ use ImagickDraw;
 
 trait BorderTrait
 {
-
     public ?ImagickDraw $borderTop = null;
+
     public ?ImagickDraw $borderRight = null;
+
     public ?ImagickDraw $borderBottom = null;
+
     public ?ImagickDraw $borderLeft = null;
 
     protected function getBorderInsets(): array
@@ -51,25 +53,29 @@ trait BorderTrait
         $newHeight = $height - $halfTop - $halfBottom;
 
         // Prevent negative sizes
-        if ($newWidth < 0) { $newWidth = 0; }
-        if ($newHeight < 0) { $newHeight = 0; }
+        if ($newWidth < 0) {
+            $newWidth = 0;
+        }
+        if ($newHeight < 0) {
+            $newHeight = 0;
+        }
 
         return [$newX, $newY, $newWidth, $newHeight];
     }
 
     public function setBorder(?ImagickDraw $arg1 = null, ?ImagickDraw $arg2 = null, ?ImagickDraw $arg3 = null, ?ImagickDraw $arg4 = null): void
     {
-        if($arg4 !== null) {
+        if ($arg4 !== null) {
             $this->borderTop = $arg1;
             $this->borderRight = $arg2;
             $this->borderBottom = $arg3;
             $this->borderLeft = $arg4;
-        } else if($arg3 !== null) {
+        } elseif ($arg3 !== null) {
             $this->borderTop = $arg1;
             $this->borderRight = $arg2;
             $this->borderBottom = $arg3;
             $this->borderLeft = $arg1;
-        } else if($arg2 !== null) {
+        } elseif ($arg2 !== null) {
             $this->borderTop = $arg1;
             $this->borderRight = $arg2;
             $this->borderBottom = $arg1;

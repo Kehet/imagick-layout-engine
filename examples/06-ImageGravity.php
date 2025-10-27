@@ -38,8 +38,8 @@ function fill(string $fill): ImagickDraw
 $width = 1500;
 $height = 1000;
 
-$smallImage = __DIR__ . '/example-image-small.jpeg';
-$largeImage = __DIR__ . '/example-image-large.jpeg';
+$smallImage = __DIR__.'/example-image-small.jpeg';
+$largeImage = __DIR__.'/example-image-large.jpeg';
 
 // Create new image
 $imagick = new Imagick;
