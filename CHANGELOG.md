@@ -2,6 +2,24 @@
 
 All notable changes to `imagick-layout-engine` will be documented in this file.
 
+## Release 3.0.0 - 2025-10-27
+
+### Breaking changes
+
+* Change padding format
+
+### What's Changed
+
+* Add margin feature
+* Add border feature
+* Update phpunit/phpunit requirement from ^11.5 to ^12.2 by @dependabot[bot] in https://github.com/Kehet/imagick-layout-engine/pull/4
+* Bump aglipanci/laravel-pint-action from 2.5 to 2.6 by @dependabot[bot] in https://github.com/Kehet/imagick-layout-engine/pull/5
+* Bump actions/checkout from 4 to 5 by @dependabot[bot] in https://github.com/Kehet/imagick-layout-engine/pull/6
+* Bump stefanzweifel/git-auto-commit-action from 6 to 7 by @dependabot[bot] in https://github.com/Kehet/imagick-layout-engine/pull/8
+* Bump actions/setup-node from 4 to 6 by @dependabot[bot] in https://github.com/Kehet/imagick-layout-engine/pull/9
+
+**Full Changelog**: https://github.com/Kehet/imagick-layout-engine/compare/2.1.0...3.0.0
+
 ## Release 2.1.0 - 2025-07-20
 
 ### What's Changed
