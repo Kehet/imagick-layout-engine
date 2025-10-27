@@ -84,23 +84,54 @@ Containers support padding, which adds space between the container's edge and it
 ```php
 // Single value padding (10px on all sides)
 $row = new RowContainer();
-$row->addItem(new Rectangle(fill('#fee2e2')), padding: 10);
-$row->addItem(new Rectangle(fill('#fca5a5')), padding: 10);
+$row->setPadding(10);
+$row->addItem(new Rectangle(fill('#fee2e2')));
+$row->addItem(new Rectangle(fill('#fca5a5')));
 
 // Two value padding (10px top/bottom, 20px left/right)
 $column = new ColumnContainer();
-$column->addItem(new Rectangle(fill('#fee2e2')), padding: [10, 20]);
-$column->addItem(new Rectangle(fill('#fca5a5')), padding: [10, 20]);
+$column->setPadding(10, 20);
+$column->addItem(new Rectangle(fill('#fee2e2')));
+$column->addItem(new Rectangle(fill('#fca5a5')));
 
 // Three value padding (10px top, 20px left/right, 30px bottom)
 $row = new RowContainer();
-$row->addItem(new Rectangle(fill('#fee2e2')), padding: [10, 20, 30]);
-$row->addItem(new Rectangle(fill('#fca5a5')), padding: [10, 20, 30]);
+$row->setPadding(10, 20, 30);
+$row->addItem(new Rectangle(fill('#fee2e2')));
+$row->addItem(new Rectangle(fill('#fca5a5')));
 
 // Four value padding (10px top, 20px right, 30px bottom, 40px left)
 $column = new ColumnContainer();
-$column->addItem(new Rectangle(fill('#fee2e2')), padding: [10, 20, 30, 40]);
-$column->addItem(new Rectangle(fill('#fca5a5')), padding: [10, 20, 30, 40]);
+$column->setPadding(10, 20, 30, 40);
+$column->addItem(new Rectangle(fill('#fee2e2')));
+$column->addItem(new Rectangle(fill('#fca5a5')));
+```
+
+#### Margin
+
+Containers and items also support margins, which add space outside the border, pushing the element away from neighboring elements. Margin behaves like CSS margin and supports one to four values:
+
+- Single value: applies the same margin to all sides
+- Two values: first value applies to top and bottom, second value applies to left and right
+- Three values: first value applies to top, second value applies to left and right, third value applies to bottom
+- Four values: values apply to top, right, bottom, and left, respectively
+
+```php
+// Single value margin (8px on all sides)
+$row = new RowContainer();
+$row->setMargin(8);
+$row->addItem((new Rectangle(fill('#4ade80')))->setMargin(4));
+$row->addItem((new Rectangle(fill('#f87171')))->setMargin(12, 24));
+
+// Three and four value margins on containers
+$column = new ColumnContainer();
+$column->setMargin(10, 20, 30);      // top=10, left/right=20, bottom=30
+$column->setPadding(12);             // can be combined with padding
+$column->addItem(new Rectangle(fill('#93c5fd')));
+
+$column2 = new ColumnContainer();
+$column2->setMargin(5, 10, 15, 20);  // top=5, right=10, bottom=15, left=20
+$column2->addItem(new Rectangle(fill('#fde68a')));
 ```
 
 ### Text Handling
@@ -170,6 +201,48 @@ Available gravity options:
 - `Gravity::BOTTOM`
 - `Gravity::BOTTOM_RIGHT`
 
+### Border Functionality
+
+All drawable elements (Rectangle, Text, TextWrap, Image, and Containers) support borders. You can set borders for each side individually or all sides at once:
+
+```php
+// Create a rectangle with different colored borders on each side
+$rectangle = new Rectangle(fill('#4ade80'));
+$rectangle->setBorderTop(createBorder('#ff0000'));
+$rectangle->setBorderRight(createBorder('#00ff00'));
+$rectangle->setBorderBottom(createBorder('#0000ff'));
+$rectangle->setBorderLeft(createBorder('#ffff00'));
+
+// Set the same border on all sides
+$text = new Text(fill('#000000'), 'Text with border');
+$border = createBorder('#ff0000');
+$text->setBorder($border, $border, $border, $border);
+
+// Helper function to create a border
+function createBorder(string $color, float $strokeWidth = 2): ImagickDraw
+{
+    $draw = new \ImagickDraw();
+    $draw->setStrokeColor(new \ImagickPixel($color));
+    $draw->setStrokeWidth($strokeWidth);
+    return $draw;
+}
+```
+
+Borders can be applied to containers as well, allowing you to create complex layouts with visual separation:
+
+```php
+// Create a container with a border
+$container = new RowContainer();
+$container->addItem(new Rectangle(fill('#4ade80')));
+$container->addItem(new Rectangle(fill('#f87171')));
+
+// Add a border around the entire container
+$border = createBorder('#000000', 3);
+$container->setBorder($border, $border, $border, $border);
+```
+
+For more examples, see [examples/08-Borders.php](examples/08-Borders.php)
+
 ## Advanced Examples
 
 ### Nested Containers
@@ -217,6 +290,7 @@ Please see [CHANGELOG](CHANGELOG.md) for more information on what has changed re
 ## Roadmap
 
 - [x] Margin / padding
+- [x] Borders
 - [ ] Text background
 - [ ] Extract helper functions
 

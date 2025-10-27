@@ -23,12 +23,19 @@ namespace Kehet\ImagickLayoutEngine\Items;
 use Imagick;
 use Kehet\ImagickLayoutEngine\Enums\Gravity;
 use Kehet\ImagickLayoutEngine\Enums\ImageMode;
+use Kehet\ImagickLayoutEngine\Traits\BorderTrait;
+use Kehet\ImagickLayoutEngine\Traits\MarginTrait;
+use Kehet\ImagickLayoutEngine\Traits\PaddingTrait;
 
 /**
  * Represents an image that can be drawn onto container grid.
  */
 class Image implements DrawableInterface
 {
+    use BorderTrait;
+    use PaddingTrait;
+    use MarginTrait;
+
     public function __construct(
         protected string $file,
         protected ImageMode $mode = ImageMode::NONE,
@@ -37,6 +44,16 @@ class Image implements DrawableInterface
 
     public function draw(Imagick $imagick, int $x, int $y, int $width, int $height): void
     {
+        [$x, $y, $width, $height] = $this->getBoundingBoxInsideMargin($x, $y, $width, $height);
+
+        $borderX = $x;
+        $borderY = $y;
+        $borderWidth = $width;
+        $borderHeight = $height;
+
+        [$x, $y, $width, $height] = $this->getBoundingBoxInsideBorder($x, $y, $width, $height);
+        [$x, $y, $width, $height] = $this->getBoundingBoxInsidePadding($x, $y, $width, $height);
+
         $image = new Imagick($this->file);
 
         $originalWidth = $image->getImageWidth();
@@ -195,5 +212,7 @@ class Image implements DrawableInterface
         }
 
         $imagick->compositeImage($image, Imagick::COMPOSITE_DEFAULT, $posX, $posY);
+
+        $this->drawBorders($imagick, $borderX, $borderY, $borderWidth, $borderHeight);
     }
 }

@@ -32,6 +32,16 @@ class RowContainer extends Container
 {
     public function draw(Imagick $imagick, int $x, int $y, int $width, int $height): void
     {
+        [$x, $y, $width, $height] = $this->getBoundingBoxInsideMargin($x, $y, $width, $height);
+
+        $borderX = $x;
+        $borderY = $y;
+        $borderWidth = $width;
+        $borderHeight = $height;
+
+        [$x, $y, $width, $height] = $this->getBoundingBoxInsideBorder($x, $y, $width, $height);
+        [$x, $y, $width, $height] = $this->getBoundingBoxInsidePadding($x, $y, $width, $height);
+
         $itemX = 0;
         $itemY = 0;
         $itemHeight = $height;
@@ -65,29 +75,32 @@ class RowContainer extends Container
         foreach ($this->items as $key => $item) {
             $currentWidth = $item['size'] ?? $notForcedWidth;
 
-            $paddingTop = $item['padding'][0] ?? 0;
-            $paddingRight = $item['padding'][1] ?? 0;
-            $paddingBottom = $item['padding'][2] ?? 0;
-            $paddingLeft = $item['padding'][3] ?? 0;
-
             if ($key === $lastKeyWithoutForcing) {
                 $currentWidth += $cheat;
             }
 
-            // Calculate content area with padding
-            $contentX = $itemX + $paddingLeft;
-            $contentY = $itemY + $paddingTop;
-            $contentWidth = $currentWidth - $paddingLeft - $paddingRight;
-            $contentHeight = $itemHeight - $paddingTop - $paddingBottom;
+            // Calculate content area with padding (+ half border widths)
+            $contentX = $itemX;
+            $contentY = $itemY;
+            $contentWidth = $currentWidth;
+            $contentHeight = $itemHeight;
 
             // Ensure content dimensions are at least 1 pixel
             $contentWidth = max(1, $contentWidth);
             $contentHeight = max(1, $contentHeight);
 
-            $item['item']->draw($imagick, $x + $contentX, $y + $contentY, $contentWidth, $contentHeight);
+            $item['item']->draw(
+                $imagick,
+                $x + $contentX,
+                $y + $contentY,
+                $contentWidth,
+                $contentHeight
+            );
 
             // Move to next item position, including right margin
             $itemX += $currentWidth;
         }
+
+        $this->drawBorders($imagick, $borderX, $borderY, $borderWidth, $borderHeight);
     }
 }

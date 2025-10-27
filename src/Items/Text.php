@@ -23,12 +23,20 @@ namespace Kehet\ImagickLayoutEngine\Items;
 use Imagick;
 use ImagickDraw;
 use Kehet\ImagickLayoutEngine\Enums\Gravity;
+use Kehet\ImagickLayoutEngine\Traits\BorderTrait;
+use Kehet\ImagickLayoutEngine\Traits\MarginTrait;
+use Kehet\ImagickLayoutEngine\Traits\PaddingTrait;
 
 /**
  * Represents a simple text that can be drawn onto container grid. Scales font size down as needed.
  */
 class Text implements DrawableInterface
 {
+
+    use BorderTrait;
+    use PaddingTrait;
+    use MarginTrait;
+
     public function __construct(
         protected ImagickDraw $draw,
         protected string $text,
@@ -39,15 +47,27 @@ class Text implements DrawableInterface
 
     public function draw(Imagick $imagick, int $x, int $y, int $width, int $height): void
     {
+        [$x, $y, $width, $height] = $this->getBoundingBoxInsideMargin($x, $y, $width, $height);
+
+        $borderX = $x;
+        $borderY = $y;
+        $borderWidth = $width;
+        $borderHeight = $height;
+
+        [$x, $y, $width, $height] = $this->getBoundingBoxInsideBorder($x, $y, $width, $height);
+        [$x, $y, $width, $height] = $this->getBoundingBoxInsidePadding($x, $y, $width, $height);
+
         $this->draw->setGravity(Imagick::GRAVITY_NORTHWEST);
 
         $textMetrics = $this->calculateOptimalFontSize($imagick, $width, $height);
 
-        $x = $this->calculateHorizontalPosition($x, $width, $textMetrics['textWidth']);
-        $y = $this->calculateVerticalPosition($y, $height, $textMetrics['textHeight']);
+        $tx = $this->calculateHorizontalPosition($x, $width, $textMetrics['textWidth']);
+        $ty = $this->calculateVerticalPosition($y, $height, $textMetrics['textHeight']);
 
-        $this->draw->annotation($x, $y, $this->text);
+        $this->draw->annotation($tx, $ty, $this->text);
         $imagick->drawImage($this->draw);
+
+        $this->drawBorders($imagick, $borderX, $borderY, $borderWidth, $borderHeight);
     }
 
     private function calculateOptimalFontSize(Imagick $imagick, int $width, int $height): array

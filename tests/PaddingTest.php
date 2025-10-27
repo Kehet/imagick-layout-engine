@@ -31,10 +31,10 @@ class PaddingTest extends TestCase
         $imagick = $this->createImage();
 
         $frame = new RowContainer;
-        $frame->addItem(new Rectangle($this->draw('#fee2e2')), padding: 40);
-        $frame->addItem(new Rectangle($this->draw('#fca5a5')), padding: 60);
-        $frame->addItem(new Rectangle($this->draw('#dc2626')), padding: 80);
-        $frame->addItem(new Rectangle($this->draw('#450a0a')), padding: 100);
+        $frame->addItem((new Rectangle($this->draw('#fee2e2')))->setPadding(40));
+        $frame->addItem((new Rectangle($this->draw('#fca5a5')))->setPadding(60));
+        $frame->addItem((new Rectangle($this->draw('#dc2626')))->setPadding(80));
+        $frame->addItem((new Rectangle($this->draw('#450a0a')))->setPadding(100));
 
         $this->saveImage($imagick, $frame, __FUNCTION__.'.png');
     }
@@ -44,10 +44,10 @@ class PaddingTest extends TestCase
         $imagick = $this->createImage();
 
         $frame = new ColumnContainer;
-        $frame->addItem(new Rectangle($this->draw('#fee2e2')), padding: 40);
-        $frame->addItem(new Rectangle($this->draw('#fca5a5')), padding: 60);
-        $frame->addItem(new Rectangle($this->draw('#dc2626')), padding: 80);
-        $frame->addItem(new Rectangle($this->draw('#450a0a')), padding: 100);
+        $frame->addItem((new Rectangle($this->draw('#fee2e2')))->setPadding(40));
+        $frame->addItem((new Rectangle($this->draw('#fca5a5')))->setPadding(60));
+        $frame->addItem((new Rectangle($this->draw('#dc2626')))->setPadding(80));
+        $frame->addItem((new Rectangle($this->draw('#450a0a')))->setPadding(100));
 
         $this->saveImage($imagick, $frame, __FUNCTION__.'.png');
     }
@@ -58,10 +58,10 @@ class PaddingTest extends TestCase
 
         $frame = new RowContainer;
         // First value: top/bottom, Second value: left/right
-        $frame->addItem(new Rectangle($this->draw('#fee2e2')), padding: [20, 40]);
-        $frame->addItem(new Rectangle($this->draw('#fca5a5')), padding: [40, 20]);
-        $frame->addItem(new Rectangle($this->draw('#dc2626')), padding: [60, 80]);
-        $frame->addItem(new Rectangle($this->draw('#450a0a')), padding: [80, 60]);
+        $frame->addItem((new Rectangle($this->draw('#fee2e2')))->setPadding(20, 40));
+        $frame->addItem((new Rectangle($this->draw('#fca5a5')))->setPadding(40, 20));
+        $frame->addItem((new Rectangle($this->draw('#dc2626')))->setPadding(60, 80));
+        $frame->addItem((new Rectangle($this->draw('#450a0a')))->setPadding(80, 60));
 
         $this->saveImage($imagick, $frame, __FUNCTION__.'.png');
     }
@@ -72,10 +72,10 @@ class PaddingTest extends TestCase
 
         $frame = new ColumnContainer;
         // First value: top/bottom, Second value: left/right
-        $frame->addItem(new Rectangle($this->draw('#fee2e2')), padding: [20, 40]);
-        $frame->addItem(new Rectangle($this->draw('#fca5a5')), padding: [40, 20]);
-        $frame->addItem(new Rectangle($this->draw('#dc2626')), padding: [60, 80]);
-        $frame->addItem(new Rectangle($this->draw('#450a0a')), padding: [80, 60]);
+        $frame->addItem((new Rectangle($this->draw('#fee2e2')))->setPadding(20, 40));
+        $frame->addItem((new Rectangle($this->draw('#fca5a5')))->setPadding(40, 20));
+        $frame->addItem((new Rectangle($this->draw('#dc2626')))->setPadding(60, 80));
+        $frame->addItem((new Rectangle($this->draw('#450a0a')))->setPadding(80, 60));
 
         $this->saveImage($imagick, $frame, __FUNCTION__.'.png');
     }
@@ -86,10 +86,10 @@ class PaddingTest extends TestCase
 
         $frame = new RowContainer;
         // First value: top, Second value: left/right, Third value: bottom
-        $frame->addItem(new Rectangle($this->draw('#fee2e2')), padding: [20, 40, 60]);
-        $frame->addItem(new Rectangle($this->draw('#fca5a5')), padding: [40, 60, 20]);
-        $frame->addItem(new Rectangle($this->draw('#dc2626')), padding: [60, 20, 40]);
-        $frame->addItem(new Rectangle($this->draw('#450a0a')), padding: [80, 40, 60]);
+        $frame->addItem((new Rectangle($this->draw('#fee2e2')))->setPadding(20, 40, 60));
+        $frame->addItem((new Rectangle($this->draw('#fca5a5')))->setPadding(40, 60, 20));
+        $frame->addItem((new Rectangle($this->draw('#dc2626')))->setPadding(60, 20, 40));
+        $frame->addItem((new Rectangle($this->draw('#450a0a')))->setPadding(80, 40, 60));
 
         $this->saveImage($imagick, $frame, __FUNCTION__.'.png');
     }
@@ -100,10 +100,10 @@ class PaddingTest extends TestCase
 
         $frame = new ColumnContainer;
         // First value: top, Second value: left/right, Third value: bottom
-        $frame->addItem(new Rectangle($this->draw('#fee2e2')), padding: [20, 40, 60]);
-        $frame->addItem(new Rectangle($this->draw('#fca5a5')), padding: [40, 60, 20]);
-        $frame->addItem(new Rectangle($this->draw('#dc2626')), padding: [60, 20, 40]);
-        $frame->addItem(new Rectangle($this->draw('#450a0a')), padding: [80, 40, 60]);
+        $frame->addItem((new Rectangle($this->draw('#fee2e2')))->setPadding(20, 40, 60));
+        $frame->addItem((new Rectangle($this->draw('#fca5a5')))->setPadding(40, 60, 20));
+        $frame->addItem((new Rectangle($this->draw('#dc2626')))->setPadding(60, 20, 40));
+        $frame->addItem((new Rectangle($this->draw('#450a0a')))->setPadding(80, 40, 60));
 
         $this->saveImage($imagick, $frame, __FUNCTION__.'.png');
     }
@@ -114,10 +114,10 @@ class PaddingTest extends TestCase
 
         $frame = new RowContainer;
         // Values: top, right, bottom, left (clockwise)
-        $frame->addItem(new Rectangle($this->draw('#fee2e2')), padding: [20, 40, 60, 80]);
-        $frame->addItem(new Rectangle($this->draw('#fca5a5')), padding: [40, 60, 80, 20]);
-        $frame->addItem(new Rectangle($this->draw('#dc2626')), padding: [60, 80, 20, 40]);
-        $frame->addItem(new Rectangle($this->draw('#450a0a')), padding: [80, 20, 40, 60]);
+        $frame->addItem((new Rectangle($this->draw('#fee2e2')))->setPadding(20, 40, 60, 80));
+        $frame->addItem((new Rectangle($this->draw('#fca5a5')))->setPadding(40, 60, 80, 20));
+        $frame->addItem((new Rectangle($this->draw('#dc2626')))->setPadding(60, 80, 20, 40));
+        $frame->addItem((new Rectangle($this->draw('#450a0a')))->setPadding(80, 20, 40, 60));
 
         $this->saveImage($imagick, $frame, __FUNCTION__.'.png');
     }
@@ -128,10 +128,10 @@ class PaddingTest extends TestCase
 
         $frame = new ColumnContainer;
         // Values: top, right, bottom, left (clockwise)
-        $frame->addItem(new Rectangle($this->draw('#fee2e2')), padding: [20, 40, 60, 80]);
-        $frame->addItem(new Rectangle($this->draw('#fca5a5')), padding: [40, 60, 80, 20]);
-        $frame->addItem(new Rectangle($this->draw('#dc2626')), padding: [60, 80, 20, 40]);
-        $frame->addItem(new Rectangle($this->draw('#450a0a')), padding: [80, 20, 40, 60]);
+        $frame->addItem((new Rectangle($this->draw('#fee2e2')))->setPadding(20, 40, 60, 80));
+        $frame->addItem((new Rectangle($this->draw('#fca5a5')))->setPadding(40, 60, 80, 20));
+        $frame->addItem((new Rectangle($this->draw('#dc2626')))->setPadding(60, 80, 20, 40));
+        $frame->addItem((new Rectangle($this->draw('#450a0a')))->setPadding(80, 20, 40, 60));
 
         $this->saveImage($imagick, $frame, __FUNCTION__.'.png');
     }
@@ -143,25 +143,28 @@ class PaddingTest extends TestCase
         $frame = new ColumnContainer;
 
         $row = new RowContainer;
-        $row->addItem(new Rectangle($this->draw('#fee2e2')), 50, 10);
-        $row->addItem(new Rectangle($this->draw('#fca5a5')), 100, 20);
-        $row->addItem(new Rectangle($this->draw('#dc2626')), 150, 30);
-        $row->addItem(new Rectangle($this->draw('#450a0a')), null, 40);
-        $frame->addItem($row, padding: 20);
+        $row->setPadding(20);
+        $row->addItem((new Rectangle($this->draw('#fee2e2')))->setPadding(10), 50);
+        $row->addItem((new Rectangle($this->draw('#fca5a5')))->setPadding(20), 100);
+        $row->addItem((new Rectangle($this->draw('#dc2626')))->setPadding(30), 150);
+        $row->addItem((new Rectangle($this->draw('#450a0a')))->setPadding(40), null);
+        $frame->addItem($row);
 
         $row = new RowContainer;
-        $row->addItem(new Rectangle($this->draw('#ecfccb')), null, 10);
-        $row->addItem(new Rectangle($this->draw('#bef264')), 50, 20);
-        $row->addItem(new Rectangle($this->draw('#65a30d')), 100, 30);
-        $row->addItem(new Rectangle($this->draw('#1a2e05')), 150, 40);
-        $frame->addItem($row, padding: 30);
+        $row->setPadding(30);
+        $row->addItem((new Rectangle($this->draw('#ecfccb')))->setPadding(10), null);
+        $row->addItem((new Rectangle($this->draw('#bef264')))->setPadding(20), 50);
+        $row->addItem((new Rectangle($this->draw('#65a30d')))->setPadding(30), 100);
+        $row->addItem((new Rectangle($this->draw('#1a2e05')))->setPadding(40), 150);
+        $frame->addItem($row);
 
         $row = new RowContainer;
-        $row->addItem(new Rectangle($this->draw('#cffafe')), padding: 10);
-        $row->addItem(new Rectangle($this->draw('#67e8f9')), padding: 20);
-        $row->addItem(new Rectangle($this->draw('#0891b2')), padding: 30);
-        $row->addItem(new Rectangle($this->draw('#164e63')), padding: 40);
-        $frame->addItem($row, padding: 40);
+        $row->setPadding(40);
+        $row->addItem((new Rectangle($this->draw('#cffafe')))->setPadding(10));
+        $row->addItem((new Rectangle($this->draw('#67e8f9')))->setPadding(20));
+        $row->addItem((new Rectangle($this->draw('#0891b2')))->setPadding(30));
+        $row->addItem((new Rectangle($this->draw('#164e63')))->setPadding(40));
+        $frame->addItem($row);
 
         $this->saveImage($imagick, $frame, __FUNCTION__.'.png');
     }

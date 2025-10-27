@@ -23,6 +23,9 @@ namespace Kehet\ImagickLayoutEngine\Items;
 use Imagick;
 use ImagickDraw;
 use Kehet\ImagickLayoutEngine\Enums\Gravity;
+use Kehet\ImagickLayoutEngine\Traits\BorderTrait;
+use Kehet\ImagickLayoutEngine\Traits\MarginTrait;
+use Kehet\ImagickLayoutEngine\Traits\PaddingTrait;
 
 /**
  * Represents an simple text that can be drawn onto container grid.
@@ -30,6 +33,11 @@ use Kehet\ImagickLayoutEngine\Enums\Gravity;
  */
 class TextWrap implements DrawableInterface
 {
+
+    use BorderTrait;
+    use PaddingTrait;
+    use MarginTrait;
+
     public function __construct(
         protected ImagickDraw $draw,
         protected string $text,
@@ -77,6 +85,16 @@ class TextWrap implements DrawableInterface
 
     public function draw(Imagick $imagick, int $x, int $y, int $width, int $height): void
     {
+        [$x, $y, $width, $height] = $this->getBoundingBoxInsideMargin($x, $y, $width, $height);
+
+        $borderX = $x;
+        $borderY = $y;
+        $borderWidth = $width;
+        $borderHeight = $height;
+
+        [$x, $y, $width, $height] = $this->getBoundingBoxInsideBorder($x, $y, $width, $height);
+        [$x, $y, $width, $height] = $this->getBoundingBoxInsidePadding($x, $y, $width, $height);
+
         $this->draw->setGravity(Imagick::GRAVITY_NORTHWEST);
 
         $fontSize = $this->initialFontSize;
@@ -113,6 +131,8 @@ class TextWrap implements DrawableInterface
         }
 
         $imagick->drawImage($this->draw);
+
+        $this->drawBorders($imagick, $borderX, $borderY, $borderWidth, $borderHeight);
     }
 
     private function calculateHorizontalPosition(int $x, int $width, int $textWidth): int

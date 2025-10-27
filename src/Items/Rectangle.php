@@ -22,20 +22,39 @@ namespace Kehet\ImagickLayoutEngine\Items;
 
 use Imagick;
 use ImagickDraw;
+use Kehet\ImagickLayoutEngine\Traits\BorderTrait;
+use Kehet\ImagickLayoutEngine\Traits\MarginTrait;
+use Kehet\ImagickLayoutEngine\Traits\PaddingTrait;
 
 /**
  * Represents a drawable rectangle that can be drawn onto container grid.
  */
 class Rectangle implements DrawableInterface
 {
+    use BorderTrait;
+    use PaddingTrait;
+    use MarginTrait;
+
     public function __construct(
         protected ImagickDraw $draw,
     ) {}
 
     public function draw(Imagick $imagick, int $x, int $y, int $width, int $height): void
     {
+        [$x, $y, $width, $height] = $this->getBoundingBoxInsideMargin($x, $y, $width, $height);
+
+        $borderX = $x;
+        $borderY = $y;
+        $borderWidth = $width;
+        $borderHeight = $height;
+
+        [$x, $y, $width, $height] = $this->getBoundingBoxInsideBorder($x, $y, $width, $height);
+        [$x, $y, $width, $height] = $this->getBoundingBoxInsidePadding($x, $y, $width, $height);
+
         $this->draw->rectangle($x, $y, $x + $width, $y + $height);
 
         $imagick->drawImage($this->draw);
+
+        $this->drawBorders($imagick, $borderX, $borderY, $borderWidth, $borderHeight);
     }
 }

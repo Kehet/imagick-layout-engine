@@ -32,6 +32,17 @@ class ColumnContainer extends Container
 {
     public function draw(Imagick $imagick, int $x, int $y, int $width, int $height): void
     {
+
+        [$x, $y, $width, $height] = $this->getBoundingBoxInsideMargin($x, $y, $width, $height);
+
+        $borderX = $x;
+        $borderY = $y;
+        $borderWidth = $width;
+        $borderHeight = $height;
+
+        [$x, $y, $width, $height] = $this->getBoundingBoxInsideBorder($x, $y, $width, $height);
+        [$x, $y, $width, $height] = $this->getBoundingBoxInsidePadding($x, $y, $width, $height);
+
         $itemX = 0;
         $itemY = 0;
         $itemWidth = $width;
@@ -65,20 +76,15 @@ class ColumnContainer extends Container
         foreach ($this->items as $key => $item) {
             $currentHeight = $item['size'] ?? $notForcedHeight;
 
-            $paddingTop = $item['padding'][0] ?? 0;
-            $paddingRight = $item['padding'][1] ?? 0;
-            $paddingBottom = $item['padding'][2] ?? 0;
-            $paddingLeft = $item['padding'][3] ?? 0;
-
             if ($key === $lastKeyWithoutForcing) {
                 $currentHeight += $cheat;
             }
 
             // Calculate content area with padding
-            $contentX = $itemX + $paddingLeft;
-            $contentY = $itemY + $paddingTop;
-            $contentWidth = $itemWidth - $paddingLeft - $paddingRight;
-            $contentHeight = $currentHeight - $paddingTop - $paddingBottom;
+            $contentX = $itemX;
+            $contentY = $itemY;
+            $contentWidth = $itemWidth;
+            $contentHeight = $currentHeight;
 
             // Ensure content dimensions are at least 1 pixel
             $contentWidth = max(1, $contentWidth);
@@ -89,5 +95,7 @@ class ColumnContainer extends Container
             // Move to next item position, including bottom margin
             $itemY += $currentHeight;
         }
+
+        $this->drawBorders($imagick, $borderX, $borderY, $borderWidth, $borderHeight);
     }
 }
