@@ -58,3 +58,12 @@ jobs:
 
       - name: Execute tests
         run: vendor/bin/phpunit
+
+      - name: Upload test images
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: test-images-${{ matrix.php }}-${{ matrix.stability }}
+          path: |
+            ${{ github.workspace }}/tests/temp
+          retention-days: 7
