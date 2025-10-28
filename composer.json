@@ -1,12 +1,13 @@
 {
     "name": "kehet/imagick-layout-engine",
-    "description": "This is my package imagick-layout-engine",
+    "description": "A PHP library for creating complex image layouts with automatic positioning and sizing. This library provides a flexbox-like approach to image composition, making it easy to create structured layouts with text, images, and shapes.",
     "keywords": [
         "Kehet",
+        "imagick",
         "imagick-layout-engine"
     ],
     "homepage": "https://github.com/kehet/imagick-layout-engine",
-    "license": "MIT",
+    "license": "GPL-3.0-or-later",
     "authors": [
         {
             "name": "Kehet",
