@@ -63,7 +63,7 @@ trait BorderTrait
         return [$newX, $newY, $newWidth, $newHeight];
     }
 
-    public function setBorder(?ImagickDraw $arg1 = null, ?ImagickDraw $arg2 = null, ?ImagickDraw $arg3 = null, ?ImagickDraw $arg4 = null): void
+    public function setBorder(?ImagickDraw $arg1 = null, ?ImagickDraw $arg2 = null, ?ImagickDraw $arg3 = null, ?ImagickDraw $arg4 = null): self
     {
         if ($arg4 !== null) {
             $this->borderTop = $arg1;
@@ -86,26 +86,32 @@ trait BorderTrait
             $this->borderBottom = $arg1;
             $this->borderLeft = $arg1;
         }
+
+        return $this;
     }
 
-    public function setBorderTop(ImagickDraw $draw): void
+    public function setBorderTop(ImagickDraw $draw): self
     {
         $this->borderTop = $draw;
+        return $this;
     }
 
-    public function setBorderRight(ImagickDraw $draw): void
+    public function setBorderRight(ImagickDraw $draw): self
     {
         $this->borderRight = $draw;
+        return $this;
     }
 
-    public function setBorderBottom(ImagickDraw $draw): void
+    public function setBorderBottom(ImagickDraw $draw): self
     {
         $this->borderBottom = $draw;
+        return $this;
     }
 
-    public function setBorderLeft(ImagickDraw $draw): void
+    public function setBorderLeft(ImagickDraw $draw): self
     {
         $this->borderLeft = $draw;
+        return $this;
     }
 
     protected function drawBorders(Imagick $imagick, int $x, int $y, int $width, int $height): void

@@ -27,7 +27,10 @@
     "autoload": {
         "psr-4": {
             "Kehet\\ImagickLayoutEngine\\": "src"
-        }
+        },
+        "files": [
+            "src/helpers.php"
+        ]
     },
     "autoload-dev": {
         "psr-4": {
