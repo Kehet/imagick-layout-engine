@@ -1,4 +1,4 @@
-# This is my package imagick-layout-engine
+# imagick-layout-engine
 
 [![Latest Version on Packagist](https://img.shields.io/packagist/v/kehet/imagick-layout-engine.svg?style=flat-square)](https://packagist.org/packages/kehet/imagick-layout-engine)
 [![Tests](https://img.shields.io/github/actions/workflow/status/kehet/imagick-layout-engine/run-tests.yml?branch=master&label=tests&style=flat-square)](https://github.com/kehet/imagick-layout-engine/actions/workflows/run-tests.yml)
@@ -44,7 +44,7 @@ $imagick->setImageFormat('png');
 $imagick->writeImage('output.png');
 ```
 
-For more examples, see [documentation](https://kehet.github.io/imagick-layout-engine-docs)
+For more examples, see [documentation](https://kehet.github.io/imagick-layout-engine-docs).
 
 ## Testing
 
@@ -61,11 +61,7 @@ Please see [CHANGELOG](CHANGELOG.md) for more information on what has changed re
 - [x] Margin / padding
 - [x] Borders
 - [ ] Item background
-- [x] Extract helper functions
-
-## Security Vulnerabilities
-
-Please review [our security policy](../../security/policy) on how to report security vulnerabilities.
+- [x] Extract helper function
 
 ## Credits
 
@@ -74,4 +70,4 @@ Please review [our security policy](../../security/policy) on how to report secu
 
 ## License
 
-GNU GENERAL PUBLIC LICENSE version 3. Please see [License File](LICENSE.md) for more information.
+GNU GENERAL PUBLIC LICENSE version 3. Please see [License File](LICENSE) for more information.
