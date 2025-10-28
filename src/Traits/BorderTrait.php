@@ -93,24 +93,28 @@ trait BorderTrait
     public function setBorderTop(ImagickDraw $draw): self
     {
         $this->borderTop = $draw;
+
         return $this;
     }
 
     public function setBorderRight(ImagickDraw $draw): self
     {
         $this->borderRight = $draw;
+
         return $this;
     }
 
     public function setBorderBottom(ImagickDraw $draw): self
     {
         $this->borderBottom = $draw;
+
         return $this;
     }
 
     public function setBorderLeft(ImagickDraw $draw): self
     {
         $this->borderLeft = $draw;
+
         return $this;
     }
 

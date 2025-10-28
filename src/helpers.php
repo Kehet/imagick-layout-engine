@@ -18,7 +18,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-if (!function_exists('draw')) {
+if (! function_exists('draw')) {
     function draw(?string $fill = null, ?string $stroke = null, int $strokeWidth = 1): \ImagickDraw
     {
         $draw = new \ImagickDraw;
