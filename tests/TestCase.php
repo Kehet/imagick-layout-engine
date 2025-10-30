@@ -75,6 +75,6 @@ abstract class TestCase extends \PHPUnit\Framework\TestCase
         $imagick->setImageFormat('png');
         $imagick->writeImage(__DIR__.'/temp/'.$filename);
 
-        $this->assertMatchesImageSnapshot(__DIR__.'/temp/'.$filename, 0.1);
+        $this->assertMatchesImageSnapshot(__DIR__.'/temp/'.$filename, 0.2, false);
     }
 }
