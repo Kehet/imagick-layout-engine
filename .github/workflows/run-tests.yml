@@ -41,9 +41,11 @@ jobs:
           extensions: dom, curl, libxml, mbstring, zip, pcntl, pdo, sqlite, pdo_sqlite, bcmath, soap, intl, gd, exif, iconv, imagick, fileinfo
           coverage: xdebug
 
-      - name: List available imagick fonts
+      - name: List available imagick fonts and version
         run: |
           php -r "print_r(\Imagick::queryFonts('*'));"
+          php -r "echo phpversion('imagick');"
+          php -r "echo (new \Imagick)->getVersion()[\"versionString\"];"
 
       - name: Setup problem matchers
         run: |
