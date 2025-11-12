@@ -2,6 +2,15 @@
 
 All notable changes to `imagick-layout-engine` will be documented in this file.
 
+## Release 3.2.0 - 2025-11-12
+
+### What's Changed
+
+* Add StackContainer for stacking multiple frames on top of each others
+* Bump actions/upload-artifact from 4 to 5 by @dependabot[bot] in https://github.com/Kehet/imagick-layout-engine/pull/10
+
+**Full Changelog**: https://github.com/Kehet/imagick-layout-engine/compare/3.1.0...3.2.0
+
 ## Release 3.1.0 - 2025-10-28
 
 ### What's new
