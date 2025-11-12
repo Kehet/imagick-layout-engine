@@ -18,6 +18,8 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
+namespace Kehet\ImagickLayoutEngine\Tests;
+
 use Kehet\ImagickLayoutEngine\Containers\ColumnContainer;
 use Kehet\ImagickLayoutEngine\Containers\RowContainer;
 use Kehet\ImagickLayoutEngine\Enums\Gravity;
@@ -37,7 +39,7 @@ class ImageTest extends TestCase
         $frame->addItem(new Image(self::SMALL_IMAGE, ImageMode::FIT, Gravity::CENTER));
         $frame->addItem(new Image(self::SMALL_IMAGE, ImageMode::FIT, Gravity::BOTTOM));
 
-        $this->saveImage($imagick, $frame, __FUNCTION__.'.png');
+        $this->saveImage($imagick, $frame, __CLASS__ . '__' . __FUNCTION__.'.png');
     }
 
     public function test_image_column_fit(): void
@@ -50,7 +52,7 @@ class ImageTest extends TestCase
         $frame->addItem(new Image(self::SMALL_IMAGE, ImageMode::FIT, Gravity::CENTER));
         $frame->addItem(new Image(self::SMALL_IMAGE, ImageMode::FIT, Gravity::RIGHT));
 
-        $this->saveImage($imagick, $frame, __FUNCTION__.'.png');
+        $this->saveImage($imagick, $frame, __CLASS__ . '__' . __FUNCTION__.'.png');
     }
 
     public function test_image_row_fill(): void
@@ -63,7 +65,7 @@ class ImageTest extends TestCase
         $frame->addItem(new Image(self::SMALL_IMAGE, ImageMode::FILL, Gravity::CENTER));
         $frame->addItem(new Image(self::SMALL_IMAGE, ImageMode::FILL, Gravity::RIGHT));
 
-        $this->saveImage($imagick, $frame, __FUNCTION__.'.png');
+        $this->saveImage($imagick, $frame, __CLASS__ . '__' . __FUNCTION__.'.png');
     }
 
     public function test_image_column_fill(): void
@@ -76,7 +78,7 @@ class ImageTest extends TestCase
         $frame->addItem(new Image(self::SMALL_IMAGE, ImageMode::FILL, Gravity::CENTER));
         $frame->addItem(new Image(self::SMALL_IMAGE, ImageMode::FILL, Gravity::BOTTOM));
 
-        $this->saveImage($imagick, $frame, __FUNCTION__.'.png');
+        $this->saveImage($imagick, $frame, __CLASS__ . '__' . __FUNCTION__.'.png');
     }
 
     public function test_image_tiny_none(): void
@@ -103,7 +105,7 @@ class ImageTest extends TestCase
         $row3->addItem(new Image(self::TINY_IMAGE, ImageMode::NONE, Gravity::BOTTOM_RIGHT));
         $frame->addItem($row3);
 
-        $this->saveImage($imagick, $frame, __FUNCTION__.'.png');
+        $this->saveImage($imagick, $frame, __CLASS__ . '__' . __FUNCTION__.'.png');
     }
 
     public function test_image_small_none(): void
@@ -130,7 +132,7 @@ class ImageTest extends TestCase
         $row3->addItem(new Image(self::SMALL_IMAGE, ImageMode::NONE, Gravity::BOTTOM_RIGHT));
         $frame->addItem($row3);
 
-        $this->saveImage($imagick, $frame, __FUNCTION__.'.png');
+        $this->saveImage($imagick, $frame, __CLASS__ . '__' . __FUNCTION__.'.png');
     }
 
     public function test_image_large_none(): void
@@ -157,6 +159,6 @@ class ImageTest extends TestCase
         $row3->addItem(new Image(self::LARGE_IMAGE, ImageMode::NONE, Gravity::BOTTOM_RIGHT));
         $frame->addItem($row3);
 
-        $this->saveImage($imagick, $frame, __FUNCTION__.'.png');
+        $this->saveImage($imagick, $frame, __CLASS__ . '__' . __FUNCTION__.'.png');
     }
 }

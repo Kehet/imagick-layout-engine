@@ -36,7 +36,7 @@ class MarginTest extends TestCase
         $frame->addItem((new Rectangle($this->draw('#dc2626')))->setMargin(80));
         $frame->addItem((new Rectangle($this->draw('#450a0a')))->setMargin(100));
 
-        $this->saveImage($imagick, $frame, __FUNCTION__.'.png');
+        $this->saveImage($imagick, $frame, __CLASS__ . '__' . __FUNCTION__.'.png');
     }
 
     public function test_column_container_with_margin(): void
@@ -49,7 +49,7 @@ class MarginTest extends TestCase
         $frame->addItem((new Rectangle($this->draw('#dc2626')))->setMargin(80));
         $frame->addItem((new Rectangle($this->draw('#450a0a')))->setMargin(100));
 
-        $this->saveImage($imagick, $frame, __FUNCTION__.'.png');
+        $this->saveImage($imagick, $frame, __CLASS__ . '__' . __FUNCTION__.'.png');
     }
 
     public function test_row_container_with_two_value_margin(): void
@@ -63,7 +63,7 @@ class MarginTest extends TestCase
         $frame->addItem((new Rectangle($this->draw('#dc2626')))->setMargin(60, 80));
         $frame->addItem((new Rectangle($this->draw('#450a0a')))->setMargin(80, 60));
 
-        $this->saveImage($imagick, $frame, __FUNCTION__.'.png');
+        $this->saveImage($imagick, $frame, __CLASS__ . '__' . __FUNCTION__.'.png');
     }
 
     public function test_column_container_with_two_value_margin(): void
@@ -77,7 +77,7 @@ class MarginTest extends TestCase
         $frame->addItem((new Rectangle($this->draw('#dc2626')))->setMargin(60, 80));
         $frame->addItem((new Rectangle($this->draw('#450a0a')))->setMargin(80, 60));
 
-        $this->saveImage($imagick, $frame, __FUNCTION__.'.png');
+        $this->saveImage($imagick, $frame, __CLASS__ . '__' . __FUNCTION__.'.png');
     }
 
     public function test_row_container_with_three_value_margin(): void
@@ -91,7 +91,7 @@ class MarginTest extends TestCase
         $frame->addItem((new Rectangle($this->draw('#dc2626')))->setMargin(60, 20, 40));
         $frame->addItem((new Rectangle($this->draw('#450a0a')))->setMargin(80, 40, 60));
 
-        $this->saveImage($imagick, $frame, __FUNCTION__.'.png');
+        $this->saveImage($imagick, $frame, __CLASS__ . '__' . __FUNCTION__.'.png');
     }
 
     public function test_column_container_with_three_value_margin(): void
@@ -105,7 +105,7 @@ class MarginTest extends TestCase
         $frame->addItem((new Rectangle($this->draw('#dc2626')))->setMargin(60, 20, 40));
         $frame->addItem((new Rectangle($this->draw('#450a0a')))->setMargin(80, 40, 60));
 
-        $this->saveImage($imagick, $frame, __FUNCTION__.'.png');
+        $this->saveImage($imagick, $frame, __CLASS__ . '__' . __FUNCTION__.'.png');
     }
 
     public function test_row_container_with_four_value_margin(): void
@@ -119,7 +119,7 @@ class MarginTest extends TestCase
         $frame->addItem((new Rectangle($this->draw('#dc2626')))->setMargin(60, 80, 20, 40));
         $frame->addItem((new Rectangle($this->draw('#450a0a')))->setMargin(80, 20, 40, 60));
 
-        $this->saveImage($imagick, $frame, __FUNCTION__.'.png');
+        $this->saveImage($imagick, $frame, __CLASS__ . '__' . __FUNCTION__.'.png');
     }
 
     public function test_column_container_with_four_value_margin(): void
@@ -133,7 +133,7 @@ class MarginTest extends TestCase
         $frame->addItem((new Rectangle($this->draw('#dc2626')))->setMargin(60, 80, 20, 40));
         $frame->addItem((new Rectangle($this->draw('#450a0a')))->setMargin(80, 20, 40, 60));
 
-        $this->saveImage($imagick, $frame, __FUNCTION__.'.png');
+        $this->saveImage($imagick, $frame, __CLASS__ . '__' . __FUNCTION__.'.png');
     }
 
     public function test_nested_containers_with_margin(): void
@@ -166,6 +166,6 @@ class MarginTest extends TestCase
         $row->addItem((new Rectangle($this->draw('#164e63')))->setMargin(40));
         $frame->addItem($row);
 
-        $this->saveImage($imagick, $frame, __FUNCTION__.'.png');
+        $this->saveImage($imagick, $frame, __CLASS__ . '__' . __FUNCTION__.'.png');
     }
 }

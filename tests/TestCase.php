@@ -24,11 +24,11 @@ use Imagick;
 use ImagickDraw;
 use ImagickPixel;
 use Kehet\ImagickLayoutEngine\Containers\Container;
-use Spatie\Snapshots\MatchesSnapshots;
+use Kehet\ImagickLayoutEngine\Tests\Traits\HasImageAssertion;
 
 abstract class TestCase extends \PHPUnit\Framework\TestCase
 {
-    use MatchesSnapshots;
+    use HasImageAssertion;
 
     const string TINY_TEXT = 'Lorem ipsum dolor sit amet.';
 
@@ -36,11 +36,11 @@ abstract class TestCase extends \PHPUnit\Framework\TestCase
 
     const string LONG_TEXT = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris vitae ultrices erat. Integer id eleifend diam, sed commodo lacus.  Fusce iaculis aliquam pulvinar. Donec dictum mollis volutpat. Nulla facilisi. Nulla egestas hendrerit lobortis. Proin tincidunt interdum eros a pharetra. Nam tincidunt, justo eget pulvinar consequat, velit tortor iaculis urna, in vulputate libero ipsum at ante. ';
 
-    const string TINY_IMAGE = __DIR__.'/assets/example-image-tiny.jpeg';
+    const string TINY_IMAGE = __DIR__ . '/assets/example-image-tiny.jpeg';
 
-    const string SMALL_IMAGE = __DIR__.'/assets/example-image-small.jpeg';
+    const string SMALL_IMAGE = __DIR__ . '/assets/example-image-small.jpeg';
 
-    const string LARGE_IMAGE = __DIR__.'/assets/example-image-large.jpeg';
+    const string LARGE_IMAGE = __DIR__ . '/assets/example-image-large.jpeg';
 
     public function draw(string $fill): ImagickDraw
     {
@@ -72,9 +72,24 @@ abstract class TestCase extends \PHPUnit\Framework\TestCase
     {
         $container->draw($imagick, 0, 0, 1500, 1000);
 
-        $imagick->setImageFormat('png');
-        $imagick->writeImage(__DIR__.'/temp/'.$filename);
+        $position = strrpos($filename, "\\");
+        $filename = substr($filename, $position + 1);
 
-        $this->assertMatchesImageSnapshot(__DIR__.'/temp/'.$filename, 0.05, false);
+        $imagick->setImageFormat('png');
+        $imagick->writeImage(__DIR__ . '/temp/' . $filename);
+
+        if (!file_exists(__DIR__ . '/__snapshots__/' . $filename)) {
+            if (getenv('SAVE_SNAPSHOT') !== false) {
+                $imagick->writeImage(__DIR__ . '/__snapshots__/' . $filename);
+                $this->fail('Snapshot file not found, adding it.');
+            }
+            $this->fail('Snapshot file not found.');
+        }
+
+        $this->assertImageEquals(
+            __DIR__ . '/__snapshots__/' . $filename,
+            __DIR__ . '/temp/' . $filename,
+            0.05
+        );
     }
 }

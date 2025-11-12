@@ -18,6 +18,8 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
+namespace Kehet\ImagickLayoutEngine\Tests;
+
 use Kehet\ImagickLayoutEngine\Containers\ColumnContainer;
 use Kehet\ImagickLayoutEngine\Containers\RowContainer;
 use Kehet\ImagickLayoutEngine\Items\Rectangle;
@@ -62,6 +64,6 @@ class RectangleTest extends TestCase
             $frame->addItem($container);
         }
 
-        $this->saveImage($imagick, $frame, __FUNCTION__.'.png');
+        $this->saveImage($imagick, $frame, __CLASS__ . '__' . __FUNCTION__.'.png');
     }
 }

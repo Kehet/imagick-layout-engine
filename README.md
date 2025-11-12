@@ -52,6 +52,18 @@ For more examples, see [documentation](https://kehet.github.io/imagick-layout-en
 composer test
 ```
 
+### SAVE_SNAPSHOT
+When set (to any value), snapshot images will be automatically written to `tests/__snapshots__/` if snapshot file is missing.
+```bash
+SAVE_SNAPSHOT=1 composer test -- --filter=YourTest
+```
+
+### SAVE_IMAGE_DIFF
+When set (to any non-empty value), a visual diff image will be saved to `tests/temp/` whenever an image comparison is performed, regardless of pass/fail.
+```bash
+SAVE_IMAGE_DIFF=1 composer test -- --filter=YourTest
+```
+
 ## Changelog
 
 Please see [CHANGELOG](CHANGELOG.md) for more information on what has changed recently.

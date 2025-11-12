@@ -10,7 +10,6 @@ This document provides guidelines and instructions for developing and testing th
 - Linux environment (Windows is not officially supported)
 - Imagick PHP extension
 - Composer for dependency management
-- Node.js and npm for image comparison in tests
 
 ### Installation
 
@@ -25,11 +24,6 @@ This document provides guidelines and instructions for developing and testing th
    composer install
    ```
 
-3. Install Node.js dependencies:
-   ```bash
-   npm ci
-   ```
-
 ### Environment Setup
 
 The project requires the Imagick PHP extension with font support. The test suite uses the "DejaVu-Sans" font, which should be available on most Linux distributions. You can check available fonts with:
@@ -39,12 +33,6 @@ print_r(\Imagick::queryFonts('*'));
 ```
 
 ## Testing Information
-
-### Test Framework
-
-The project uses PHPUnit for testing, with the following additional components:
-- Spatie's PHPUnit snapshot assertions for image comparison
-- Pixelmatch (Node.js library) for pixel-by-pixel image comparison
 
 ### Running Tests
 
@@ -56,6 +44,16 @@ composer test
 Run a specific test:
 ```bash
 composer test -- --filter=TestName
+```
+
+To automatically save snapshots when its missing when running tests, set the SAVE_SNAPSHOT environment variable:
+```bash
+SAVE_SNAPSHOT=1 composer test
+```
+
+For debugging purposes, save generated diff to tests/temp/ folder:
+```bash
+SAVE_IMAGE_DIFF=1 composer test
 ```
 
 ### Test Structure
@@ -86,14 +84,14 @@ Tests are located in the `tests` directory and follow the standard PHPUnit struc
            $container->addItem(new Rectangle($this->draw('#4ade80')));
 
            // Save and compare with snapshot
-           $this->saveImage($imagick, $container, __FUNCTION__.'.png');
+           $this->saveImage($imagick, $container, __CLASS__ . '__' . __FUNCTION__.'.png');
        }
    }
    ```
 
 2. Run the test to generate a snapshot:
    ```bash
-   composer test -- --filter=YourTest
+   SAVE_SNAPSHOT=1 composer test -- --filter=YourTest
    ```
 
 3. The first run will mark the test as incomplete and create a snapshot in `tests/__snapshots__`.
@@ -109,12 +107,13 @@ The project uses snapshot testing to verify that the generated images match the 
 
 - Snapshots are stored in the `tests/__snapshots__` directory
 - The `saveImage()` method in `TestCase` saves the image to `tests/temp/` and compares it with the snapshot
-- The comparison allows for a 10% difference (0.1 tolerance)
+- The comparison allows for a 5% difference (0.05 tolerance)
 - If the image doesn't match the snapshot, the test will fail
 
 To update snapshots when you intentionally change the output:
 ```bash
-composer test -- --update-snapshots
+rm tests/__snapshots__/old_snapshot.png
+SAVE_SNAPSHOT=1 composer test
 ```
 
 ## Development Guidelines

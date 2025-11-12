@@ -21,9 +21,7 @@
     },
     "require-dev": {
         "laravel/pint": "^1.0",
-        "phpunit/phpunit": "^12.2",
-        "spatie/phpunit-snapshot-assertions": "^5.2",
-        "spatie/pixelmatch-php": "^1.1"
+        "phpunit/phpunit": "^12.2"
     },
     "autoload": {
         "psr-4": {
