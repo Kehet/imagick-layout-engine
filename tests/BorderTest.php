@@ -45,7 +45,7 @@ class BorderTest extends TestCase
 
         $container->addItem($rectangle);
 
-        $this->saveImage($imagick, $container, __CLASS__ . '__' . __FUNCTION__.'.png');
+        $this->saveImage($imagick, $container, __CLASS__.'__'.__FUNCTION__.'.png');
     }
 
     public function test_text_with_border(): void
@@ -61,7 +61,7 @@ class BorderTest extends TestCase
 
         $container->addItem($text);
 
-        $this->saveImage($imagick, $container, __CLASS__ . '__' . __FUNCTION__.'.png');
+        $this->saveImage($imagick, $container, __CLASS__.'__'.__FUNCTION__.'.png');
     }
 
     public function test_text_wrap_with_border(): void
@@ -79,7 +79,7 @@ class BorderTest extends TestCase
 
         $container->addItem($textWrap);
 
-        $this->saveImage($imagick, $container, __CLASS__ . '__' . __FUNCTION__.'.png');
+        $this->saveImage($imagick, $container, __CLASS__.'__'.__FUNCTION__.'.png');
     }
 
     public function test_image_with_border(): void
@@ -95,7 +95,7 @@ class BorderTest extends TestCase
 
         $container->addItem($image);
 
-        $this->saveImage($imagick, $container, __CLASS__ . '__' . __FUNCTION__.'.png');
+        $this->saveImage($imagick, $container, __CLASS__.'__'.__FUNCTION__.'.png');
     }
 
     public function test_row_container_with_border(): void
@@ -115,7 +115,7 @@ class BorderTest extends TestCase
         $container->setBorderBottom($this->stroke('#0000ff'));
         $container->setBorderLeft($this->stroke('#ffff00'));
 
-        $this->saveImage($imagick, $container, __CLASS__ . '__' . __FUNCTION__.'.png');
+        $this->saveImage($imagick, $container, __CLASS__.'__'.__FUNCTION__.'.png');
     }
 
     public function test_column_container_with_border(): void
@@ -133,7 +133,7 @@ class BorderTest extends TestCase
         $borderDraw = $this->stroke('#ff0000');
         $container->setBorder($borderDraw, $borderDraw, $borderDraw, $borderDraw);
 
-        $this->saveImage($imagick, $container, __CLASS__ . '__' . __FUNCTION__.'.png');
+        $this->saveImage($imagick, $container, __CLASS__.'__'.__FUNCTION__.'.png');
     }
 
     public function test_nested_containers_with_border(): void
@@ -166,7 +166,7 @@ class BorderTest extends TestCase
         $outerBorder = $this->stroke('#000000');
         $outerContainer->setBorder($outerBorder, $outerBorder, $outerBorder, $outerBorder);
 
-        $this->saveImage($imagick, $outerContainer, __CLASS__ . '__' . __FUNCTION__.'.png');
+        $this->saveImage($imagick, $outerContainer, __CLASS__.'__'.__FUNCTION__.'.png');
     }
 
     public function test_container_with_border_and_padding(): void
@@ -188,7 +188,7 @@ class BorderTest extends TestCase
         // Third item: padding on top and bottom only
         $container->addItem((new Rectangle($this->draw('#60a5fa')))->setPadding(30, 0, 30, 0), 300);
 
-        $this->saveImage($imagick, $container, __CLASS__ . '__' . __FUNCTION__.'.png');
+        $this->saveImage($imagick, $container, __CLASS__.'__'.__FUNCTION__.'.png');
     }
 
     public function test_container_with_border_and_margin(): void
@@ -210,7 +210,7 @@ class BorderTest extends TestCase
         // Third item: margin on top and bottom only
         $container->addItem((new Rectangle($this->draw('#60a5fa')))->setMargin(30, 0, 30, 0), 300);
 
-        $this->saveImage($imagick, $container, __CLASS__ . '__' . __FUNCTION__.'.png');
+        $this->saveImage($imagick, $container, __CLASS__.'__'.__FUNCTION__.'.png');
     }
 
     public function test_container_with_simple_border_margin(): void
@@ -224,7 +224,7 @@ class BorderTest extends TestCase
         $container->setMargin(50);
         $container->addItem((new Rectangle($this->draw('#4ade80'))));
 
-        $this->saveImage($imagick, $container, __CLASS__ . '__' . __FUNCTION__.'.png');
+        $this->saveImage($imagick, $container, __CLASS__.'__'.__FUNCTION__.'.png');
     }
 
     public function test_container_with_simple_border_padding(): void
@@ -238,7 +238,7 @@ class BorderTest extends TestCase
         $container->setPadding(50);
         $container->addItem((new Rectangle($this->draw('#4ade80'))));
 
-        $this->saveImage($imagick, $container, __CLASS__ . '__' . __FUNCTION__.'.png');
+        $this->saveImage($imagick, $container, __CLASS__.'__'.__FUNCTION__.'.png');
     }
 
     public function test_container_with_simple_border_margin_and_padding(): void
@@ -253,7 +253,7 @@ class BorderTest extends TestCase
         $container->setPadding(50);
         $container->addItem((new Rectangle($this->draw('#4ade80'))));
 
-        $this->saveImage($imagick, $container, __CLASS__ . '__' . __FUNCTION__.'.png');
+        $this->saveImage($imagick, $container, __CLASS__.'__'.__FUNCTION__.'.png');
     }
 
     public function test_container_with_border_margin_and_padding(): void
@@ -278,7 +278,7 @@ class BorderTest extends TestCase
         // Item 3: two-value margin (tb, lr) and padding (tb, lr)
         $container->addItem((new Rectangle($this->draw('#60a5fa')))->setMargin(30, 10)->setPadding(10, 30), 300);
 
-        $this->saveImage($imagick, $container, __CLASS__ . '__' . __FUNCTION__.'.png');
+        $this->saveImage($imagick, $container, __CLASS__.'__'.__FUNCTION__.'.png');
     }
 
     public function test_rectangle_border_with_margin(): void
@@ -297,7 +297,7 @@ class BorderTest extends TestCase
         $rectangle->setMargin(40);
         $container->addItem($rectangle);
 
-        $this->saveImage($imagick, $container, __CLASS__ . '__' . __FUNCTION__.'.png');
+        $this->saveImage($imagick, $container, __CLASS__.'__'.__FUNCTION__.'.png');
     }
 
     public function test_rectangle_border_with_padding(): void
@@ -316,7 +316,7 @@ class BorderTest extends TestCase
         $rectangle->setPadding(40);
         $container->addItem($rectangle);
 
-        $this->saveImage($imagick, $container, __CLASS__ . '__' . __FUNCTION__.'.png');
+        $this->saveImage($imagick, $container, __CLASS__.'__'.__FUNCTION__.'.png');
     }
 
     public function test_rectangle_border_with_margin_and_padding(): void
@@ -336,6 +336,6 @@ class BorderTest extends TestCase
         $rectangle->setPadding(30, 10);
         $container->addItem($rectangle);
 
-        $this->saveImage($imagick, $container, __CLASS__ . '__' . __FUNCTION__.'.png');
+        $this->saveImage($imagick, $container, __CLASS__.'__'.__FUNCTION__.'.png');
     }
 }

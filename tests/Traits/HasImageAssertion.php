@@ -1,4 +1,5 @@
 <?php
+
 /*
  * The Imagick Layout Engine
  * Copyright (C) 2025
@@ -22,7 +23,6 @@ namespace Kehet\ImagickLayoutEngine\Tests\Traits;
 /** @mixin \PHPUnit\Framework\TestCase */
 trait HasImageAssertion
 {
-
     /**
      * @throws \ImagickException
      */
@@ -46,7 +46,7 @@ trait HasImageAssertion
         $differenceRatio = $result[1];
 
         if (getenv('SAVE_IMAGE_DIFF') !== false) {
-            $debugFilename = __DIR__ . '/../temp/' . basename($actualPath, '.png') . '_diff.png';
+            $debugFilename = __DIR__.'/../temp/'.basename($actualPath, '.png').'_diff.png';
             $result[0]->setImageFormat('png');
             $result[0]->writeImage($debugFilename);
         }
@@ -61,5 +61,4 @@ trait HasImageAssertion
             sprintf('Images differ by %.2f%% (threshold: %.2f%%)', $differenceRatio * 100, $threshold * 100)
         );
     }
-
 }

@@ -23,7 +23,6 @@ namespace Kehet\ImagickLayoutEngine\Tests;
 use Kehet\ImagickLayoutEngine\Containers\ColumnContainer;
 use Kehet\ImagickLayoutEngine\Containers\RowContainer;
 use Kehet\ImagickLayoutEngine\Items\Rectangle;
-use Kehet\ImagickLayoutEngine\Tests\TestCase;
 
 class RectangleTest extends TestCase
 {
@@ -64,6 +63,6 @@ class RectangleTest extends TestCase
             $frame->addItem($container);
         }
 
-        $this->saveImage($imagick, $frame, __CLASS__ . '__' . __FUNCTION__.'.png');
+        $this->saveImage($imagick, $frame, __CLASS__.'__'.__FUNCTION__.'.png');
     }
 }

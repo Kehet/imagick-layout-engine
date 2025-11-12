@@ -36,7 +36,7 @@ class TextTest extends TestCase
         $frame->addItem(new Text($this->draw('#000'), self::SHORT_TEXT));
         $frame->addItem(new Text($this->draw('#000'), self::LONG_TEXT));
 
-        $this->saveImage($imagick, $frame, __CLASS__ . '__' . __FUNCTION__.'.png');
+        $this->saveImage($imagick, $frame, __CLASS__.'__'.__FUNCTION__.'.png');
     }
 
     public function test_text_with_initial_font_size(): void
@@ -48,7 +48,7 @@ class TextTest extends TestCase
         $frame->addItem(new Text($this->draw('#000'), self::SHORT_TEXT, initialFontSize: 100));
         $frame->addItem(new Text($this->draw('#000'), self::LONG_TEXT, initialFontSize: 100));
 
-        $this->saveImage($imagick, $frame, __CLASS__ . '__' . __FUNCTION__.'.png');
+        $this->saveImage($imagick, $frame, __CLASS__.'__'.__FUNCTION__.'.png');
     }
 
     public function test_text_with_minimum_font_size(): void
@@ -60,7 +60,7 @@ class TextTest extends TestCase
         $frame->addItem(new Text($this->draw('#000'), self::SHORT_TEXT, minFontSize: 100));
         $frame->addItem(new Text($this->draw('#000'), self::LONG_TEXT, minFontSize: 100));
 
-        $this->saveImage($imagick, $frame, __CLASS__ . '__' . __FUNCTION__.'.png');
+        $this->saveImage($imagick, $frame, __CLASS__.'__'.__FUNCTION__.'.png');
     }
 
     public function test_text_with_gravity(): void
@@ -91,7 +91,7 @@ class TextTest extends TestCase
         $row->addItem($this->createGravityDemoContainer(Gravity::BOTTOM_RIGHT, 'BOTTOM_RIGHT'));
         $mainContainer->addItem($row);
 
-        $this->saveImage($imagick, $mainContainer, __CLASS__ . '__' . __FUNCTION__.'.png');
+        $this->saveImage($imagick, $mainContainer, __CLASS__.'__'.__FUNCTION__.'.png');
     }
 
     private function createGravityDemoContainer(Gravity $gravity, string $label): ColumnContainer

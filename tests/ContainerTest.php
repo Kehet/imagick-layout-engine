@@ -36,7 +36,7 @@ class ContainerTest extends TestCase
         $frame->addItem(new Rectangle($this->draw('#dc2626')));
         $frame->addItem(new Rectangle($this->draw('#450a0a')));
 
-        $this->saveImage($imagick, $frame, __CLASS__ . '__' . __FUNCTION__.'.png');
+        $this->saveImage($imagick, $frame, __CLASS__.'__'.__FUNCTION__.'.png');
     }
 
     public function test_row_container_with_forced_width(): void
@@ -49,7 +49,7 @@ class ContainerTest extends TestCase
         $frame->addItem(new Rectangle($this->draw('#dc2626')), 150);
         $frame->addItem(new Rectangle($this->draw('#450a0a')));
 
-        $this->saveImage($imagick, $frame, __CLASS__ . '__' . __FUNCTION__.'.png');
+        $this->saveImage($imagick, $frame, __CLASS__.'__'.__FUNCTION__.'.png');
     }
 
     public function test_column_container(): void
@@ -62,7 +62,7 @@ class ContainerTest extends TestCase
         $frame->addItem(new Rectangle($this->draw('#dc2626')));
         $frame->addItem(new Rectangle($this->draw('#450a0a')));
 
-        $this->saveImage($imagick, $frame, __CLASS__ . '__' . __FUNCTION__.'.png');
+        $this->saveImage($imagick, $frame, __CLASS__.'__'.__FUNCTION__.'.png');
     }
 
     public function test_column_container_with_forced_width(): void
@@ -75,7 +75,7 @@ class ContainerTest extends TestCase
         $frame->addItem(new Rectangle($this->draw('#dc2626')), 100);
         $frame->addItem(new Rectangle($this->draw('#450a0a')));
 
-        $this->saveImage($imagick, $frame, __CLASS__ . '__' . __FUNCTION__.'.png');
+        $this->saveImage($imagick, $frame, __CLASS__.'__'.__FUNCTION__.'.png');
     }
 
     public function test_cascading_containers(): void
@@ -105,6 +105,6 @@ class ContainerTest extends TestCase
         $row->addItem(new Rectangle($this->draw('#164e63')));
         $frame->addItem($row);
 
-        $this->saveImage($imagick, $frame, __CLASS__ . '__' . __FUNCTION__.'.png');
+        $this->saveImage($imagick, $frame, __CLASS__.'__'.__FUNCTION__.'.png');
     }
 }
