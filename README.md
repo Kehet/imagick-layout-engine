@@ -72,7 +72,7 @@ Please see [CHANGELOG](CHANGELOG.md) for more information on what has changed re
 
 - [x] Margin / padding
 - [x] Borders
-- [ ] Item background
+- [x] Item background
 - [x] Extract helper function
 
 ## Credits
