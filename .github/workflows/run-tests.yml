@@ -66,7 +66,7 @@ jobs:
 
       - name: Upload test images
         if: always()
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v5
         with:
           name: test-images-${{ matrix.php }}-${{ matrix.stability }}
           path: |
