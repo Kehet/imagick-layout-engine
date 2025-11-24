@@ -16,7 +16,7 @@ All notable changes to `imagick-layout-engine` will be documented in this file.
 ### What's new
 
 - `draw()` helper
-- New documentation http://localhost:4321/imagick-layout-engine-docs/
+- New documentation https://kehet.github.io/imagick-layout-engine-docs/ ([source](https://github.com/Kehet/imagick-layout-engine-docs))
 
 **Full Changelog**: https://github.com/Kehet/imagick-layout-engine/compare/3.0.0...3.1.0
 
