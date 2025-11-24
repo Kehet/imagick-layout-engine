@@ -1,14 +1,17 @@
-# imagick-layout-engine
+<p align="center"><img src="/art/logo.svg" width="50%" alt="Logo Imagick Layout Engine"></p>
 
-[![Latest Version on Packagist](https://img.shields.io/packagist/v/kehet/imagick-layout-engine.svg?style=flat-square)](https://packagist.org/packages/kehet/imagick-layout-engine)
-[![Tests](https://img.shields.io/github/actions/workflow/status/kehet/imagick-layout-engine/run-tests.yml?branch=master&label=tests&style=flat-square)](https://github.com/kehet/imagick-layout-engine/actions/workflows/run-tests.yml)
-[![Total Downloads](https://img.shields.io/packagist/dt/kehet/imagick-layout-engine.svg?style=flat-square)](https://packagist.org/packages/kehet/imagick-layout-engine)
+<p align="center">
+    <a href="https://github.com/Kehet/imagick-layout-engine/actions"><img src="https://github.com/Kehet/imagick-layout-engine/actions/workflows/run-tests.yml/badge.svg" alt="Build Status"></a>
+    <a href="https://packagist.org/packages/Kehet/imagick-layout-engine"><img src="https://img.shields.io/packagist/dt/Kehet/imagick-layout-engine" alt="Total Downloads"></a>
+    <a href="https://packagist.org/packages/Kehet/imagick-layout-engine"><img src="https://img.shields.io/packagist/v/Kehet/imagick-layout-engine" alt="Latest Stable Version"></a>
+    <a href="https://packagist.org/packages/Kehet/imagick-layout-engine"><img src="https://img.shields.io/packagist/l/Kehet/imagick-layout-engine" alt="License"></a>
+</p>
 
 A PHP library for creating complex image layouts with automatic positioning and sizing. This library provides a flexbox-like approach to image composition, making it easy to create structured layouts with text, images, and shapes.
 
 ## Requirements
 
-- PHP 8.3 or higher
+- PHP 8.3 or later
 - Linux (Windows not tested)
 - Imagick PHP extension
 
@@ -53,13 +56,13 @@ composer test
 ```
 
 ### SAVE_SNAPSHOT
-When set (to any value), snapshot images will be automatically written to `tests/__snapshots__/` if snapshot file is missing.
+When set, if snapshot file is missing, snapshot image will be automatically written to `tests/__snapshots__/`.
 ```bash
 SAVE_SNAPSHOT=1 composer test -- --filter=YourTest
 ```
 
 ### SAVE_IMAGE_DIFF
-When set (to any non-empty value), a visual diff image will be saved to `tests/temp/` whenever an image comparison is performed, regardless of pass/fail.
+When set, a visual diff image will be saved to `tests/temp/` whenever an image comparison is performed, regardless of pass/fail.
 ```bash
 SAVE_IMAGE_DIFF=1 composer test -- --filter=YourTest
 ```
@@ -68,13 +71,6 @@ SAVE_IMAGE_DIFF=1 composer test -- --filter=YourTest
 
 Please see [CHANGELOG](CHANGELOG.md) for more information on what has changed recently.
 
-## Roadmap
-
-- [x] Margin / padding
-- [x] Borders
-- [x] Item background
-- [x] Extract helper function
-
 ## Credits
 
 - [Kehet](https://github.com/Kehet)
@@ -82,4 +78,4 @@ Please see [CHANGELOG](CHANGELOG.md) for more information on what has changed re
 
 ## License
 
-GNU GENERAL PUBLIC LICENSE version 3. Please see [License File](LICENSE) for more information.
+GNU GENERAL PUBLIC LICENSE version 3 or later. Please see [License File](LICENSE) for more information.
