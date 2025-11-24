@@ -20,8 +20,13 @@
 
 namespace Kehet\ImagickLayoutEngine\Tests;
 
+use Kehet\ImagickLayoutEngine\Containers\ColumnContainer;
 use Kehet\ImagickLayoutEngine\Containers\StackContainer;
+use Kehet\ImagickLayoutEngine\Enums\Gravity;
+use Kehet\ImagickLayoutEngine\Enums\ImageMode;
+use Kehet\ImagickLayoutEngine\Items\Image;
 use Kehet\ImagickLayoutEngine\Items\Rectangle;
+use Kehet\ImagickLayoutEngine\Items\Text;
 
 class StackContainerTest extends TestCase
 {
@@ -41,5 +46,24 @@ class StackContainerTest extends TestCase
         $stack->addItem($fg);
 
         $this->saveImage($imagick, $stack, __CLASS__.'__'.__FUNCTION__.'.png');
+    }
+
+    public function test_overlay_text_over_image(): void
+    {
+        $imagick = $this->createImage();
+
+        $frame = new ColumnContainer;
+
+        $stack = new StackContainer;
+        $stack->addItem(new Image(self::SMALL_IMAGE, ImageMode::FILL));
+        $stack->addItem(new Text($this->draw('#fff'), 'Text over image', initialFontSize: 150, gravity: Gravity::CENTER));
+        $frame->addItem($stack);
+
+        $stack = new StackContainer;
+        $stack->addItem(new Text($this->draw('#fff'), 'Text under image', initialFontSize: 150, gravity: Gravity::CENTER));
+        $stack->addItem(new Image(self::SMALL_IMAGE, ImageMode::FILL));
+        $frame->addItem($stack);
+
+        $this->saveImage($imagick, $frame, __CLASS__.'__'.__FUNCTION__.'.png');
     }
 }
