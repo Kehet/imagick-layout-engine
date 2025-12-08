@@ -1,3 +1,4 @@
+<!--suppress HtmlDeprecatedAttribute -->
 <p align="center"><img src="/art/logo.svg" width="50%" alt="Logo Imagick Layout Engine"></p>
 
 <p align="center">
@@ -66,6 +67,10 @@ When set, a visual diff image will be saved to `tests/temp/` whenever an image c
 ```bash
 SAVE_IMAGE_DIFF=1 composer test -- --filter=YourTest
 ```
+
+## Roadmap
+
+Please see [ROADMAP](ROADMAP.md) for more information on the future of this project.
 
 ## Changelog
 
