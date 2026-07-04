@@ -44,6 +44,26 @@ class Text implements DrawableInterface
         protected Gravity $gravity = Gravity::TOP_LEFT,
     ) {}
 
+    /**
+     * Sets the extra space, in pixels, inserted between adjacent characters.
+     */
+    public function setLetterSpacing(float $spacing): self
+    {
+        $this->draw->setTextKerning($spacing);
+
+        return $this;
+    }
+
+    /**
+     * Sets the extra space, in pixels, inserted between words.
+     */
+    public function setWordSpacing(float $spacing): self
+    {
+        $this->draw->setTextInterwordSpacing($spacing);
+
+        return $this;
+    }
+
     public function draw(Imagick $imagick, int $x, int $y, int $width, int $height): void
     {
         [$x, $y, $width, $height] = $this->getBoundingBoxInsideMargin($x, $y, $width, $height);

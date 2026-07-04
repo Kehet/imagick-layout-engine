@@ -63,6 +63,28 @@ class TextTest extends TestCase
         $this->saveImage($imagick, $frame, __CLASS__.'__'.__FUNCTION__.'.png');
     }
 
+    public function test_text_with_letter_spacing(): void
+    {
+        $imagick = $this->createImage();
+
+        $frame = new ColumnContainer;
+        $frame->addItem((new Text($this->draw('#000'), self::TINY_TEXT))->setLetterSpacing(15));
+        $frame->addItem(new Text($this->draw('#000'), self::TINY_TEXT));
+
+        $this->saveImage($imagick, $frame, __CLASS__.'__'.__FUNCTION__.'.png');
+    }
+
+    public function test_text_with_word_spacing(): void
+    {
+        $imagick = $this->createImage();
+
+        $frame = new ColumnContainer;
+        $frame->addItem((new Text($this->draw('#000'), self::TINY_TEXT))->setWordSpacing(40));
+        $frame->addItem(new Text($this->draw('#000'), self::TINY_TEXT));
+
+        $this->saveImage($imagick, $frame, __CLASS__.'__'.__FUNCTION__.'.png');
+    }
+
     public function test_text_with_gravity(): void
     {
         $imagick = $this->createImage();

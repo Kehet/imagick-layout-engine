@@ -63,6 +63,39 @@ class TextWrapTest extends TestCase
         $this->saveImage($imagick, $frame, __CLASS__.'__'.__FUNCTION__.'.png');
     }
 
+    public function test_text_wrap_with_letter_spacing(): void
+    {
+        $imagick = $this->createImage();
+
+        $frame = new ColumnContainer;
+        $frame->addItem((new TextWrap($this->draw('#000'), self::SHORT_TEXT))->setLetterSpacing(10));
+        $frame->addItem(new TextWrap($this->draw('#000'), self::SHORT_TEXT));
+
+        $this->saveImage($imagick, $frame, __CLASS__.'__'.__FUNCTION__.'.png');
+    }
+
+    public function test_text_wrap_with_word_spacing(): void
+    {
+        $imagick = $this->createImage();
+
+        $frame = new ColumnContainer;
+        $frame->addItem((new TextWrap($this->draw('#000'), self::SHORT_TEXT))->setWordSpacing(30));
+        $frame->addItem(new TextWrap($this->draw('#000'), self::SHORT_TEXT));
+
+        $this->saveImage($imagick, $frame, __CLASS__.'__'.__FUNCTION__.'.png');
+    }
+
+    public function test_text_wrap_with_line_spacing(): void
+    {
+        $imagick = $this->createImage();
+
+        $frame = new ColumnContainer;
+        $frame->addItem((new TextWrap($this->draw('#000'), self::SHORT_TEXT))->setLineSpacing(20));
+        $frame->addItem(new TextWrap($this->draw('#000'), self::SHORT_TEXT));
+
+        $this->saveImage($imagick, $frame, __CLASS__.'__'.__FUNCTION__.'.png');
+    }
+
     public function test_text_wrap_with_gravity(): void
     {
         $imagick = $this->createImage();

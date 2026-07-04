@@ -18,7 +18,7 @@ Provide a small, predictable, and composable layout system for images, inspired 
  
 ### Text features
 - Text multiline wrapping improvements: word/char boundaries, soft hyphen support
-- line height, letter spacing, paragraph spacing
+- paragraph spacing
 - Ellipsize (end/middle) with max lines
 - Font fallback chain, emoji support
 - Caching text measurements

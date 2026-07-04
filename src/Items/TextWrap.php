@@ -45,6 +45,38 @@ class TextWrap implements DrawableInterface
         protected Gravity $gravity = Gravity::TOP_LEFT,
     ) {}
 
+    protected int $lineSpacing = 0;
+
+    /**
+     * Sets the extra space, in pixels, inserted between adjacent characters.
+     */
+    public function setLetterSpacing(float $spacing): self
+    {
+        $this->draw->setTextKerning($spacing);
+
+        return $this;
+    }
+
+    /**
+     * Sets the extra space, in pixels, inserted between words.
+     */
+    public function setWordSpacing(float $spacing): self
+    {
+        $this->draw->setTextInterwordSpacing($spacing);
+
+        return $this;
+    }
+
+    /**
+     * Sets the extra space, in pixels, inserted between wrapped lines.
+     */
+    public function setLineSpacing(int $spacing): self
+    {
+        $this->lineSpacing = $spacing;
+
+        return $this;
+    }
+
     protected function calculateWrapping(Imagick $imagick, int $width): array
     {
         $words = explode(' ', $this->text);
@@ -72,8 +104,9 @@ class TextWrap implements DrawableInterface
             $lines[] = $currentLine;
         }
 
-        $lineHeight = $imagick->queryFontMetrics($this->draw, 'Tg')['textHeight'];
-        $totalHeight = count($lines) * $lineHeight;
+        $naturalLineHeight = $imagick->queryFontMetrics($this->draw, 'Tg')['textHeight'];
+        $lineHeight = $naturalLineHeight + $this->lineSpacing;
+        $totalHeight = count($lines) * $naturalLineHeight + max(0, count($lines) - 1) * $this->lineSpacing;
 
         return [
             'lines' => $lines,
