@@ -26,6 +26,34 @@ SAVE_IMAGE_DIFF=1 composer test -- --filter=YourTest  # write a diff image to te
 Requires the Imagick PHP extension and the `DejaVu-Sans` font (used in tests; available on GH runners and most
 Linux distros — check with `\Imagick::queryFonts('*')`).
 
+### Running tests in Docker
+
+If you'd rather not use host PHP, the provided `Dockerfile` (based on `serversideup/php:8.3-cli`) is an
+alternative way to run the test suite. It doesn't copy the source or install dependencies at build time — the
+project directory is bind-mounted at run time, so edits are picked up without rebuilding. Pass `USER_ID`/
+`GROUP_ID` at build time so the container's `www-data` user matches the host user — this makes bind-mounted
+output (e.g. `tests/temp/` diffs, `vendor/`) writable/readable on the host without permission errors:
+
+```bash
+docker build --build-arg USER_ID="$(id -u)" --build-arg GROUP_ID="$(id -g)" -t imagick-layout-engine-test .
+```
+
+Install dependencies once (and again whenever `composer.json`/`composer.lock` change) by running Composer
+inside the container — it writes `vendor/` straight to the host through the bind mount:
+
+```bash
+docker run --rm -v "$(pwd):/var/www/html" imagick-layout-engine-test composer install --no-interaction --no-progress --prefer-dist
+```
+
+Then run the suite:
+
+```bash
+docker run --rm -v "$(pwd):/var/www/html" imagick-layout-engine-test                                    # composer test
+docker run --rm -e SAVE_IMAGE_DIFF=1 -v "$(pwd):/var/www/html" imagick-layout-engine-test                # diffs land in tests/temp/ on host
+docker run --rm -e SAVE_SNAPSHOT=1 -v "$(pwd):/var/www/html" \
+  imagick-layout-engine-test composer test -- --filter=YourTest                                          # write a missing snapshot to host
+```
+
 ## Architecture
 
 Everything that can be drawn implements `DrawableInterface` (`src/Items/DrawableInterface.php`):

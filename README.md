@@ -68,6 +68,41 @@ When set, a visual diff image will be saved to `tests/temp/` whenever an image c
 SAVE_IMAGE_DIFF=1 composer test -- --filter=YourTest
 ```
 
+### Running tests in Docker
+
+If you'd rather not use your host PHP install, a `Dockerfile` is provided to run the test suite in a container
+instead. It doesn't copy the source or install dependencies at build time — the project directory is
+bind-mounted at run time, so code changes are picked up without rebuilding. Build with `USER_ID`/`GROUP_ID` set
+to your host user so bind-mounted output (`tests/temp/`, `vendor/`) is written back with your own permissions
+instead of the container's:
+
+```bash
+docker build --build-arg USER_ID="$(id -u)" --build-arg GROUP_ID="$(id -g)" -t imagick-layout-engine-test .
+```
+
+Install dependencies once (and again whenever `composer.json`/`composer.lock` change) by running Composer
+inside the container — it writes `vendor/` straight to the host through the bind mount:
+```bash
+docker run --rm -v "$(pwd):/var/www/html" imagick-layout-engine-test composer install --no-interaction --no-progress --prefer-dist
+```
+
+Run the suite:
+```bash
+docker run --rm -v "$(pwd):/var/www/html" imagick-layout-engine-test
+```
+
+To inspect snapshot diffs on the host, set `SAVE_IMAGE_DIFF` (they land in `tests/temp/` since the project is
+already mounted):
+```bash
+docker run --rm -e SAVE_IMAGE_DIFF=1 -v "$(pwd):/var/www/html" imagick-layout-engine-test
+```
+
+To write a missing snapshot, set `SAVE_SNAPSHOT`:
+```bash
+docker run --rm -e SAVE_SNAPSHOT=1 -v "$(pwd):/var/www/html" \
+  imagick-layout-engine-test composer test -- --filter=YourTest
+```
+
 ## Roadmap
 
 Please see [ROADMAP](ROADMAP.md) for more information on the future of this project.
