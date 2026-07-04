@@ -15,7 +15,9 @@ Provide a small, predictable, and composable layout system for images, inspired 
 - `justify-items`, `justify-self`
 - `width`, `max-width`, `min-width`
 - `height`, `max-height`, `min-height`
- 
+- `overflow: hidden` clipping for containers
+- border-radius / rounded corners for `Rectangle`/`Image`
+
 ### Text features
 - Text multiline wrapping improvements: word/char boundaries, soft hyphen support
 - paragraph spacing
@@ -33,7 +35,6 @@ Provide a small, predictable, and composable layout system for images, inspired 
 
 ### Project management
 - MIT license?
-- Name change?
 
 ## Non‑goals (for now)
 - Full CSS rendering / browser engine parity
