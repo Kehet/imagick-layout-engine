@@ -10,7 +10,6 @@ Links:
 Provide a small, predictable, and composable layout system for images, inspired by flexbox suitable for labels, stickers, and status screens.
 
 ### Layout features
-- `GridContainer`
 - `gap`
 - `justify-content`, `align-content`
 - `align-items`, `align-self`
