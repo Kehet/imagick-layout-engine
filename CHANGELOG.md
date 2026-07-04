@@ -2,6 +2,18 @@
 
 All notable changes to `imagick-layout-engine` will be documented in this file.
 
+## Release 3.3.0 - 2026-07-04
+
+### What's Changed
+
+* Dockerfile to run tests locally
+* New GridContainer
+* Gap feature for all containers
+* Line height, letter spacing and word spacing for text
+* Dependabot updates
+
+**Full Changelog**: https://github.com/Kehet/imagick-layout-engine/compare/3.2.0...3.3.0
+
 ## Release 3.2.0 - 2025-11-12
 
 ### What's Changed
