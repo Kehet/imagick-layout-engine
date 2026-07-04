@@ -19,16 +19,16 @@
  */
 
 if (! function_exists('draw')) {
-    function draw(?string $fill = null, ?string $stroke = null, int $strokeWidth = 1): \ImagickDraw
+    function draw(?string $fill = null, ?string $stroke = null, int $strokeWidth = 1): ImagickDraw
     {
-        $draw = new \ImagickDraw;
+        $draw = new ImagickDraw;
 
         if ($fill !== null) {
-            $draw->setFillColor(new \ImagickPixel($fill));
+            $draw->setFillColor(new ImagickPixel($fill));
         }
 
         if ($stroke !== null) {
-            $draw->setStrokeColor(new \ImagickPixel($stroke));
+            $draw->setStrokeColor(new ImagickPixel($stroke));
             $draw->setStrokeWidth($strokeWidth);
         }
 

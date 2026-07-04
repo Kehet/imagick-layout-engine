@@ -20,7 +20,9 @@
 
 namespace Kehet\ImagickLayoutEngine\Tests\Traits;
 
-/** @mixin \PHPUnit\Framework\TestCase */
+use PHPUnit\Framework\TestCase;
+
+/** @mixin TestCase */
 trait HasImageAssertion
 {
     /**
