@@ -10,13 +10,12 @@ Links:
 Provide a small, predictable, and composable layout system for images, inspired by flexbox suitable for labels, stickers, and status screens.
 
 ### Layout features
-- `gap`
 - `justify-content`, `align-content`
 - `align-items`, `align-self`
 - `justify-items`, `justify-self`
 - `width`, `max-width`, `min-width`
 - `height`, `max-height`, `min-height`
-
+ 
 ### Text features
 - Text multiline wrapping improvements: word/char boundaries, soft hyphen support
 - line height, letter spacing, paragraph spacing

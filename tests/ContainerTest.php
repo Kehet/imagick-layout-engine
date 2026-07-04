@@ -78,6 +78,34 @@ class ContainerTest extends TestCase
         $this->saveImage($imagick, $frame, __CLASS__.'__'.__FUNCTION__.'.png');
     }
 
+    public function test_row_container_with_gap(): void
+    {
+        $imagick = $this->createImage();
+
+        $frame = new RowContainer;
+        $frame->setGap(20);
+        $frame->addItem(new Rectangle($this->draw('#fee2e2')));
+        $frame->addItem(new Rectangle($this->draw('#fca5a5')));
+        $frame->addItem(new Rectangle($this->draw('#dc2626')));
+        $frame->addItem(new Rectangle($this->draw('#450a0a')));
+
+        $this->saveImage($imagick, $frame, __CLASS__.'__'.__FUNCTION__.'.png');
+    }
+
+    public function test_column_container_with_gap(): void
+    {
+        $imagick = $this->createImage();
+
+        $frame = new ColumnContainer;
+        $frame->setGap(20);
+        $frame->addItem(new Rectangle($this->draw('#fee2e2')));
+        $frame->addItem(new Rectangle($this->draw('#fca5a5')));
+        $frame->addItem(new Rectangle($this->draw('#dc2626')));
+        $frame->addItem(new Rectangle($this->draw('#450a0a')));
+
+        $this->saveImage($imagick, $frame, __CLASS__.'__'.__FUNCTION__.'.png');
+    }
+
     public function test_cascading_containers(): void
     {
         $imagick = $this->createImage();

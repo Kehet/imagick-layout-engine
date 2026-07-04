@@ -30,6 +30,18 @@ use Imagick;
  */
 class RowContainer extends Container
 {
+    protected int $gap = 0;
+
+    /**
+     * Sets the horizontal space, in pixels, inserted between adjacent items.
+     */
+    public function setGap(int $gap): self
+    {
+        $this->gap = $gap;
+
+        return $this;
+    }
+
     public function draw(Imagick $imagick, int $x, int $y, int $width, int $height): void
     {
         [$x, $y, $width, $height] = $this->getBoundingBoxInsideMargin($x, $y, $width, $height);
@@ -46,6 +58,9 @@ class RowContainer extends Container
         $itemY = 0;
         $itemHeight = $height;
 
+        $itemCount = count($this->items);
+        $availableWidth = $width - $this->gap * max(0, $itemCount - 1);
+
         $totalForcedWidth = 0;
         $countForcedWidth = 0;
 
@@ -61,15 +76,15 @@ class RowContainer extends Container
         }
 
         $notForcedWidth = 10;
-        if (count($this->items) > $countForcedWidth) {
-            $notForcedWidth = round(($width - $totalForcedWidth) / (count($this->items) - $countForcedWidth));
+        if ($itemCount > $countForcedWidth) {
+            $notForcedWidth = round(($availableWidth - $totalForcedWidth) / ($itemCount - $countForcedWidth));
         }
 
         // since there can't be sub-pixel sizes, dump all remaining width to last item without forced width
         // (no-one will notice (or if they do, they should use size forcing))
         $cheat = 0;
-        if (($totalForcedWidth + count($this->items) * $notForcedWidth) < $width) {
-            $cheat = $width - ($totalForcedWidth + count($this->items) * $notForcedWidth);
+        if (($totalForcedWidth + $itemCount * $notForcedWidth) < $availableWidth) {
+            $cheat = $availableWidth - ($totalForcedWidth + $itemCount * $notForcedWidth);
         }
 
         foreach ($this->items as $key => $item) {
@@ -97,8 +112,8 @@ class RowContainer extends Container
                 $contentHeight
             );
 
-            // Move to next item position, including right margin
-            $itemX += $currentWidth;
+            // Move to next item position, including right margin and gap
+            $itemX += $currentWidth + $this->gap;
         }
 
         $this->drawBorders($imagick, $borderX, $borderY, $borderWidth, $borderHeight);

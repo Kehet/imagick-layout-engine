@@ -30,6 +30,18 @@ use Imagick;
  */
 class ColumnContainer extends Container
 {
+    protected int $gap = 0;
+
+    /**
+     * Sets the vertical space, in pixels, inserted between adjacent items.
+     */
+    public function setGap(int $gap): self
+    {
+        $this->gap = $gap;
+
+        return $this;
+    }
+
     public function draw(Imagick $imagick, int $x, int $y, int $width, int $height): void
     {
 
@@ -47,6 +59,9 @@ class ColumnContainer extends Container
         $itemY = 0;
         $itemWidth = $width;
 
+        $itemCount = count($this->items);
+        $availableHeight = $height - $this->gap * max(0, $itemCount - 1);
+
         $totalForcedHeight = 0;
         $countForcedHeight = 0;
 
@@ -62,15 +77,15 @@ class ColumnContainer extends Container
         }
 
         $notForcedHeight = 10;
-        if (count($this->items) > $countForcedHeight) {
-            $notForcedHeight = round(($height - $totalForcedHeight) / (count($this->items) - $countForcedHeight));
+        if ($itemCount > $countForcedHeight) {
+            $notForcedHeight = round(($availableHeight - $totalForcedHeight) / ($itemCount - $countForcedHeight));
         }
 
         // since there can't be sub-pixel sizes, dump all remaining width to last item without forced height
         // (no-one will notice (or if they do, they should use size forcing))
         $cheat = 0;
-        if (($totalForcedHeight + count($this->items) * $notForcedHeight) < $height) {
-            $cheat = $height - ($totalForcedHeight + count($this->items) * $notForcedHeight);
+        if (($totalForcedHeight + $itemCount * $notForcedHeight) < $availableHeight) {
+            $cheat = $availableHeight - ($totalForcedHeight + $itemCount * $notForcedHeight);
         }
 
         foreach ($this->items as $key => $item) {
@@ -92,8 +107,8 @@ class ColumnContainer extends Container
 
             $item['item']->draw($imagick, $x + $contentX, $y + $contentY, $contentWidth, $contentHeight);
 
-            // Move to next item position, including bottom margin
-            $itemY += $currentHeight;
+            // Move to next item position, including bottom margin and gap
+            $itemY += $currentHeight + $this->gap;
         }
 
         $this->drawBorders($imagick, $borderX, $borderY, $borderWidth, $borderHeight);
