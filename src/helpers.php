@@ -19,9 +19,13 @@
  */
 
 if (! function_exists('draw')) {
-    function draw(?string $fill = null, ?string $stroke = null, int $strokeWidth = 1): ImagickDraw
+    function draw(?string $fill = null, ?string $stroke = null, int $strokeWidth = 1, ?string $font = 'DejaVu-Sans'): ImagickDraw
     {
         $draw = new ImagickDraw;
+
+        if ($font !== null) {
+            $draw->setFont($font);
+        }
 
         if ($fill !== null) {
             $draw->setFillColor(new ImagickPixel($fill));
