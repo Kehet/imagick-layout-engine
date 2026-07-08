@@ -1,0 +1,309 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/kehet/imagick-layout-engine/master/template.schema.json",
+  "title": "Imagick Layout Engine Template",
+  "description": "Layout tree consumed by Kehet\\ImagickLayoutEngine\\Templates\\Template::fromArray()/fromJson()/fromFile(). The root node, and every node in a 'children' array, is validated against #/$defs/node.",
+  "$ref": "#/$defs/node",
+  "$defs": {
+    "node": {
+      "oneOf": [
+        { "$ref": "#/$defs/row" },
+        { "$ref": "#/$defs/column" },
+        { "$ref": "#/$defs/grid" },
+        { "$ref": "#/$defs/stack" },
+        { "$ref": "#/$defs/text" },
+        { "$ref": "#/$defs/textWrap" },
+        { "$ref": "#/$defs/image" },
+        { "$ref": "#/$defs/rectangle" }
+      ]
+    },
+    "color": {
+      "type": "string",
+      "description": "Any color string accepted by ImagickPixel, e.g. a '#rrggbb'/'#rrggbbaa' hex code or an ImageMagick color name."
+    },
+    "gravity": {
+      "type": "string",
+      "enum": ["top-left", "top", "top-right", "left", "center", "right", "bottom-left", "bottom", "bottom-right"]
+    },
+    "imageMode": {
+      "type": "string",
+      "enum": ["none", "fit", "fill"]
+    },
+    "spacingValue": {
+      "description": "Used for 'margin' and 'padding'. Either one number applied to all four sides, or an object overriding individual sides.",
+      "oneOf": [
+        { "type": "integer" },
+        {
+          "type": "object",
+          "properties": {
+            "top": { "type": "integer" },
+            "right": { "type": "integer" },
+            "bottom": { "type": "integer" },
+            "left": { "type": "integer" }
+          },
+          "additionalProperties": false
+        }
+      ]
+    },
+    "borderSpec": {
+      "type": "object",
+      "properties": {
+        "fill": { "$ref": "#/$defs/color" },
+        "stroke": { "$ref": "#/$defs/color" },
+        "strokeWidth": { "type": "integer", "minimum": 0 }
+      },
+      "additionalProperties": false
+    },
+    "borderValue": {
+      "description": "Either one border spec applied to all four sides, or an object overriding individual sides.",
+      "anyOf": [
+        { "$ref": "#/$defs/borderSpec" },
+        {
+          "type": "object",
+          "properties": {
+            "top": { "$ref": "#/$defs/borderSpec" },
+            "right": { "$ref": "#/$defs/borderSpec" },
+            "bottom": { "$ref": "#/$defs/borderSpec" },
+            "left": { "$ref": "#/$defs/borderSpec" }
+          },
+          "additionalProperties": false
+        }
+      ]
+    },
+    "sizeProperty": {
+      "type": "integer",
+      "minimum": 0,
+      "description": "Forced size in pixels along the main axis. Only read when this node is a child of a 'row' or 'column'."
+    },
+    "gridColumn": {
+      "type": "integer",
+      "minimum": 0,
+      "description": "Column index. Only read when this node is a child of a 'grid'."
+    },
+    "gridRow": {
+      "type": "integer",
+      "minimum": 0,
+      "description": "Row index. Only read when this node is a child of a 'grid'."
+    },
+    "columnSpan": {
+      "type": "integer",
+      "minimum": 1,
+      "description": "Number of columns to span. Only read when this node is a child of a 'grid'; defaults to 1."
+    },
+    "rowSpan": {
+      "type": "integer",
+      "minimum": 1,
+      "description": "Number of rows to span. Only read when this node is a child of a 'grid'; defaults to 1."
+    },
+    "row": {
+      "type": "object",
+      "properties": {
+        "type": { "const": "row" },
+        "gap": { "type": "integer", "minimum": 0 },
+        "children": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/node" }
+        },
+        "margin": { "$ref": "#/$defs/spacingValue" },
+        "padding": { "$ref": "#/$defs/spacingValue" },
+        "border": { "$ref": "#/$defs/borderValue" },
+        "size": { "$ref": "#/$defs/sizeProperty" },
+        "column": { "$ref": "#/$defs/gridColumn" },
+        "row": { "$ref": "#/$defs/gridRow" },
+        "columnSpan": { "$ref": "#/$defs/columnSpan" },
+        "rowSpan": { "$ref": "#/$defs/rowSpan" }
+      },
+      "required": ["type"],
+      "additionalProperties": false
+    },
+    "column": {
+      "type": "object",
+      "properties": {
+        "type": { "const": "column" },
+        "gap": { "type": "integer", "minimum": 0 },
+        "children": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/node" }
+        },
+        "margin": { "$ref": "#/$defs/spacingValue" },
+        "padding": { "$ref": "#/$defs/spacingValue" },
+        "border": { "$ref": "#/$defs/borderValue" },
+        "size": { "$ref": "#/$defs/sizeProperty" },
+        "column": { "$ref": "#/$defs/gridColumn" },
+        "row": { "$ref": "#/$defs/gridRow" },
+        "columnSpan": { "$ref": "#/$defs/columnSpan" },
+        "rowSpan": { "$ref": "#/$defs/rowSpan" }
+      },
+      "required": ["type"],
+      "additionalProperties": false
+    },
+    "grid": {
+      "type": "object",
+      "properties": {
+        "type": { "const": "grid" },
+        "templateColumns": {
+          "type": "array",
+          "items": { "type": ["integer", "null"] },
+          "description": "Fixed pixel width per column, or null for an auto-sized column."
+        },
+        "templateRows": {
+          "type": "array",
+          "items": { "type": ["integer", "null"] },
+          "description": "Fixed pixel height per row, or null for an auto-sized row."
+        },
+        "gap": {
+          "description": "One number applied to both row and column gap, or a [rowGap, columnGap] tuple.",
+          "oneOf": [
+            { "type": "integer", "minimum": 0 },
+            {
+              "type": "array",
+              "prefixItems": [
+                { "type": "integer", "minimum": 0 },
+                { "type": "integer", "minimum": 0 }
+              ],
+              "minItems": 1,
+              "maxItems": 2,
+              "items": false
+            }
+          ]
+        },
+        "children": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/node" }
+        },
+        "margin": { "$ref": "#/$defs/spacingValue" },
+        "padding": { "$ref": "#/$defs/spacingValue" },
+        "border": { "$ref": "#/$defs/borderValue" },
+        "size": { "$ref": "#/$defs/sizeProperty" },
+        "column": { "$ref": "#/$defs/gridColumn" },
+        "row": { "$ref": "#/$defs/gridRow" },
+        "columnSpan": { "$ref": "#/$defs/columnSpan" },
+        "rowSpan": { "$ref": "#/$defs/rowSpan" }
+      },
+      "required": ["type"],
+      "additionalProperties": false
+    },
+    "stack": {
+      "type": "object",
+      "properties": {
+        "type": { "const": "stack" },
+        "children": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/node" }
+        },
+        "margin": { "$ref": "#/$defs/spacingValue" },
+        "padding": { "$ref": "#/$defs/spacingValue" },
+        "border": { "$ref": "#/$defs/borderValue" },
+        "size": { "$ref": "#/$defs/sizeProperty" },
+        "column": { "$ref": "#/$defs/gridColumn" },
+        "row": { "$ref": "#/$defs/gridRow" },
+        "columnSpan": { "$ref": "#/$defs/columnSpan" },
+        "rowSpan": { "$ref": "#/$defs/rowSpan" }
+      },
+      "required": ["type"],
+      "additionalProperties": false
+    },
+    "rectangle": {
+      "type": "object",
+      "properties": {
+        "type": { "const": "rectangle" },
+        "fill": { "$ref": "#/$defs/color" },
+        "stroke": { "$ref": "#/$defs/color" },
+        "strokeWidth": { "type": "integer", "minimum": 0 },
+        "font": { "type": "string" },
+        "margin": { "$ref": "#/$defs/spacingValue" },
+        "padding": { "$ref": "#/$defs/spacingValue" },
+        "border": { "$ref": "#/$defs/borderValue" },
+        "size": { "$ref": "#/$defs/sizeProperty" },
+        "column": { "$ref": "#/$defs/gridColumn" },
+        "row": { "$ref": "#/$defs/gridRow" },
+        "columnSpan": { "$ref": "#/$defs/columnSpan" },
+        "rowSpan": { "$ref": "#/$defs/rowSpan" }
+      },
+      "required": ["type"],
+      "additionalProperties": false
+    },
+    "text": {
+      "type": "object",
+      "properties": {
+        "type": { "const": "text" },
+        "text": {
+          "type": "string",
+          "description": "Supports {{placeholder}} substitution from the data array passed to Template::toDrawable()."
+        },
+        "fill": { "$ref": "#/$defs/color" },
+        "stroke": { "$ref": "#/$defs/color" },
+        "strokeWidth": { "type": "integer", "minimum": 0 },
+        "font": { "type": "string" },
+        "fontSize": { "type": "integer", "minimum": 1, "default": 60 },
+        "minFontSize": { "type": "integer", "minimum": 1, "default": 10 },
+        "gravity": { "$ref": "#/$defs/gravity", "default": "top-left" },
+        "letterSpacing": { "type": "number" },
+        "wordSpacing": { "type": "number" },
+        "margin": { "$ref": "#/$defs/spacingValue" },
+        "padding": { "$ref": "#/$defs/spacingValue" },
+        "border": { "$ref": "#/$defs/borderValue" },
+        "size": { "$ref": "#/$defs/sizeProperty" },
+        "column": { "$ref": "#/$defs/gridColumn" },
+        "row": { "$ref": "#/$defs/gridRow" },
+        "columnSpan": { "$ref": "#/$defs/columnSpan" },
+        "rowSpan": { "$ref": "#/$defs/rowSpan" }
+      },
+      "required": ["type", "text"],
+      "additionalProperties": false
+    },
+    "textWrap": {
+      "type": "object",
+      "properties": {
+        "type": { "const": "text-wrap" },
+        "text": {
+          "type": "string",
+          "description": "Supports {{placeholder}} substitution from the data array passed to Template::toDrawable()."
+        },
+        "fill": { "$ref": "#/$defs/color" },
+        "stroke": { "$ref": "#/$defs/color" },
+        "strokeWidth": { "type": "integer", "minimum": 0 },
+        "font": { "type": "string" },
+        "fontSize": { "type": "integer", "minimum": 1, "default": 60 },
+        "minFontSize": { "type": "integer", "minimum": 1, "default": 10 },
+        "gravity": { "$ref": "#/$defs/gravity", "default": "top-left" },
+        "letterSpacing": { "type": "number" },
+        "wordSpacing": { "type": "number" },
+        "lineSpacing": { "type": "integer" },
+        "margin": { "$ref": "#/$defs/spacingValue" },
+        "padding": { "$ref": "#/$defs/spacingValue" },
+        "border": { "$ref": "#/$defs/borderValue" },
+        "size": { "$ref": "#/$defs/sizeProperty" },
+        "column": { "$ref": "#/$defs/gridColumn" },
+        "row": { "$ref": "#/$defs/gridRow" },
+        "columnSpan": { "$ref": "#/$defs/columnSpan" },
+        "rowSpan": { "$ref": "#/$defs/rowSpan" }
+      },
+      "required": ["type", "text"],
+      "additionalProperties": false
+    },
+    "image": {
+      "type": "object",
+      "properties": {
+        "type": { "const": "image" },
+        "file": {
+          "type": "string",
+          "pattern": "^(?![a-zA-Z][a-zA-Z0-9+.-]*:).*$",
+          "description": "Local filesystem path. Supports {{placeholder}} substitution from the data array passed to Template::toDrawable(). ImageMagick coder/URI-scheme prefixes (e.g. 'https:', 'msl:') are rejected at build time; a literal value with such a prefix is rejected here too, though a prefix introduced only via {{placeholder}} substitution cannot be caught statically."
+        },
+        "mode": { "$ref": "#/$defs/imageMode", "default": "none" },
+        "gravity": { "$ref": "#/$defs/gravity", "default": "center" },
+        "margin": { "$ref": "#/$defs/spacingValue" },
+        "padding": { "$ref": "#/$defs/spacingValue" },
+        "border": { "$ref": "#/$defs/borderValue" },
+        "size": { "$ref": "#/$defs/sizeProperty" },
+        "column": { "$ref": "#/$defs/gridColumn" },
+        "row": { "$ref": "#/$defs/gridRow" },
+        "columnSpan": { "$ref": "#/$defs/columnSpan" },
+        "rowSpan": { "$ref": "#/$defs/rowSpan" }
+      },
+      "required": ["type", "file"],
+      "additionalProperties": false
+    }
+  }
+}
