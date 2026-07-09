@@ -37,20 +37,20 @@ use ValueError;
 
 final class NodeBuilder
 {
-    public static function build(array $node, array $data): DrawableInterface
+    public static function build(array $node, array $data, TemplateSettings $settings): DrawableInterface
     {
         if (! isset($node['type']) || ! is_string($node['type'])) {
             throw new InvalidTemplateException('Template node is missing a "type" string.');
         }
 
         $item = match ($node['type']) {
-            'row' => self::buildRow($node, $data),
-            'column' => self::buildColumn($node, $data),
-            'grid' => self::buildGrid($node, $data),
-            'stack' => self::buildStack($node, $data),
+            'row' => self::buildRow($node, $data, $settings),
+            'column' => self::buildColumn($node, $data, $settings),
+            'grid' => self::buildGrid($node, $data, $settings),
+            'stack' => self::buildStack($node, $data, $settings),
             'text' => self::buildText($node, $data),
             'text-wrap' => self::buildTextWrap($node, $data),
-            'image' => self::buildImage($node, $data),
+            'image' => self::buildImage($node, $data, $settings),
             'rectangle' => self::buildRectangle($node),
             default => throw new InvalidTemplateException(sprintf('Unknown template node type "%s".', $node['type'])),
         };
@@ -60,17 +60,17 @@ final class NodeBuilder
         return $item;
     }
 
-    private static function buildRow(array $node, array $data): RowContainer
+    private static function buildRow(array $node, array $data, TemplateSettings $settings): RowContainer
     {
-        return self::buildLinearContainer(new RowContainer, $node, $data);
+        return self::buildLinearContainer(new RowContainer, $node, $data, $settings);
     }
 
-    private static function buildColumn(array $node, array $data): ColumnContainer
+    private static function buildColumn(array $node, array $data, TemplateSettings $settings): ColumnContainer
     {
-        return self::buildLinearContainer(new ColumnContainer, $node, $data);
+        return self::buildLinearContainer(new ColumnContainer, $node, $data, $settings);
     }
 
-    private static function buildLinearContainer(RowContainer|ColumnContainer $container, array $node, array $data): RowContainer|ColumnContainer
+    private static function buildLinearContainer(RowContainer|ColumnContainer $container, array $node, array $data, TemplateSettings $settings): RowContainer|ColumnContainer
     {
         if (isset($node['gap'])) {
             $container->setGap((int) $node['gap']);
@@ -78,7 +78,7 @@ final class NodeBuilder
 
         foreach ($node['children'] ?? [] as $child) {
             $container->addItem(
-                self::build($child, $data),
+                self::build($child, $data, $settings),
                 isset($child['size']) ? (int) $child['size'] : null
             );
         }
@@ -86,7 +86,7 @@ final class NodeBuilder
         return $container;
     }
 
-    private static function buildGrid(array $node, array $data): GridContainer
+    private static function buildGrid(array $node, array $data, TemplateSettings $settings): GridContainer
     {
         $container = new GridContainer;
 
@@ -110,7 +110,7 @@ final class NodeBuilder
 
         foreach ($node['children'] ?? [] as $child) {
             $container->addItem(
-                self::build($child, $data),
+                self::build($child, $data, $settings),
                 isset($child['column']) ? (int) $child['column'] : null,
                 isset($child['row']) ? (int) $child['row'] : null,
                 isset($child['columnSpan']) ? (int) $child['columnSpan'] : 1,
@@ -121,12 +121,12 @@ final class NodeBuilder
         return $container;
     }
 
-    private static function buildStack(array $node, array $data): StackContainer
+    private static function buildStack(array $node, array $data, TemplateSettings $settings): StackContainer
     {
         $container = new StackContainer;
 
         foreach ($node['children'] ?? [] as $child) {
-            $container->addItem(self::build($child, $data));
+            $container->addItem(self::build($child, $data, $settings));
         }
 
         return $container;
@@ -188,7 +188,7 @@ final class NodeBuilder
         return $item;
     }
 
-    private static function buildImage(array $node, array $data): Image
+    private static function buildImage(array $node, array $data, TemplateSettings $settings): Image
     {
         if (! isset($node['file']) || ! is_string($node['file'])) {
             throw new InvalidTemplateException('Template node of type "image" requires a "file" string.');
@@ -209,7 +209,7 @@ final class NodeBuilder
         }
 
         return new Image(
-            self::assertLocalFilePath(self::substitute($node['file'], $data)),
+            self::resolveLocalFilePath(self::substitute($node['file'], $data), $settings->imageBaseDir),
             $mode,
             self::gravity($node, Gravity::CENTER),
         );
@@ -221,14 +221,63 @@ final class NodeBuilder
      * file loader. Without this, a {{placeholder}} substituted into "file"
      * from render-time data could trigger SSRF or arbitrary-coder execution
      * (the "ImageTragick" class of vulnerabilities, CVE-2016-3714).
+     *
+     * Also rejects a leading "|", ImageMagick's pipe-delegate syntax: a
+     * filename starting with "|" is popen()'d and the remainder executed as a
+     * shell command — a direct RCE vector that the scheme-prefix regex above
+     * does not catch (it requires a leading letter, "|" is not one).
      */
     private static function assertLocalFilePath(string $path): string
     {
+        if (str_starts_with($path, '|')) {
+            throw new InvalidTemplateException(sprintf('Invalid "file" value "%s": pipe ("|") prefixed paths are not allowed.', $path));
+        }
+
         if (preg_match('/^[a-zA-Z][a-zA-Z0-9+.-]*:/', $path) === 1) {
             throw new InvalidTemplateException(sprintf('Invalid "file" value "%s": ImageMagick coder/URI prefixes are not allowed.', $path));
         }
 
         return $path;
+    }
+
+    /**
+     * When $baseDir is set, contains the resolved "file" path to that directory
+     * (via realpath, so symlinks/".."/mixed separators can't escape it) before
+     * it reaches Imagick's file loader. A {{placeholder}} substituted into
+     * "file" from render-time data may come from an untrusted source (e.g. a
+     * form field); without containment, a value like "../../../etc/passwd" or
+     * an absolute path would be read straight off disk as an "image".
+     *
+     * $baseDir defaults to null, preserving today's behavior (any local path
+     * is accepted) for callers who haven't opted into TemplateSettings.
+     */
+    private static function resolveLocalFilePath(string $path, ?string $baseDir): string
+    {
+        self::assertLocalFilePath($path);
+
+        if (str_contains($path, "\0")) {
+            throw new InvalidTemplateException('Invalid "file" value: contains a null byte.');
+        }
+
+        if ($baseDir === null) {
+            return $path;
+        }
+
+        $realBase = realpath($baseDir);
+
+        if ($realBase === false) {
+            throw new InvalidTemplateException(sprintf('Image base directory "%s" does not exist.', $baseDir));
+        }
+
+        $candidate = $realBase.DIRECTORY_SEPARATOR.ltrim($path, '/\\');
+        $realCandidate = realpath($candidate);
+
+        if ($realCandidate === false
+            || ($realCandidate !== $realBase && ! str_starts_with($realCandidate, $realBase.DIRECTORY_SEPARATOR))) {
+            throw new InvalidTemplateException(sprintf('"file" value "%s" resolves outside the allowed image directory.', $path));
+        }
+
+        return $realCandidate;
     }
 
     private static function applyTextSpacing(Text|TextWrap $item, array $node): void
