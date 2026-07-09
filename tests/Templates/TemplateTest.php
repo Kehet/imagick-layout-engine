@@ -33,6 +33,7 @@ use Kehet\ImagickLayoutEngine\Items\Text;
 use Kehet\ImagickLayoutEngine\Items\TextWrap;
 use Kehet\ImagickLayoutEngine\Templates\Exceptions\InvalidTemplateException;
 use Kehet\ImagickLayoutEngine\Templates\Template;
+use Kehet\ImagickLayoutEngine\Templates\TemplateSettings;
 use Kehet\ImagickLayoutEngine\Tests\TestCase;
 
 class TemplateTest extends TestCase
@@ -631,6 +632,72 @@ class TemplateTest extends TestCase
         $this->expectExceptionMessage('Invalid "file" value "msl:evil.msl": ImageMagick coder/URI prefixes are not allowed.');
 
         Template::fromArray(['type' => 'image', 'file' => '{{path}}'])->toDrawable(['path' => 'msl:evil.msl']);
+    }
+
+    public function test_image_rejects_pipe_prefixed_file_value(): void
+    {
+        $this->expectException(InvalidTemplateException::class);
+        $this->expectExceptionMessage('Invalid "file" value "|id > /tmp/pwned": pipe ("|") prefixed paths are not allowed.');
+
+        Template::fromArray(['type' => 'image', 'file' => '|id > /tmp/pwned'])->toDrawable();
+    }
+
+    public function test_image_rejects_pipe_prefix_from_placeholder_substitution(): void
+    {
+        $this->expectException(InvalidTemplateException::class);
+        $this->expectExceptionMessage('Invalid "file" value "|id > /tmp/pwned": pipe ("|") prefixed paths are not allowed.');
+
+        Template::fromArray(['type' => 'image', 'file' => '{{path}}'])->toDrawable(['path' => '|id > /tmp/pwned']);
+    }
+
+    public function test_image_rejects_path_traversal_outside_base_dir(): void
+    {
+        $this->expectException(InvalidTemplateException::class);
+        $this->expectExceptionMessage('resolves outside the allowed image directory');
+
+        Template::fromArray(['type' => 'image', 'file' => '{{path}}'])
+            ->withSettings(new TemplateSettings(imageBaseDir: __DIR__.'/../assets/templates'))
+            ->toDrawable(['path' => '../example-image-small.jpeg']);
+    }
+
+    public function test_image_rejects_absolute_path_outside_base_dir(): void
+    {
+        $this->expectException(InvalidTemplateException::class);
+        $this->expectExceptionMessage('resolves outside the allowed image directory');
+
+        Template::fromArray(['type' => 'image', 'file' => '{{path}}'])
+            ->withSettings(new TemplateSettings(imageBaseDir: __DIR__.'/../assets/templates'))
+            ->toDrawable(['path' => self::SMALL_IMAGE]);
+    }
+
+    public function test_image_allows_path_inside_base_dir(): void
+    {
+        $expected = new RowContainer;
+        $expected->addItem(new Image(self::SMALL_IMAGE, ImageMode::FIT, Gravity::TOP_LEFT));
+
+        $expectedImagick = $this->createImage();
+        $expected->draw($expectedImagick, 0, 0, 1500, 1000);
+        $expectedImagick->setImageFormat('png');
+        $expectedImagick->writeImage(__DIR__.'/../temp/image_inside_base_dir_expected.png');
+
+        $actualImagick = $this->createImage();
+        Template::fromArray([
+            'type' => 'row',
+            'children' => [
+                ['type' => 'image', 'file' => '{{path}}', 'mode' => 'fit', 'gravity' => 'top-left'],
+            ],
+        ])
+            ->withSettings(new TemplateSettings(imageBaseDir: __DIR__.'/../assets'))
+            ->toDrawable(['path' => 'example-image-small.jpeg'])
+            ->draw($actualImagick, 0, 0, 1500, 1000);
+        $actualImagick->setImageFormat('png');
+        $actualImagick->writeImage(__DIR__.'/../temp/image_inside_base_dir_actual.png');
+
+        $this->assertImageEquals(
+            __DIR__.'/../temp/image_inside_base_dir_expected.png',
+            __DIR__.'/../temp/image_inside_base_dir_actual.png',
+            0.0
+        );
     }
 
     public function test_readme_row_of_rectangles_matches_hand_built(): void

@@ -25,11 +25,19 @@ use Kehet\ImagickLayoutEngine\Templates\Exceptions\InvalidTemplateException;
 
 final class Template
 {
-    private function __construct(private readonly array $node) {}
+    private function __construct(
+        private readonly array $node,
+        private readonly TemplateSettings $settings = new TemplateSettings,
+    ) {}
 
     public static function fromArray(array $node): self
     {
         return new self($node);
+    }
+
+    public function withSettings(TemplateSettings $settings): self
+    {
+        return new self($this->node, $settings);
     }
 
     public static function fromJson(string $json): self
@@ -58,6 +66,6 @@ final class Template
 
     public function toDrawable(array $data = []): DrawableInterface
     {
-        return NodeBuilder::build($this->node, $data);
+        return NodeBuilder::build($this->node, $data, $this->settings);
     }
 }
