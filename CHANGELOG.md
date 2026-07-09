@@ -2,6 +2,13 @@
 
 All notable changes to `imagick-layout-engine` will be documented in this file.
 
+## Release 3.4.0 - 2026-07-09
+
+- Templates feature
+- Set default font in helper function
+
+**Full Changelog**: https://github.com/Kehet/imagick-layout-engine/compare/3.3.0...3.4.0
+
 ## Release 3.3.0 - 2026-07-04
 
 ### What's Changed
